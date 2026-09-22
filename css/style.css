@@ -1,0 +1,2861 @@
+/* ==========================================================================
+   デザイントークン
+   DANDY HOME ブランドカラー：ブラック／チャコールブラック／
+   落ち着いたブロンズゴールド／ホワイト
+   ========================================================================== */
+:root {
+  /* --- Brand colors --- */
+  --color-black: #0e0e0f;
+  --color-charcoal: #1c1c1f;
+  --color-charcoal-2: #262629;
+  --color-bronze: #a9812f;
+  --color-bronze-light: #c79a4b;
+  --color-bronze-dark: #7d5f22;
+  --color-white: #ffffff;
+  --color-offwhite: #f7f5f2;
+  --color-lightgray: #eeece8;
+  --color-border: #e2ded6;
+
+  /* --- Text --- */
+  --text-on-dark: #f5f3ee;
+  --text-on-dark-muted: #b9b6ad;
+  --text-on-light: #201f1d;
+  --text-on-light-muted: #56534c;
+
+  /* --- Semantic --- */
+  --color-bg: var(--color-white);
+  --color-bg-alt: var(--color-offwhite);
+  --color-bg-dark: var(--color-black);
+  --color-bg-dark-alt: var(--color-charcoal);
+  --color-accent: var(--color-bronze);
+  --color-accent-hover: var(--color-bronze-light);
+
+  /* --- Typography ---
+     本文（和文）: Manrope（欧文）→ Noto Sans JP（和文）の順にフォールバックさせることで、
+     数字・英字はManropeの端正な字形、日本語はNoto Sans JPで表示される。
+     見出し（和文）: Shippori Mincho中心の明朝体で品格・重厚感を出す。
+     ロゴ・欧文見出し（DANDY HOME／STEPラベル等）: Montserratの太字＋広めのトラッキング。 */
+  --font-base: "Manrope", "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+    "Yu Gothic", Meiryo, system-ui, -apple-system, sans-serif;
+  --font-serif: "Shippori Mincho", "Noto Serif JP", "Noto Serif CJK JP", "Hiragino Mincho ProN", serif;
+  --font-display: "Montserrat", "Manrope", system-ui, -apple-system, sans-serif;
+
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+
+  /* 見出し類はclamp()で滑らかに可変させ、画面幅ごとの不自然な改行を防ぐ */
+  --fs-xl: clamp(1.375rem, 1.1rem + 1.2vw, 2rem);
+  --fs-2xl: clamp(1.5rem, 1.15rem + 1.9vw, 2.75rem);
+  --fs-3xl: clamp(1.875rem, 1.3rem + 3vw, 3.5rem);
+
+  /* --- Spacing --- */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 2.75rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* --- Layout --- */
+  --container-width: 1120px;
+  --container-padding: 1.25rem;
+  --radius-sm: 4px;
+  --radius-md: 10px;
+  --radius-lg: 18px;
+  --header-height: 72px;
+  --fixed-cta-height: 60px;
+
+  /* --- Motion (控えめ) --- */
+  --transition-fast: 150ms ease;
+  --transition-base: 220ms ease;
+
+  --shadow-sm: 0 2px 8px rgba(14, 14, 15, 0.06);
+  --shadow-md: 0 8px 24px rgba(14, 14, 15, 0.1);
+  --shadow-gold: 0 4px 14px rgba(169, 129, 47, 0.25);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --header-height: 84px;
+  }
+}
+
+@media (min-width: 1200px) {
+  :root {
+    /* ロゴ＋ブランド表記（ダンディホーム / タグライン）を
+       2段で見せるため、PCではヘッダーを少し高くする */
+    --header-height: 100px;
+  }
+}
+
+
+/* ==========================================================================
+   ベーススタイル・リセット
+   ========================================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-base);
+  font-size: var(--fs-base);
+  line-height: 1.85;
+  color: var(--text-on-light);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  padding-bottom: var(--fixed-cta-height);
+  overflow-wrap: break-word;
+  /* オフキャンバスメニュー（transformで画面外に退避）がドキュメント幅に
+     影響し横スクロールが発生するのを防ぐ */
+  overflow-x: hidden;
+}
+
+/* 見出しは和文＋英数字が混在しやすいため、
+   英単語の途中だけで不自然に折り返さないようにする。
+   （本文の日本語は通常どおり文字間で自然に折り返す） */
+h1,
+h2,
+h3,
+h4 {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: balance;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+table {
+  margin: 0;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+}
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: var(--space-4);
+  background: var(--color-black);
+  color: var(--color-white);
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  z-index: 200;
+  transition: top var(--transition-fast);
+}
+
+.skip-link:focus {
+  top: var(--space-4);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 2px;
+}
+
+.icon svg {
+  width: 1em;
+  height: 1em;
+  display: block;
+}
+
+.sp-only {
+  display: inline;
+}
+
+@media (min-width: 768px) {
+  .sp-only {
+    display: none;
+  }
+}
+
+
+/* ==========================================================================
+   共通レイアウト：セクション見出し・ボタン・ヘッダー・フッター・固定CTA
+   ========================================================================== */
+
+/* --- Section common --- */
+.section {
+  padding-block: var(--space-9);
+}
+
+.section-eyebrow {
+  display: inline-block;
+  font-family: var(--font-base);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-4);
+}
+
+.section-eyebrow--light {
+  color: var(--color-bronze-light);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-2xl);
+  font-weight: 700;
+  line-height: 1.6;
+  color: var(--text-on-light);
+  margin-bottom: var(--space-6);
+  letter-spacing: 0.03em;
+}
+
+.section-title--light {
+  color: var(--text-on-dark);
+}
+
+/* --- Buttons --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: 0.9rem 1.75rem;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast),
+    background var(--transition-fast), color var(--transition-fast);
+  white-space: nowrap;
+}
+
+.btn--primary {
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+  box-shadow: var(--shadow-gold);
+}
+
+.btn--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(169, 129, 47, 0.32);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+}
+
+.btn--outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: var(--color-white);
+}
+
+.btn--large {
+  padding: 1.05rem 2.1rem;
+  font-size: var(--fs-base);
+}
+
+.btn--nav {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .btn--nav {
+    display: inline-flex;
+    padding: 0.8rem 1.4rem;
+    font-size: var(--fs-xs);
+  }
+}
+
+/* --- Header ---
+   【FIXED / 確定済み】.site-header* / .brand* / .main-nav* / .nav-link 関連
+   （ファーストビューと一体のブランド署名部分）は 2026-09-22 に PC 1440px・
+   スマホ390pxの両方でクライアント確認済みの完成版として固定されました。
+   明示的な変更指示がない限り、他セクション編集時にもここを変更しないこと。 */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  background: var(--color-black);
+  border-bottom: 1px solid rgba(169, 129, 47, 0.22);
+}
+
+.site-header__inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  line-height: 1.1;
+}
+
+/* ヘッダー左上は「盾ロゴ＋DANDY HOME」を横並びのロックアップとして見せる。
+   正式ロゴ画像（盾が上・DANDY HOMEが下に一体化した1枚のPNG）そのものは
+   一切加工・再生成せず、同じ画像ファイルを2つの表示枠でそれぞれ異なる
+   位置・拡大率にトリミング表示することで、盾とワードマークを横に並べている
+   （ファイル自体は不変。CSSのbackground-size/positionによる表示上のトリミングのみ。
+   ナビゲーションと横並びで収まるよう、幅は控えめに抑えている）。
+   余計なキャッチコピー（ダンディホーム／家の命を守る。）はヘッダーには入れない。 */
+.brand__icon {
+  display: block;
+  width: 25px;
+  height: 30px;
+  background-repeat: no-repeat;
+  background-size: 44px 39.6px;
+  background-position: -8.9px -1.4px;
+}
+
+.brand__wordmark {
+  display: block;
+  width: 152.3px;
+  height: 15px;
+  background-repeat: no-repeat;
+  background-size: 164.4px 148px;
+  background-position: -6px -127.6px;
+}
+
+@media (min-width: 1200px) {
+  .brand__icon {
+    width: 33.3px;
+    height: 40px;
+    background-size: 58.6px 52.8px;
+    background-position: -11.8px -1.9px;
+  }
+
+  .brand__wordmark {
+    width: 203px;
+    height: 20px;
+    background-size: 219.2px 197.3px;
+    background-position: -8px -170.1px;
+  }
+
+  /* 完成イメージではヘッダーロゴがほぼ画面左端に寄っている。
+     .container が広い画面幅では中央寄せになり左右に大きな余白が
+     生まれるため、ナビゲーション・CTAの位置はそのまま維持しつつ、
+     ロゴ（.brand）だけをコンテナの外側左方向へ引き出して左余白を
+     完成イメージと同程度に縮める（サイズ・デザインは変更しない） */
+  .brand {
+    margin-left: -125px;
+  }
+}
+
+.brand__name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 800;
+  letter-spacing: 0.09em;
+  color: var(--color-white);
+  text-transform: uppercase;
+}
+
+.brand__name--footer {
+  font-size: 1.55rem;
+}
+
+.brand__accent {
+  color: var(--color-bronze-light);
+}
+
+@media (min-width: 1200px) {
+  .brand__logo {
+    height: 86px;
+  }
+}
+
+.nav-toggle {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: var(--color-white);
+  position: relative;
+  z-index: 110;
+}
+
+.nav-toggle__icon {
+  grid-area: 1 / 1;
+  font-size: 1.4rem;
+  transition: opacity var(--transition-fast), transform var(--transition-fast);
+}
+
+.nav-toggle__icon--close {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon--open {
+  opacity: 0;
+  transform: scale(0.7);
+}
+
+.nav-toggle[aria-expanded="true"] .nav-toggle__icon--close {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.main-nav {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(84vw, 340px);
+  height: 100vh;
+  background: var(--color-black);
+  border-left: 1px solid rgba(169, 129, 47, 0.25);
+  padding: calc(var(--header-height) + var(--space-6)) var(--space-6) var(--space-6);
+  transform: translateX(100%);
+  transition: transform var(--transition-base);
+  overflow-y: auto;
+  z-index: 105;
+}
+
+.main-nav.is-open {
+  transform: translateX(0);
+}
+
+.main-nav__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-6);
+}
+
+.nav-link {
+  display: block;
+  padding: var(--space-3) var(--space-2);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color var(--transition-fast);
+}
+
+.nav-link:hover {
+  color: var(--color-bronze-light);
+}
+
+/* 完成イメージに合わせ、現在地であるTOPのみゴールドのアクセントにする */
+.main-nav__list li:first-child .nav-link {
+  color: var(--color-bronze-light);
+}
+
+.nav-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  /* z-index: ヘッダー(.site-header, z-index:100)より低く設定し、
+     ヘッダー内のハンバーガーアイコン・メニュー項目がオーバーレイの
+     下に隠れてタップできなくなる不具合を修正（機能修正のみ、
+     見た目・配置・サイズは変更しない） */
+  z-index: 99;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--transition-base);
+}
+
+.nav-overlay.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (min-width: 1200px) {
+  .nav-toggle {
+    display: none;
+  }
+
+  .main-nav {
+    position: static;
+    width: auto;
+    height: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
+    transform: none;
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    overflow: visible;
+  }
+
+  .main-nav__list {
+    flex-direction: row;
+    gap: var(--space-3);
+    margin-bottom: 0;
+  }
+
+  .nav-link {
+    padding: var(--space-1) 0;
+    border-bottom: none;
+    font-size: var(--fs-sm);
+    white-space: nowrap;
+    position: relative;
+  }
+
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -4px;
+    height: 2px;
+    background: var(--color-bronze-light);
+    transform: scaleX(0);
+    transition: transform var(--transition-fast);
+  }
+
+  .nav-link:hover::after {
+    transform: scaleX(1);
+  }
+
+  .nav-overlay {
+    display: none;
+  }
+}
+
+/* --- Footer ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   黒背景＋落ち着いたゴールド＋白文字。装飾を避け、細いラインと余白だけで
+   情報を整理する企業サイトらしいフッター。PC版は横方向、スマホ版は縦。 */
+.site-footer {
+  background: var(--color-black);
+  color: var(--text-on-dark);
+  padding-block: var(--space-8) var(--space-6);
+}
+
+.footer-layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  padding-bottom: var(--space-7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Footerのブランド表示は、ヘッダー／ファーストビューと同じ正式ロゴ画像
+   （盾＋DANDY HOMEワードマーク一体のPNG、company.logo）をそのまま使う。
+   新規デザインは作らず、Footerらしく控えめなサイズで配置するのみ。 */
+.footer-brand__logo {
+  display: block;
+  height: 48px; /* 元の34pxの約1.4倍（スマホ版） */
+  width: auto;
+  margin-bottom: var(--space-3);
+}
+
+.footer-brand__kana {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+  margin-bottom: var(--space-3);
+}
+
+.footer-brand__tagline {
+  font-family: var(--font-serif);
+  font-size: var(--fs-sm);
+  color: var(--color-bronze-light);
+  letter-spacing: 0.04em;
+}
+
+.footer-col__heading {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-3);
+}
+
+.footer-col__text {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+}
+
+.footer-col ul {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer-col a {
+  color: var(--text-on-dark-muted);
+  font-size: var(--fs-sm);
+  transition: color var(--transition-fast);
+}
+
+.footer-col a:hover {
+  color: var(--color-white);
+}
+
+.footer-bottom {
+  padding-top: var(--space-5);
+  font-size: var(--fs-xs);
+  color: var(--text-on-dark-muted);
+  text-align: center;
+}
+
+/* PC版のみ：ブランド／運営会社／ナビゲーション／その他を横並びにし、
+   左右の空間を活かす。スマホ版（この@mediaの外）は縦に整理する。 */
+@media (min-width: 1024px) {
+  .footer-layout {
+    flex-direction: row;
+    gap: var(--space-8);
+  }
+
+  .footer-brand {
+    flex: 1.4;
+  }
+
+  .footer-col {
+    flex: 1;
+  }
+
+  .footer-brand__logo {
+    height: 51px; /* 元の34pxの約1.5倍（PC版） */
+  }
+}
+
+/* --- Fixed bottom CTA --- */
+.fixed-cta {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  display: grid;
+  grid-auto-flow: column;
+  height: var(--fixed-cta-height);
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.fixed-cta__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: var(--fs-sm);
+}
+
+.fixed-cta__btn--primary {
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+}
+
+.fixed-cta__btn--secondary {
+  background: var(--color-charcoal);
+  color: var(--color-white);
+}
+
+@media (min-width: 1024px) {
+  .fixed-cta {
+    display: none;
+  }
+
+  body {
+    padding-bottom: 0;
+  }
+}
+
+
+/* ==========================================================================
+   各セクション固有のスタイル
+   ========================================================================== */
+
+/* --- Hero ---
+   【FIXED / 確定済み】この .hero* ブロック一式（およびlayout.cssの
+   .site-header* / .brand* 関連ルール）は 2026-09-22 に PC 1440px・
+   スマホ390pxの両方でクライアント確認済みの完成版として固定されました。
+   明示的な変更指示がない限り、他セクション編集時にもここを変更しないこと。 */
+.hero {
+  position: relative;
+  min-height: calc(100svh - var(--header-height));
+  display: flex;
+  align-items: center;
+  color: var(--text-on-dark);
+  overflow: hidden;
+}
+
+/* スマホ・タブレットでは画面下部に固定CTAバーが表示されるため、
+   ファーストビュー内のCTAがその固定バーと近すぎて窮屈にならないよう、
+   固定バーの高さ分をあらかじめ差し引いて余白を確保する */
+@media (max-width: 1023px) {
+  .hero {
+    min-height: calc(100svh - var(--header-height) - var(--fixed-cta-height));
+  }
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-color: var(--color-black);
+  /* 背景写真は site.config.js の company.heroImage / heroImageMobile を
+     設定すると、inline styleで --hero-bg-pc / --hero-bg-mobile として
+     渡される（差し替えは設定ファイルのパスを変更するだけでOK）。
+     767px以下ではスマホ専用の縦長写真（--hero-bg-mobile）に切り替わり、
+     768px以上はPC/タブレット共通の写真（--hero-bg-pc）を使う。
+     どちらも未設定の間は、上質なダークグラデーションのみで重厚感を演出する。
+     写真が設定されている場合は、基礎のひび割れ等が写る右側を中心に
+     見せるため right center を基準に配置する。 */
+  background-image: var(
+    --hero-bg-pc,
+    radial-gradient(circle at 18% 12%, rgba(169, 129, 47, 0.2), transparent 55%),
+    radial-gradient(circle at 88% 82%, rgba(169, 129, 47, 0.12), transparent 50%),
+    linear-gradient(160deg, var(--color-black) 0%, var(--color-charcoal) 55%, var(--color-black) 100%)
+  );
+  background-size: cover;
+  background-position: right center;
+  z-index: -2;
+}
+
+/* タブレット（768px〜1199px）専用：PC版のように「黒い余白の中に
+   ロゴと文字が浮かぶ」印象にするため、PC/タブレット共通の写真を
+   等倍のcoverで全面拡大せず、やや縮小して見せることでクラックの超接近
+   表示を避け、木部・基礎・床下空間全体の奥行きが伝わる構図にする。
+   明るさも少し抑える。
+   （1200px以上のPC版はこのブロックの対象外。767px以下はスマホ専用写真＋
+   専用クロップに切り替わるため、このブロックの対象外） */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .hero__bg {
+    background-size: 340% auto;
+    background-position: right 35%;
+    filter: brightness(0.7) saturate(0.86);
+  }
+}
+
+/* スマホ（767px以下）専用：縦長のスマホ専用写真に切り替え、
+   不自然な拡大・横伸び・縦伸びをしないようcoverのまま縦横比を保ち、
+   木部と基礎クラックの両方が確認できる位置に調整する */
+@media (max-width: 767px) {
+  .hero__bg {
+    background-image: var(--hero-bg-mobile, var(--hero-bg-pc));
+    background-size: cover;
+    background-position: center 38%;
+    filter: brightness(0.9) saturate(0.95);
+  }
+}
+
+.hero__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    115deg,
+    rgba(255, 255, 255, 0.025) 0px,
+    rgba(255, 255, 255, 0.025) 1px,
+    transparent 1px,
+    transparent 64px
+  );
+}
+
+.hero__overlay {
+  /* 背景写真の上に重ねる暗いオーバーレイ。
+     スマホ・タブレット（1200px未満）でも横方向のグラデーションにし、
+     左＝黒約85%（文字の可読性優先）→中央＝黒約60%→右＝黒約35%と
+     床下写真・基礎のクラックが自然に浮かび上がるようにする。
+     PC（1200px以上）は下のmedia queryで別途、より強いグラデーションに
+     切り替える。 */
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(
+    90deg,
+    rgba(6, 6, 7, 0.96) 0%,
+    rgba(6, 6, 7, 0.82) 50%,
+    rgba(6, 6, 7, 0.58) 100%
+  );
+}
+
+@media (min-width: 1200px) {
+  .hero__overlay {
+    /* 左0〜35%＝ほぼ黒、35〜55%＝黒から写真への移行、55%以降＝床下写真が
+       しっかり見える、という比率を保ちつつ、途中で急に暗さが変わる
+       「境界線」に見えないよう刻みを増やしてなめらかな一本のカーブにする */
+    background: linear-gradient(
+      90deg,
+      rgba(4, 4, 5, 1) 0%,
+      rgba(4, 4, 5, 0.99) 22%,
+      rgba(4, 4, 5, 0.94) 32%,
+      rgba(4, 4, 5, 0.8) 40%,
+      rgba(4, 4, 5, 0.6) 46%,
+      rgba(4, 4, 5, 0.38) 52%,
+      rgba(4, 4, 5, 0.2) 58%,
+      rgba(4, 4, 5, 0.08) 64%,
+      rgba(4, 4, 5, 0) 72%
+    );
+  }
+}
+
+/* スマホ（767px以下）専用：PC版と同じ「左は黒でブランドを立たせ、右は
+   写真をしっかり見せる」明暗のメリハリを、縦長画面にも落とし込む。
+   横方向（左0〜40%＝黒を強く／40〜65%＝黒から写真への自然なグラデーション／
+   65〜100%＝黒を弱めてクラック・金物・木部を見せる）と、
+   縦方向（ヘッダー直下と下部CTA付近をやや暗く、中央は写真を見せる）の
+   2枚のグラデーションを重ねる。ロゴ・文字・CTAのサイズや位置は変更しない */
+@media (max-width: 767px) {
+  .hero__overlay {
+    background: linear-gradient(
+        180deg,
+        rgba(4, 4, 5, 0.38) 0%,
+        rgba(4, 4, 5, 0.16) 16%,
+        rgba(4, 4, 5, 0.04) 46%,
+        rgba(4, 4, 5, 0.04) 62%,
+        rgba(4, 4, 5, 0.18) 84%,
+        rgba(4, 4, 5, 0.34) 100%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(4, 4, 5, 0.97) 0%,
+        rgba(4, 4, 5, 0.95) 18%,
+        rgba(4, 4, 5, 0.9) 30%,
+        rgba(4, 4, 5, 0.8) 39%,
+        rgba(4, 4, 5, 0.68) 46%,
+        rgba(4, 4, 5, 0.54) 52%,
+        rgba(4, 4, 5, 0.41) 58%,
+        rgba(4, 4, 5, 0.3) 64%,
+        rgba(4, 4, 5, 0.21) 70%,
+        rgba(4, 4, 5, 0.15) 77%,
+        rgba(4, 4, 5, 0.11) 85%,
+        rgba(4, 4, 5, 0.08) 100%
+      );
+  }
+}
+
+.hero__inner {
+  /* ファーストビュー専用の、完成イメージから実測したシャンパン〜アンティーク
+     ゴールドの中間色。サイト共通のブロンズトークンとは分けて定義し、
+     他セクションには影響させない */
+  --hero-gold: #c3a05a;
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(2rem, 3vw + 0.75rem, 2.75rem);
+  padding-left: clamp(1.25rem, 6vw, 5rem);
+  padding-right: var(--container-padding);
+  text-align: left;
+  width: 100%;
+  max-width: 640px;
+  margin-inline: 0 auto;
+}
+
+@media (min-width: 1200px) {
+  /* 完成イメージのように、上下中央寄せではなく上寄りに構え、CTAの下に
+     余白をたっぷり残すことで高級感を出す。完成イメージを実測すると、
+     ブランドブロックの開始位置はヒーロー高さの約1割程度とかなり上側で、
+     以前の値（4.5〜5.5rem）は下げすぎだったため縮小した */
+  .hero {
+    align-items: flex-start;
+  }
+
+  .hero__inner {
+    max-width: min(45%, 620px);
+    padding-top: clamp(2.25rem, 3vw + 0.75rem, 3rem);
+    padding-bottom: 0;
+  }
+}
+
+.hero__eyebrow {
+  font-family: var(--font-base);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.18em;
+  color: var(--hero-gold);
+  font-weight: 600;
+  margin-bottom: var(--space-5);
+}
+
+/* 完成イメージ実測：エリア表記〜盾ロゴの間隔がより詰まっているため
+   PCのみ圧縮する（スマホは対象外） */
+@media (min-width: 1200px) {
+  .hero__eyebrow {
+    margin-bottom: var(--space-1);
+  }
+}
+
+/* ロゴ画像は「盾＋DANDY HOME」が一体になった正式アセットのため、
+   文字を大きくするのではなく余白のリズムで高級感を出す方針に合わせ、
+   完成イメージの比率（ヒーロー高さの約3割程度）に近づけて調整。
+   画像自体は無加工のまま、表示サイズのみ変更している */
+.hero__logo {
+  display: block;
+  height: 157px;
+  width: auto;
+  margin-bottom: 4px;
+}
+
+@media (min-width: 640px) {
+  .hero__logo {
+    height: 200px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__logo {
+    height: 235px;
+  }
+}
+
+/* ブランドブロック（盾〜家の命を守る。）を少しコンパクトにするため、
+   PCのみロゴ全体（盾＋DANDY HOME一体の画像）を約8%縮小し、
+   ダンディホームとの間隔もさらに詰める（縦横比・シルエットは変更しない、
+   スマホは対象外） */
+@media (min-width: 1200px) {
+  .hero__logo {
+    height: 230px;
+    margin-bottom: -10px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .hero__logo {
+    height: 251px;
+  }
+}
+
+.hero__brandtext {
+  /* 完成イメージでは「ダンディホーム」と「— 家の命を守る。—」がほぼ
+     隙間なく連続して見えるため、行間を詰めてgapのみで間隔を作る */
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  /* ブランドロック（盾〜家の命を守る。）自体はコンパクトにまとめる一方、
+     その後のメインコピーとの間は「ブランド」と「メッセージ」を分けるため
+     少し広めに取る（スマホ含む） */
+  margin-bottom: 2.5rem;
+}
+
+/* 完成イメージ実測：PCではkana〜taglineの間隔を少し詰めてブランドロックを
+   1セットにまとめつつ、tagline〜メインコピーの間隔は広めにする
+   （スマホは対象外） */
+@media (min-width: 1200px) {
+  .hero__brandtext {
+    gap: 5px;
+    margin-bottom: 2.25rem;
+  }
+}
+
+.hero__brandtext-kana {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1rem + 0.75vw, 1.625rem);
+  font-weight: 600;
+  line-height: 1.15;
+  letter-spacing: 0.34em;
+  color: var(--text-on-dark);
+}
+
+/* 「家の命を守る。」はブランドスローガンとして、メインコピーより小さく
+   保ちつつ、現在よりも一段階存在感を上げる。左右の細いゴールドラインは
+   文字（em dash）ではなく実際の罫線要素にして上品さを出す */
+.hero__brandtext-tagline {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.hero__brandtext-tagline-line {
+  flex-shrink: 0;
+  width: 14px;
+  height: 1px;
+  background: var(--hero-gold);
+}
+
+/* 「家の命を守る。」はブランドスローガンとして一目で認識できる強さが
+   必要なため、前回よりもう一段階サイズを上げる（約10%増） */
+.hero__brandtext-tagline-text {
+  font-family: var(--font-serif);
+  font-size: clamp(1.2rem, 1.03rem + 0.66vw, 1.65rem);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.22em;
+  color: var(--hero-gold);
+  white-space: nowrap;
+}
+
+@media (min-width: 1200px) {
+  .hero__brandtext-tagline {
+    gap: 12px;
+  }
+
+  .hero__brandtext-tagline-line {
+    width: 20px;
+  }
+
+  /* PCはさらにひと回り大きく（ベース比+約15%）し、ラインは装飾として
+     やや控えめに保つ */
+  .hero__brandtext-tagline-text {
+    font-size: clamp(1.3rem, 1.1rem + 0.7vw, 1.725rem);
+  }
+}
+
+.hero__lead {
+  font-family: var(--font-serif);
+  font-size: clamp(1.5rem, 1.15rem + 1.7vw, 2.125rem);
+  font-weight: 500;
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+  margin-bottom: var(--space-7);
+  word-break: keep-all;
+}
+
+/* 完成イメージ実測：メインコピー〜CTAの間隔が現在より詰まっているため
+   PCのみ圧縮する（スマホは対象外） */
+@media (min-width: 1200px) {
+  .hero__lead {
+    /* 静かで高級感のある見え方にするため行間はやや広め、
+       CTAとの間隔も少し広げる */
+    line-height: 1.45;
+    margin-bottom: 2.25rem;
+  }
+}
+
+.hero__cta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+@media (min-width: 560px) {
+  .hero__cta {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ファーストビューのCTAは、光沢の強いグラデーションではなく
+   落ち着いたフラットなゴールドに寄せ、高級感・重厚感を優先する。
+   また、他セクションのボタンより少し横長・かつ丸みを抑えた端正な形にし、
+   高級住宅ブランドらしい印象を強める（このボタン形状は他セクションの
+   .btnには影響しない） */
+.hero__cta .btn {
+  padding-inline: 2.6rem;
+  border-radius: var(--radius-md);
+}
+
+/* 完成イメージのCTAはフルピル型でひと回り横幅が広いため、PCのみ
+   角丸と横幅を合わせる（文言・他セクションのボタンは変更しない） */
+@media (min-width: 1200px) {
+  .hero__cta .btn {
+    padding-inline: 4.5rem;
+    border-radius: 999px;
+  }
+}
+
+.hero__cta .btn--primary {
+  background: var(--color-bronze);
+  box-shadow: none;
+}
+
+.hero__cta .btn--primary:hover {
+  background: var(--color-bronze-light);
+  transform: none;
+  box-shadow: none;
+}
+
+.hero__cta .btn--outline {
+  border-color: rgba(245, 243, 238, 0.4);
+}
+
+.hero__cta .btn--outline:hover {
+  border-color: var(--hero-gold);
+  color: var(--hero-gold);
+  background: transparent;
+}
+
+.hero__scroll {
+  position: absolute;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 26px;
+  height: 42px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  /* スマホ版では .hero（flexのデフォルトの align-items: stretch）により
+     .hero__inner（z-index:1）がヒーロー全体の高さまで広がり、本要素の
+     タップ判定を奪ってしまうため、.hero__inner より上に重なるよう指定。
+     位置・サイズ・見た目・アニメーションには影響しない */
+  z-index: 2;
+}
+
+.hero__scroll span {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-bronze-light);
+  animation: scrollDown 1.8s infinite;
+}
+
+@keyframes scrollDown {
+  0% {
+    opacity: 1;
+    top: 8px;
+  }
+  70% {
+    opacity: 0;
+    top: 20px;
+  }
+  100% {
+    opacity: 0;
+    top: 8px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__scroll span {
+    animation: none;
+  }
+}
+
+/* --- About --- */
+.about__grid {
+  display: grid;
+  gap: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .about__grid {
+    grid-template-columns: 1.2fr 1fr;
+    align-items: start;
+  }
+}
+
+.about__lead {
+  font-size: var(--fs-md);
+  font-weight: 600;
+  margin-bottom: var(--space-4);
+}
+
+.about__text p {
+  color: var(--text-on-light-muted);
+  margin-bottom: var(--space-4);
+}
+
+.about__points {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.about__points li {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.about__point-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-black);
+  color: var(--color-bronze-light);
+  font-size: 1.3rem;
+}
+
+.about__point-title {
+  font-weight: 700;
+  margin-bottom: var(--space-1);
+}
+
+.about__point-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+}
+
+/* --- Symptoms (dark section) --- */
+.symptoms {
+  background: linear-gradient(180deg, var(--color-black), var(--color-charcoal));
+  color: var(--text-on-dark);
+  text-align: center;
+}
+
+.symptoms__list {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-6);
+  text-align: left;
+}
+
+@media (min-width: 640px) {
+  .symptoms__list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .symptoms__list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.symptom-card {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-5);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(169, 129, 47, 0.25);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-sm);
+}
+
+.symptom-card__icon {
+  color: var(--color-bronze-light);
+  font-size: 1.3rem;
+  flex-shrink: 0;
+}
+
+.symptoms__note {
+  color: var(--text-on-dark-muted);
+  font-size: var(--fs-sm);
+  margin-bottom: var(--space-6);
+}
+
+/* --- Inspection (無料床下点検) ---
+   【FIXED / 確定済み】PC 1440px・スマホ390pxともに 2026-09-22 に
+   クライアント確認済みの完成版として固定。明示的な変更指示がない限り、
+   他セクション編集時にもこのブロック（.inspection / .flow* /
+   .inspection__assurance / .inspection__cta 関連）を変更しないこと。
+   ファーストビューの黒背景から自然に切り替わる、上質なアイボリー背景の
+   セクション。カードは白ベース＋淡いシャドウで、線の細いアイコンと
+   ゴールドのアクセントのみで高級感を出す（派手な影・グラデーションは
+   使わない） */
+.inspection {
+  background: var(--color-bg-alt);
+}
+
+.flow {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-7);
+  align-items: stretch;
+}
+
+.flow-step {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6) var(--space-5);
+  text-align: center;
+  border: 1px solid rgba(32, 31, 29, 0.07);
+  box-shadow: 0 10px 28px rgba(20, 18, 14, 0.05);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+@media (hover: hover) {
+  .flow-step:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(20, 18, 14, 0.08);
+  }
+}
+
+.flow-step__icon {
+  width: 56px;
+  height: 56px;
+  margin-inline: auto;
+  margin-bottom: var(--space-3);
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-black);
+  color: var(--color-bronze-light);
+  font-size: 1.6rem;
+}
+
+.flow-step__number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  color: var(--color-bronze);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  margin-bottom: var(--space-3);
+}
+
+.flow-step__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-md);
+  letter-spacing: 0.04em;
+  margin-bottom: var(--space-2);
+  word-break: keep-all;
+}
+
+.flow-step__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+}
+
+.flow-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-bronze);
+  font-size: 1.3rem;
+  transform: rotate(90deg);
+}
+
+@media (min-width: 640px) {
+  .flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .flow-arrow {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.inspection__assurance {
+  display: flex;
+  gap: var(--space-4);
+  align-items: center;
+  background: var(--color-black);
+  color: var(--text-on-dark);
+  border: 1px solid rgba(199, 154, 75, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  margin-bottom: var(--space-7);
+}
+
+.inspection__assurance-icon {
+  color: var(--color-bronze-light);
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.inspection__assurance p {
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  color: var(--text-on-dark);
+}
+
+.inspection__cta,
+.foundation-feature__cta,
+.symptoms__cta {
+  text-align: center;
+}
+
+/* スマホ版のみ：STEPカードと余白を少しコンパクトにし、セクション全体の
+   縦スクロール量を抑える（PC版のカードサイズ・余白には一切影響しない） */
+@media (max-width: 767px) {
+  .inspection.section {
+    padding-block: 4rem;
+  }
+
+  .flow {
+    gap: 0.9rem;
+    margin-bottom: 2rem;
+  }
+
+  .flow-step {
+    padding: 1.25rem var(--space-5) 1.15rem;
+  }
+
+  .flow-step__icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.5rem;
+    font-size: 1.45rem;
+  }
+
+  .flow-step__number {
+    margin-bottom: 0.4rem;
+  }
+
+  .flow-step__title {
+    margin-bottom: 0.3rem;
+  }
+
+  .inspection__assurance {
+    margin-bottom: 2rem;
+  }
+}
+
+/* --- Symptom detail (床下で確認する代表的な症状・変化) ---
+   【FIXED / 確定済み】PC 1440px・スマホ390pxともに 2026-09-22 に
+   クライアント確認済みの完成版として固定。明示的な変更指示がない限り、
+   他セクション編集時にもこのブロック（.symptom-detail* 関連）を変更しないこと。
+   無料床下点検セクションと同じアイボリー/黒/ゴールドのトーンを継承しつつ、
+   写真を主役にした静かな高級感のあるカードにする。過度な影・装飾は避ける。 */
+.symptom-detail {
+  background: var(--color-bg-alt);
+}
+
+.symptom-detail__title-break {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .symptom-detail__title-break {
+    display: inline;
+  }
+}
+
+.symptom-detail__lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-7);
+}
+
+.symptom-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .symptom-detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.symptom-detail-card {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid rgba(32, 31, 29, 0.07);
+  box-shadow: 0 10px 28px rgba(20, 18, 14, 0.05);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+@media (hover: hover) {
+  .symptom-detail-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 16px 34px rgba(20, 18, 14, 0.08);
+  }
+}
+
+.symptom-detail-card__photo {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  background: var(--color-charcoal);
+}
+
+.symptom-detail-card__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.symptom-detail-card__body {
+  padding: var(--space-5) var(--space-6) var(--space-6);
+}
+
+.symptom-detail-card__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-4);
+}
+
+.symptom-detail-card__meta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.symptom-detail-card__meta dt {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-bronze);
+  margin-bottom: 0.35rem;
+}
+
+.symptom-detail-card__meta dd {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.8;
+}
+
+.symptom-detail__message {
+  background: var(--color-black);
+  color: var(--text-on-dark);
+  border-radius: var(--radius-lg);
+  border: 1px solid rgba(199, 154, 75, 0.25);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+}
+
+.symptom-detail__message-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--color-white);
+  margin-bottom: var(--space-4);
+}
+
+.symptom-detail__message-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-6);
+}
+
+.symptom-detail__cta {
+  text-align: center;
+}
+
+/* PC版のみ：カード幅を少しコンパクトにし、上品な余白感に整える。
+   写真の縦横比を少し圧縮してカード全体の縦長さを抑える
+   （スマホ版・他セクションには影響しない） */
+@media (min-width: 1024px) {
+  .symptom-detail-grid {
+    max-width: 980px;
+    margin-inline: auto;
+    gap: 2.75rem 2.25rem;
+  }
+
+  .symptom-detail-card__photo {
+    aspect-ratio: 3 / 1.85;
+  }
+}
+
+/* スマホ版のみ：本文の文字サイズ・行間をわずかに上げて可読性を優先しつつ、
+   カード内の余白を少し整理する（PC版には影響しない） */
+@media (max-width: 767px) {
+  .symptom-detail-card__body {
+    padding: var(--space-5) var(--space-5) var(--space-6);
+  }
+
+  .symptom-detail-card__title {
+    margin-bottom: var(--space-3);
+  }
+
+  .symptom-detail-card__meta {
+    gap: var(--space-3);
+  }
+
+  .symptom-detail-card__meta dd {
+    font-size: 0.9375rem;
+    line-height: 1.85;
+  }
+}
+
+/* --- Why DANDY HOME (なぜDANDY HOMEなのか／選ばれる理由) ---
+   【FIXED / 確定済み】PC 1440px・スマホ390pxともに 2026-09-22 に
+   クライアント確認済みの完成版として固定。明示的な変更指示がない限り、
+   他セクション編集時にもこのブロック（.why* 関連）を変更しないこと。
+   派手な実績訴求ではなく、DANDY HOMEの考え方を静かに伝えるセクション。
+   カードを囲いすぎず、余白を大きく使った上品な3カラム（PC）/ 縦並び（スマホ）。
+   ゴールドはアクセントとしてのみ、控えめに使用する。 */
+.why {
+  background: var(--color-bg);
+}
+
+.why-tagline {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+
+.why-tagline__bar {
+  width: 2px;
+  align-self: stretch;
+  min-height: 2.6em;
+  background: var(--color-bronze-light);
+  flex-shrink: 0;
+}
+
+.why-tagline__text {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
+  color: var(--text-on-light);
+}
+
+.why-lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-8);
+}
+
+.why-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-7);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .why-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-7) var(--space-6);
+  }
+}
+
+.why-item {
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border);
+}
+
+.why-item__number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-3);
+}
+
+.why-item__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-3);
+}
+
+.why-item__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+/* PC版のみ：3項目と黒いブランドメッセージエリアの間の余白を少し詰め、
+   セクション全体が間延びして見えないよう微調整する（スマホ版には影響しない） */
+@media (min-width: 1024px) {
+  .why-grid {
+    margin-bottom: 2.75rem;
+  }
+}
+
+.why-brand-message {
+  background: var(--color-black);
+  border: 1px solid rgba(199, 154, 75, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-8) var(--space-6);
+  text-align: center;
+}
+
+.why-brand-message__gold {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-xl);
+  letter-spacing: 0.04em;
+  color: var(--color-bronze-light);
+  margin-bottom: var(--space-3);
+}
+
+.why-brand-message__white {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  font-size: var(--fs-md);
+  line-height: 1.8;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+}
+
+/* PC版のみ：黒いブランドメッセージボックスの縦方向の余白を詰め、
+   横長で上品なメッセージバーに見えるようにする（文字サイズ・色・
+   中央配置・スマホ版には影響しない）。上の .why-grid 用メディアクエリより
+   後（このブロックより後）に置くことで、上の基礎ルールに確実に勝たせる。 */
+@media (min-width: 1024px) {
+  .why-brand-message {
+    padding: 2.25rem var(--space-6);
+  }
+}
+
+/* --- Capabilities (DANDY HOMEができること／サービス紹介) ---
+   「なぜ、DANDY HOMEなのか。」の考え方を受けて、実際の施工写真とともに
+   対応できる工事を伝えるセクション。症状セクションとは役割が違うため、
+   白カードを並べる作りにはせず、写真を主役に余白を大きく使う。 */
+.capabilities {
+  background: var(--color-bg-alt);
+}
+
+.capabilities__lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-8);
+}
+
+.capabilities__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+
+@media (min-width: 1024px) {
+  .capabilities__grid {
+    max-width: 980px;
+    margin-inline: auto;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-8) var(--space-7);
+  }
+}
+
+.capability-item__photo {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+  box-shadow: 0 14px 32px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-5);
+}
+
+.capability-item__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.capability-item__rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-bronze-light);
+  margin-bottom: var(--space-3);
+}
+
+.capability-item__number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-2);
+}
+
+.capability-item__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.capability-item__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+}
+
+.capabilities__cta {
+  background: var(--color-black);
+  border: 1px solid rgba(199, 154, 75, 0.25);
+  border-radius: var(--radius-lg);
+  padding: var(--space-7) var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+}
+
+.capabilities__cta-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-2);
+  text-wrap: balance;
+}
+
+.capabilities__cta-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+  line-height: 1.8;
+}
+
+
+@media (min-width: 768px) {
+  .capabilities__cta {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-6);
+  }
+
+  .capabilities__cta-text {
+    flex: 1;
+  }
+}
+
+/* --- Case studies preview (施工事例プレビュー) ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   「DANDY HOMEができること」の直下に置く、写真主役のエディトリアル風
+   レイアウト。PC版は写真＋テキストの横2カラム交互配置、スマホ版は
+   縦構成。基礎補強／木部補強／シロアリ防除の実写真を使用済み。 */
+.case-preview {
+  background: var(--color-bg);
+}
+
+.case-preview__lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-8);
+}
+
+.case-preview__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-9);
+  margin-bottom: var(--space-7);
+}
+
+.case-preview-item__photo {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+  box-shadow: 0 16px 36px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-5);
+}
+
+.case-preview-item__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* 実写真が複数枚になるケース（ステップ写真／メイン＋補足写真）では、
+   写真枠そのものの背景・影・比率指定は使わず、内側の各写真に個別に適用する。 */
+.case-preview-item__photo--steps,
+.case-preview-item__photo--main,
+.case-preview-item__photo--pair {
+  aspect-ratio: auto;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ステップ写真（状態確認 → 施工中 → 施工後） */
+.case-preview-steps {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.case-preview-step {
+  flex: 1;
+  min-width: 0;
+}
+
+.case-preview-step__photo {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-charcoal);
+  box-shadow: 0 12px 28px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-3);
+}
+
+.case-preview-step__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-preview-step__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-on-light-muted);
+  line-height: 1.4;
+}
+
+.case-preview-step__label span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--color-bronze);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-size: 0.65rem;
+  font-weight: 700;
+}
+
+/* メイン写真＋補足写真（施工前後など） */
+.case-preview-item__main {
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+  box-shadow: 0 16px 36px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-3);
+}
+
+.case-preview-item__main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-preview-subs {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.case-preview-sub {
+  flex: 1;
+  min-width: 0;
+}
+
+.case-preview-sub__photo {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-charcoal);
+  box-shadow: 0 10px 22px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-2);
+}
+
+.case-preview-sub__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-preview-sub__label {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-on-light-muted);
+}
+
+/* アップ写真の横並び（木部補強の施工前／施工後など） */
+.case-preview-pair {
+  display: flex;
+  gap: var(--space-3);
+}
+
+.case-preview-pair-item {
+  flex: 1;
+  min-width: 0;
+}
+
+.case-preview-pair-item__photo {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-charcoal);
+  box-shadow: 0 12px 28px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-3);
+}
+
+.case-preview-pair-item__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-preview-pair-item__label {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-on-light-muted);
+}
+
+.case-preview-item__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  background: linear-gradient(135deg, var(--color-charcoal), var(--color-charcoal-2));
+  color: var(--color-bronze-light);
+}
+
+.case-preview-item__placeholder .icon {
+  font-size: 2rem;
+}
+
+.case-preview-item__placeholder span {
+  font-size: var(--fs-xs);
+  letter-spacing: 0.14em;
+  color: var(--text-on-dark-muted);
+}
+
+.case-preview-item__body {
+  max-width: 640px;
+}
+
+.case-preview-item__number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-2);
+}
+
+.case-preview-item__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.case-preview-item__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+}
+
+.case-preview__more {
+  text-align: center;
+}
+
+.case-preview__more-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-bronze);
+  transition: color var(--transition-fast);
+}
+
+.case-preview__more-link:hover {
+  color: var(--color-bronze-dark);
+}
+
+.case-preview__more-link .icon {
+  font-size: 0.85em;
+}
+
+/* PC版のみ：施工事例3件を「写真＋テキスト」の横2カラム・交互配置にする。
+   スマホ版（この@mediaの外）は既存の縦構成のまま一切変更しない。 */
+@media (min-width: 1024px) {
+  .case-preview__list {
+    gap: var(--space-9);
+  }
+
+  .case-preview-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .case-preview-item__photo {
+    flex: 0 0 58%;
+    margin-bottom: 0;
+  }
+
+  .case-preview-item__photo:not(.case-preview-item__photo--steps):not(.case-preview-item__photo--main):not(.case-preview-item__photo--pair) {
+    aspect-ratio: 3 / 2;
+  }
+
+  .case-preview-item__body {
+    flex: 1;
+    max-width: none;
+  }
+
+  .case-preview-item:nth-child(2n) {
+    flex-direction: row-reverse;
+  }
+}
+
+/* --- 無料床下点検の流れ（施工事例の直後） ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   アイコン付きカードを並べる代わりに、STEP番号・細いゴールドのライン・
+   タイポグラフィと余白だけで見せる上品な構成。施工事例セクションと
+   余白・文字サイズ・ゴールドの色味を統一する。 */
+.free-flow {
+  background: var(--color-bg);
+}
+
+.free-flow__lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-8);
+}
+
+.free-flow__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  margin-bottom: var(--space-8);
+  list-style: none;
+  padding: 0;
+}
+
+.free-flow__step-rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-bronze-light);
+  margin-bottom: var(--space-3);
+}
+
+.free-flow__step-number {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-2);
+}
+
+.free-flow__step-title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.free-flow__step-desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+}
+
+.free-flow__assurance {
+  max-width: 560px;
+  margin: 0 auto var(--space-7);
+  text-align: center;
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+.free-flow__cta {
+  text-align: center;
+}
+
+/* PC版のみ：4STEPを横並びにし、区切りは細いラインのみ（カード化しない）。
+   スマホ版（この@mediaの外）は縦に自然に読める構成のまま。 */
+@media (min-width: 1024px) {
+  .free-flow__list {
+    flex-direction: row;
+    gap: var(--space-7);
+  }
+
+  .free-flow__step {
+    flex: 1;
+  }
+
+  .free-flow__step:not(:first-child) {
+    padding-left: var(--space-7);
+    border-left: 1px solid var(--color-border);
+  }
+}
+
+/* --- Services grid --- */
+.service-grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-7);
+}
+
+@media (min-width: 640px) {
+  .service-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .service-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.service-card__link {
+  display: block;
+  height: 100%;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  transition: transform var(--transition-base), box-shadow var(--transition-base),
+    border-color var(--transition-base);
+}
+
+.service-card__link:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-bronze);
+}
+
+.service-card__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: var(--color-bg-alt);
+  color: var(--color-bronze);
+  font-size: 1.5rem;
+  margin-bottom: var(--space-4);
+}
+
+.service-card__title {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.service-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  margin-bottom: var(--space-4);
+}
+
+.service-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--color-bronze);
+}
+
+.services__partner {
+  background: var(--color-bg-alt);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+}
+
+.services__partner-title {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.services__partner-list {
+  color: var(--text-on-light-muted);
+  font-size: var(--fs-sm);
+  line-height: 2;
+}
+
+/* --- Foundation feature --- */
+.foundation-feature {
+  background: var(--color-bg-alt);
+}
+
+.foundation-feature__lead {
+  color: var(--text-on-light-muted);
+  max-width: 64ch;
+  margin-bottom: var(--space-7);
+}
+
+.foundation-feature__grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-7);
+}
+
+@media (min-width: 900px) {
+  .foundation-feature__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.foundation-feature__item {
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  border-top: 3px solid var(--color-bronze);
+}
+
+.foundation-feature__icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: var(--color-black);
+  color: var(--color-bronze-light);
+  font-size: 1.4rem;
+  margin-bottom: var(--space-4);
+}
+
+.foundation-feature__item h3 {
+  font-size: var(--fs-md);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.foundation-feature__item p {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+}
+
+/* --- Case studies --- */
+.case-studies__note {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  background: var(--color-bg-alt);
+  border-left: 3px solid var(--color-bronze);
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-sm);
+  margin-bottom: var(--space-7);
+}
+
+.case-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 800px) {
+  .case-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .case-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.case-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.case-card__images {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.case-card__label {
+  position: absolute;
+  margin: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--color-white);
+  background: rgba(14, 14, 15, 0.7);
+  padding: 2px 10px;
+  border-radius: 999px;
+  z-index: 1;
+}
+
+.case-card__image-col {
+  position: relative;
+}
+
+.case-card__placeholder {
+  aspect-ratio: 4 / 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  background: var(--color-lightgray);
+  color: var(--text-on-light-muted);
+  font-size: var(--fs-xs);
+  text-align: center;
+  padding: var(--space-3);
+}
+
+.case-card__placeholder .icon {
+  font-size: 1.6rem;
+  opacity: 0.6;
+}
+
+.case-card__body {
+  padding: var(--space-5);
+}
+
+.case-card__title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+}
+
+.case-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  font-size: var(--fs-xs);
+  color: var(--color-bronze);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+}
+
+.case-card__summary {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+}
+
+/* --- DANDY HOMEが大切にしていること（無料床下点検の流れの直後） ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   アイコン付きカードを並べるのではなく、大きな連番（01/02/03）・細い
+   ゴールドのライン・タイポグラフィと余白で見せるエディトリアルな構成。
+   施工事例／無料床下点検の流れと余白・文字サイズ・ゴールドの色味を統一。 */
+.values {
+  background: var(--color-bg);
+}
+
+.values__lead {
+  max-width: 640px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-9);
+}
+
+.value-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  list-style: none;
+  padding: 0;
+}
+
+.value-item__number {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-3xl);
+  line-height: 1;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-3);
+}
+
+.value-item__rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-bronze-light);
+  margin-bottom: var(--space-4);
+}
+
+.value-item__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-3);
+}
+
+.value-item__desc {
+  max-width: 460px;
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+/* PC版のみ：01/02/03を横3列のエディトリアル構成にする。単純な3カード
+   並びにはせず、細いラインの余白区切りのみでカード化しない。
+   スマホ版（この@mediaの外）は01→02→03と縦に自然に読める構成のまま。 */
+@media (min-width: 1024px) {
+  .value-list {
+    flex-direction: row;
+    gap: var(--space-8);
+  }
+
+  .value-item {
+    flex: 1;
+  }
+
+  .value-item:not(:first-child) {
+    padding-left: var(--space-8);
+    border-left: 1px solid var(--color-border);
+  }
+
+  .value-item__number {
+    font-size: 2.75rem;
+  }
+}
+
+/* --- 対応エリア（Valuesの直後） ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   地図イラストやアイコンは使わず、都道府県名・細いゴールドのライン・
+   タイポグラフィと余白だけで見せる構成。施工事例／無料床下点検の流れ／
+   Valuesと余白・文字サイズ・ゴールドの色味を統一する。 */
+.service-area {
+  background: var(--color-bg-alt);
+}
+
+.service-area__layout {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.service-area__lead {
+  max-width: 480px;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+.area-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-7);
+  list-style: none;
+  padding: 0;
+  margin-bottom: var(--space-6);
+}
+
+.area-item__rule {
+  display: block;
+  width: 28px;
+  height: 2px;
+  background: var(--color-bronze-light);
+  margin-bottom: var(--space-3);
+}
+
+.area-item__prefecture {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-lg);
+  color: var(--text-on-light);
+  letter-spacing: 0.03em;
+  margin-bottom: var(--space-2);
+}
+
+.area-item__detail {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+}
+
+.area-item__sub {
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+  margin-top: var(--space-2);
+}
+
+.service-area__note {
+  font-size: var(--fs-xs);
+  color: var(--text-on-light-muted);
+  line-height: 1.8;
+}
+
+/* PC版のみ：左に見出し・説明文、右に対応エリアを配置する2カラム構成。
+   スマホ版（この@mediaの外）は見出し→説明→神奈川県→東京都→補足の
+   縦一列の構成のまま。 */
+@media (min-width: 1024px) {
+  .service-area__layout {
+    flex-direction: row;
+    gap: var(--space-9);
+    align-items: flex-start;
+  }
+
+  .service-area__intro {
+    flex: 0 0 42%;
+  }
+
+  .service-area__list-wrap {
+    flex: 1;
+    max-width: 480px;
+  }
+}
+
+/* --- Company info table --- */
+/* --- 会社情報（対応エリアの直後） ---
+   【FIXED / 確定済み】ユーザー確認済み・変更禁止。
+   表をそのまま置くのではなく、項目ごとに細いゴールドのラインで区切り、
+   明朝体の見出しと余白で見せる構成。施工事例／無料床下点検の流れ／
+   Values／対応エリアと余白・文字サイズ・ゴールドの色味を統一する。 */
+.company-info {
+  background: var(--color-bg-alt);
+}
+
+.company-detail-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.company-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.company-detail:last-child {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.company-detail__label {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  color: var(--color-bronze);
+}
+
+.company-detail__value {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  color: var(--text-on-light);
+  line-height: 1.85;
+}
+
+.company-detail__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+/* PC版のみ：ラベルを左、内容を右に配置する横長の2カラム構成にし、
+   左右の空間を活かす。スマホ版（この@mediaの外）は項目ごとに縦へ
+   自然に並び、余白を広めに取って詰まって見えないようにする。 */
+@media (min-width: 1024px) {
+  .company-detail {
+    flex-direction: row;
+    align-items: baseline;
+    gap: var(--space-8);
+    padding: var(--space-7) 0;
+  }
+
+  .company-detail__label {
+    flex: 0 0 200px;
+  }
+
+  .company-detail__value {
+    flex: 1;
+    max-width: 560px;
+  }
+
+  /* 見出しはPC幅では1行に収まるため、スマホ用の改行は無効化する */
+  .company-title-break {
+    display: none;
+  }
+}
+
+/* --- Contact --- */
+.contact__lead {
+  color: var(--text-on-light-muted);
+  margin-bottom: var(--space-7);
+  max-width: 60ch;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-width: 640px;
+  background: var(--color-bg-alt);
+  padding: var(--space-7);
+  border-radius: var(--radius-lg);
+}
+
+.contact-form__row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.contact-form__row--split {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+}
+
+@media (min-width: 560px) {
+  .contact-form__row--split {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.contact-form label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.required {
+  color: #b3372c;
+  font-size: var(--fs-xs);
+  margin-left: var(--space-2);
+  font-weight: 700;
+}
+
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  font-size: var(--fs-base);
+}
+
+.contact-form input:focus,
+.contact-form select:focus,
+.contact-form textarea:focus {
+  border-color: var(--color-bronze);
+}
+
+.contact-form__row--checkbox label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-weight: 500;
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+}
+
+.contact-form__note {
+  font-size: var(--fs-sm);
+  color: #b3372c;
+}
+
+/* Formspree接続に伴う入力チェック表示・送信結果表示
+   （既存の .required / .contact-form__note と同じ配色トークンを再利用し、
+   新しい色は追加しない） */
+.contact-form__error {
+  display: block;
+  min-height: 1em;
+  font-size: var(--fs-xs);
+  color: #b3372c;
+  margin-top: var(--space-1);
+}
+
+.contact-form__note--success {
+  color: var(--color-bronze);
+}
+
+.contact-form__note--error {
+  color: #b3372c;
+}
+
+/* --- 最終CTA（お問い合わせの直後、ページ最後の導線） ---
+   黒背景＋落ち着いたゴールド＋白文字で、静かで高級感のある締めくくり。
+   押し売り感を避けるため、装飾や派手な効果は使わない。 */
+.final-cta {
+  background: var(--color-black);
+}
+
+.final-cta__inner {
+  max-width: 640px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.final-cta__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: var(--fs-2xl);
+  color: var(--color-white);
+  letter-spacing: 0.02em;
+  line-height: 1.5;
+  margin-bottom: var(--space-6);
+}
+
+.final-cta__desc {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+  line-height: 1.9;
+  margin-bottom: var(--space-7);
+}
