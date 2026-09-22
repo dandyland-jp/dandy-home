@@ -830,21 +830,25 @@ select {
 }
 
 @media (min-width: 1200px) {
+  /* 2026-09-22：完成基準画像に合わせて再調整。左側はより深い黒を
+     広く保ち、中央〜右側にかけて自然に床下写真が現れるようにしつつ、
+     右端まで完全な透明（写真そのまま）にはせず、常にうっすらと
+     暗さを残すことで全体の締まった高級感のあるトーンを保つ。
+     写真ファイル自体・背景の表示位置は変更しない（overlayの
+     グラデーションのみを調整） */
   .hero__overlay {
-    /* 左0〜35%＝ほぼ黒、35〜55%＝黒から写真への移行、55%以降＝床下写真が
-       しっかり見える、という比率を保ちつつ、途中で急に暗さが変わる
-       「境界線」に見えないよう刻みを増やしてなめらかな一本のカーブにする */
     background: linear-gradient(
       90deg,
-      rgba(4, 4, 5, 1) 0%,
-      rgba(4, 4, 5, 0.99) 22%,
-      rgba(4, 4, 5, 0.94) 32%,
-      rgba(4, 4, 5, 0.8) 40%,
-      rgba(4, 4, 5, 0.6) 46%,
-      rgba(4, 4, 5, 0.38) 52%,
-      rgba(4, 4, 5, 0.2) 58%,
-      rgba(4, 4, 5, 0.08) 64%,
-      rgba(4, 4, 5, 0) 72%
+      rgba(2, 2, 3, 1) 0%,
+      rgba(2, 2, 3, 1) 30%,
+      rgba(2, 2, 3, 0.97) 38%,
+      rgba(2, 2, 3, 0.88) 45%,
+      rgba(2, 2, 3, 0.7) 52%,
+      rgba(2, 2, 3, 0.5) 58%,
+      rgba(2, 2, 3, 0.34) 64%,
+      rgba(2, 2, 3, 0.24) 72%,
+      rgba(2, 2, 3, 0.18) 82%,
+      rgba(2, 2, 3, 0.16) 100%
     );
   }
 }
@@ -916,6 +920,72 @@ select {
   }
 }
 
+/* ------------------------------------------------------------------
+   2026-09-22：完成基準画像（添付・1536×1024）をもとに、PC（1200px
+   以上）のファーストビューを再構築。「近づける」のではなく、画像を
+   目視分析して測った実座標（％はヘッダー直下を基準にした実測値）を
+   そのまま使用する。文章内容・CTAリンク先・ロゴ画像自体・配色・
+   フォントは変更しない。1200px未満（タブレット・スマホ）には
+   一切影響しない。
+   ------------------------------------------------------------------ */
+@media (min-width: 1200px) {
+  /* .hero__inner をヒーロー全体（ヘッダー直下から下部情報バーの手前
+     まで）に重ねる基準ボックスとし、各要素の位置は％でこの基準ボックス
+     に対して指定する。ビューポートの高さ・幅が変わっても、完成基準
+     画像と同じ比率の位置関係を保つため。 */
+  .hero__inner {
+    position: absolute;
+    inset: 0;
+    max-width: none;
+    padding: 0;
+  }
+
+  .hero__eyebrow {
+    position: absolute;
+    left: 4.23%;
+    top: 4.2%;
+    margin: 0;
+  }
+
+  .hero__logo {
+    position: absolute;
+    left: 15.5%;
+    top: 7.6%;
+    margin: 0;
+  }
+
+  .hero__brandtext-kana {
+    position: absolute;
+    left: 18.2%;
+    top: 44.9%;
+  }
+
+  .hero__brandtext-tagline {
+    position: absolute;
+    left: 7.8%;
+    top: 50.1%;
+  }
+
+  .hero__lead {
+    position: absolute;
+    left: 9.3%;
+    top: 58.8%;
+    /* 2行の折り返し（<br>による改行）が完成基準画像どおり2行のまま
+       表示されるよう、text-align:centerで使う箱の幅は折り返しが
+       発生しない十分な幅を確保する（行間・文字内容は変更しない） */
+    width: 31.3%;
+    min-width: 500px;
+    text-align: center;
+    margin-bottom: 0;
+  }
+
+  .hero__cta {
+    position: absolute;
+    left: 4.2%;
+    top: 72.5%;
+  }
+}
+
 .hero__eyebrow {
   font-family: var(--font-base);
   font-size: var(--fs-sm);
@@ -963,7 +1033,6 @@ select {
 @media (min-width: 1200px) {
   .hero__logo {
     height: 230px;
-    margin-bottom: -10px;
   }
 }
 
@@ -1171,6 +1240,138 @@ select {
 @media (prefers-reduced-motion: reduce) {
   .hero__scroll span {
     animation: none;
+  }
+}
+
+/* --- Hero下部・情報バー ---
+   2026-09-22 完成基準画像に合わせて追加。PC（1200px以上）のみ表示し、
+   タブレット・スマホでは非表示（既存レイアウトに一切影響しない）。 */
+.hero-infobar {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .hero {
+    /* スクロール矢印が新しい下部情報バーと重ならないよう、情報バーの
+       高さ分だけ上に逃がす（矢印自体の見た目・サイズは変更しない） */
+    padding-bottom: 0;
+  }
+
+  .hero__scroll {
+    bottom: calc(var(--hero-infobar-height, 116px) + var(--space-5));
+  }
+
+  .hero-infobar {
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 2;
+    --hero-infobar-height: 116px;
+    min-height: var(--hero-infobar-height);
+    background: linear-gradient(
+      180deg,
+      rgba(3, 3, 4, 0) 0%,
+      rgba(3, 3, 4, 0.6) 40%,
+      rgba(3, 3, 4, 0.92) 100%
+    );
+    border-top: 1px solid rgba(245, 243, 238, 0.1);
+  }
+
+  .hero-infobar__inner {
+    position: relative;
+    height: 100%;
+    min-height: var(--hero-infobar-height);
+    display: flex;
+    align-items: center;
+    padding-inline: clamp(1.5rem, 4.2vw, 4.25rem);
+  }
+
+  .hero-infobar__list {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .hero-infobar__item {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    padding-right: clamp(1.5rem, 2.8vw, 2.75rem);
+    margin-right: clamp(1.5rem, 2.8vw, 2.75rem);
+    border-right: 1px solid rgba(245, 243, 238, 0.16);
+  }
+
+  .hero-infobar__item:last-child {
+    border-right: none;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .hero-infobar__icon {
+    display: inline-flex;
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    color: var(--color-bronze-light);
+  }
+
+  .hero-infobar__icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-infobar__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .hero-infobar__title {
+    font-family: var(--font-serif);
+    font-size: 0.98rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--text-on-dark);
+    white-space: nowrap;
+  }
+
+  .hero-infobar__desc {
+    font-family: var(--font-base);
+    font-size: 0.76rem;
+    color: rgba(245, 243, 238, 0.62);
+    white-space: nowrap;
+  }
+
+  .hero-infobar__corner {
+    position: absolute;
+    right: clamp(1.5rem, 4.2vw, 4.25rem);
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0;
+    margin: 0;
+    opacity: 0.16;
+    pointer-events: none;
+  }
+
+  .hero-infobar__corner-num {
+    font-family: var(--font-serif);
+    font-size: 2.75rem;
+    line-height: 1;
+    color: var(--text-on-dark);
+  }
+
+  .hero-infobar__corner-label {
+    font-family: var(--font-base);
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    color: var(--text-on-dark);
   }
 }
 
