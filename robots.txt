@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.dandy-home.jp/sitemap.xml
+Sitemap: https://dandyland.co.jp/sitemap.xml

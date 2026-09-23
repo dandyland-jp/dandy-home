@@ -731,6 +731,11 @@ select {
    スマホ390pxの両方でクライアント確認済みの完成版として固定されました。
    明示的な変更指示がない限り、他セクション編集時にもここを変更しないこと。 */
 .hero {
+  /* ファーストビュー専用の、完成イメージから実測したシャンパン〜アンティーク
+     ゴールドの中間色。サイト共通のブロンズトークンとは分けて定義し、
+     他セクションには影響させない。.hero__inner と .hero__side-copy の
+     両方（.heroの子要素）から参照できるよう .hero 自体に定義する。 */
+  --hero-gold: #c3a05a;
   position: relative;
   min-height: calc(100svh - var(--header-height));
   display: flex;
@@ -889,10 +894,6 @@ select {
 }
 
 .hero__inner {
-  /* ファーストビュー専用の、完成イメージから実測したシャンパン〜アンティーク
-     ゴールドの中間色。サイト共通のブロンズトークンとは分けて定義し、
-     他セクションには影響させない */
-  --hero-gold: #c3a05a;
   position: relative;
   z-index: 1;
   padding-block: clamp(2rem, 3vw + 0.75rem, 2.75rem);
@@ -904,85 +905,106 @@ select {
   margin-inline: 0 auto;
 }
 
+/* ------------------------------------------------------------------
+   2026-09-23：添付の完成基準画像（1536×1024）を実測してPC版
+   ファーストビューを再構築。個別要素ごとのabsolute配置（left/top%）は
+   やめ、.hero__inner を1つの基準ボックス（同じ左端・同じ幅）とし、
+   その中でロゴ〜CTAまでを通常のフローで積む。テキスト系の要素
+   （PCブランドブロック／ダンディホーム／家の命を守る。／メインコピー）は
+   すべて .hero__inner と同じ幅を共有する block 要素にして
+   align-items:center / text-align:center で中央揃えにすることで、
+   要素ごとに中心がズレる問題を構造的に解消する。CTAボタン行のみ
+   display:flex のブロックとして中央揃えの対象から外れ、基準ボックスの
+   左端に自然に揃う（完成基準画像でCTAだけ左寄せになっているのと一致）。
+   文章内容・CTAリンク先・ロゴ画像自体・配色・フォントは変更しない。
+   1200px未満（タブレット・スマホ）には一切影響しない。
+   ------------------------------------------------------------------ */
 @media (min-width: 1200px) {
-  /* 完成イメージのように、上下中央寄せではなく上寄りに構え、CTAの下に
-     余白をたっぷり残すことで高級感を出す。完成イメージを実測すると、
-     ブランドブロックの開始位置はヒーロー高さの約1割程度とかなり上側で、
-     以前の値（4.5〜5.5rem）は下げすぎだったため縮小した */
   .hero {
+    /* 完成基準画像を実測すると、ブランドブロックの上端はHero高さの
+       約8%の位置で、下（CTA〜情報バー手前）には余白がたっぷり残る
+       「上寄り」配置。中央寄せではなく、上端をpadding-topで固定する */
     align-items: flex-start;
   }
 
   .hero__inner {
     max-width: min(45%, 620px);
-    padding-top: clamp(2.25rem, 3vw + 0.75rem, 3rem);
+    /* 完成基準画像を実測すると、ブランドブロックの中心は画面幅の
+       約24%の位置にある。.hero__inner 自体の左端を調整し、
+       中央揃えにした子要素の中心をその位置に近づける */
+    padding-left: 6.375rem;
+    /* 2026-09-23 追記（最終微調整）：完成基準画像と比較してブロック全体が
+       わずかに上寄りだったため、グループ全体をまとめて少し下へ */
+    padding-top: clamp(4.25rem, 3vw + 2.75rem, 5.5rem);
     padding-bottom: 0;
+  }
+
+  /* 添付の完成基準画像には地域表記（神奈川県・東京都｜床下・基礎の
+     専門店）が無いため、PC版Heroのみ非表示にする。ヘッダーや他セクション
+     の同文言には影響しない */
+  .hero__eyebrow {
+    display: none;
   }
 }
 
-/* ------------------------------------------------------------------
-   2026-09-22：完成基準画像（添付・1536×1024）をもとに、PC（1200px
-   以上）のファーストビューを再構築。「近づける」のではなく、画像を
-   目視分析して測った実座標（％はヘッダー直下を基準にした実測値）を
-   そのまま使用する。文章内容・CTAリンク先・ロゴ画像自体・配色・
-   フォントは変更しない。1200px未満（タブレット・スマホ）には
-   一切影響しない。
-   ------------------------------------------------------------------ */
+/* 注意：.hero__logo / .hero__brandtext / .hero__lead / .hero__cta への
+   PC版オーバーライドは、それぞれの基本ルール（無条件のセレクタ）より
+   後の cascade で確実に効くよう、各基本ルールの直後（このファイルの
+   後半）にまとめて記述している。ここではなくそちらを参照。 */
+
+/* PCブランドブロック（盾アイコン＋「DANDY HOME」文字）
+   完成基準画像は盾アイコンに対して「DANDY HOME」の文字が、既存ロゴ
+   画像内の比率よりもかなり大きく見えるため、既存<img class="hero__logo">
+   （スマホ表示に使用・変更禁止）とは別に、盾アイコンのみを表示する要素と
+   実テキストの組み合わせで再現する。スマホ・タブレットでは非表示。 */
+.hero__pc-brand {
+  display: none;
+}
+
 @media (min-width: 1200px) {
-  /* .hero__inner をヒーロー全体（ヘッダー直下から下部情報バーの手前
-     まで）に重ねる基準ボックスとし、各要素の位置は％でこの基準ボックス
-     に対して指定する。ビューポートの高さ・幅が変わっても、完成基準
-     画像と同じ比率の位置関係を保つため。 */
-  .hero__inner {
-    position: absolute;
-    inset: 0;
-    max-width: none;
-    padding: 0;
+  .hero__pc-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* 2026-09-23 追記（縦方向の余白調整）：DANDY HOME→ダンディホームの
+       間隔を完成基準画像の余裕あるリズムに近づけるため 14px→22px に微調整 */
+    margin-bottom: 22px;
   }
 
-  .hero__eyebrow {
-    position: absolute;
-    left: 4.23%;
-    top: 4.2%;
-    margin: 0;
+  /* header__icon と同じ手法：ロゴ画像ファイルそのものは加工せず、
+     background-size で画像全体を拡大表示したうえで、盾アイコン部分
+     （画像ファイル内の上側・横中央）だけが見えるようbackground-position
+     と要素サイズで切り出す。
+     2026-09-23 追記（最終微調整）：完成基準画像と比較してまだ少し
+     大きかったため、前回サイズ（189×227）からさらに縦横比を保ったまま
+     約92%に縮小（background-size/positionも同じ比率で再計算。
+     画像ファイル自体は無加工） */
+  .hero__pc-brand-icon {
+    display: block;
+    width: 174px;
+    height: 209px;
+    background-repeat: no-repeat;
+    background-size: 306px 275px;
+    background-position: -62px -10px;
   }
 
-  .hero__logo {
-    position: absolute;
-    left: 15.5%;
-    top: 7.6%;
-    margin: 0;
-  }
-
-  .hero__brandtext-kana {
-    position: absolute;
-    left: 18.2%;
-    top: 44.9%;
-  }
-
-  .hero__brandtext-tagline {
-    position: absolute;
-    left: 7.8%;
-    top: 50.1%;
-  }
-
-  .hero__lead {
-    position: absolute;
-    left: 9.3%;
-    top: 58.8%;
-    /* 2行の折り返し（<br>による改行）が完成基準画像どおり2行のまま
-       表示されるよう、text-align:centerで使う箱の幅は折り返しが
-       発生しない十分な幅を確保する（行間・文字内容は変更しない） */
-    width: 31.3%;
-    min-width: 500px;
-    text-align: center;
-    margin-bottom: 0;
-  }
-
-  .hero__cta {
-    position: absolute;
-    left: 4.2%;
-    top: 72.5%;
+  /* 2026-09-23 追記（最終微調整）：完成基準画像の「DANDY HOME」は
+     高コントラスト（太い部分と細い部分の差がはっきりした）クラシックな
+     欧文セリフ体で、サイト共通の和文明朝体（--font-serif／Shippori
+     Mincho）とは字形が異なるため一致しなかった。プロジェクト内に
+     完成基準画像作成時のフォント指定が残っていないか確認したが
+     見つからなかったため、添付画像の字形に最も近いセリフ体として
+     Playfair Display（Google Fonts、新規追加・既存フォントの用途は
+     変更なし）を採用する。 */
+  .hero__pc-brand-word {
+    margin-top: 14px;
+    font-family: "Bodoni Moda", var(--font-serif), serif;
+    font-size: 3.15rem;
+    font-weight: 900;
+    line-height: 1;
+    letter-spacing: 0.02em;
+    color: var(--hero-gold);
+    white-space: nowrap;
   }
 }
 
@@ -1059,8 +1081,11 @@ select {
    （スマホは対象外） */
 @media (min-width: 1200px) {
   .hero__brandtext {
-    gap: 5px;
-    margin-bottom: 2.25rem;
+    /* 2026-09-23 追記（縦方向の余白調整）：ダンディホーム→家の命を守る。の
+       間隔を 22px→30px、家の命を守る。→メインコピーの間隔を
+       2.75rem→3.25rem に微調整（完成基準画像の余裕あるリズムに近づける） */
+    gap: 30px;
+    margin-bottom: 3.25rem;
   }
 }
 
@@ -1134,7 +1159,10 @@ select {
 @media (min-width: 1200px) {
   .hero__lead {
     /* 静かで高級感のある見え方にするため行間はやや広め、
-       CTAとの間隔も少し広げる */
+       CTAとの間隔も少し広げる。
+       2026-09-23 追記（最終微調整）：完成基準画像と比較して少し大きく
+       見えたため、文字サイズをわずかに縮小（大幅変更はしない） */
+    font-size: clamp(1.4rem, 1rem + 1.5vw, 1.95rem);
     line-height: 1.45;
     margin-bottom: 2.25rem;
   }
@@ -1192,6 +1220,85 @@ select {
   border-color: var(--hero-gold);
   color: var(--hero-gold);
   background: transparent;
+}
+
+/* ここから、.hero__logo / .hero__brandtext / .hero__lead / .hero__cta の
+   基本ルールより後ろに置くPC版（1200px以上）オーバーライド。
+   cascadeの後勝ちを確実にするため、この位置にまとめている
+   （実装場所が異なるだけで、内容は完成基準画像の実測に基づく）。 */
+@media (min-width: 1200px) {
+  /* スマホ版で使っている「盾＋DANDY HOMEが一体になった画像」は
+     そのまま残すが、PC版ではロゴ画像ファイルを加工・再生成せずに
+     盾アイコン部分だけをheaderと同じ背景クロップ手法で取り出した
+     .hero__pc-brand-icon に差し替える（画像は非表示にするだけで
+     DOM・alt文言は残す） */
+  .hero__logo {
+    display: none;
+  }
+
+  /* ダンディホーム／家の命を守る。／メインコピーを.hero__innerと
+     同じ幅のブロックにし、中央揃えにすることで中心軸をそろえる */
+  .hero__brandtext,
+  .hero__lead {
+    width: 100%;
+    text-align: center;
+  }
+
+  .hero__brandtext {
+    align-items: center;
+  }
+
+  .hero__cta {
+    /* display:flexのブロックはtext-align/align-itemsの中央揃えの
+       対象にならないため、基準ボックスの左端に自然に揃う。
+       完成基準画像の実測ではCTAの左端はブランドブロックの中心より
+       かなり左寄りのため、負のマージンで戻す */
+    margin-left: -2.25rem;
+  }
+}
+
+/* Hero右側のサブコピー（見えない部分こそ、本物の仕事を。／
+   PROTECT YOUR HOME.）。完成基準画像のみに存在するPC専用の要素で、
+   タブレット・スマホでは非表示。既存の文章・他要素には影響しない。 */
+.hero__side-copy {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .hero__side-copy {
+    display: block;
+    position: absolute;
+    z-index: 1;
+    right: 5%;
+    top: 38%;
+    text-align: right;
+  }
+
+  .hero__side-copy-text {
+    font-family: var(--font-serif);
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.9;
+    letter-spacing: 0.08em;
+    color: var(--text-on-dark);
+  }
+
+  .hero__side-copy-line {
+    display: block;
+    width: 34px;
+    height: 1px;
+    margin: 14px 0 14px auto;
+    background: var(--hero-gold);
+  }
+
+  .hero__side-copy-sub {
+    font-family: var(--font-base);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.6;
+    letter-spacing: 0.12em;
+    color: rgba(245, 243, 238, 0.55);
+  }
 }
 
 .hero__scroll {
@@ -2305,6 +2412,12 @@ select {
 
 .case-preview__more {
   text-align: center;
+  /* 2026-09-23 追記：施工事例一覧ページが未実装のため、遷移先の無い
+     「施工事例をもっと見る」リンクを一時的に非表示にする。
+     HTML自体は削除せず残してあるため、一覧ページ実装時にこの
+     display:none を外すだけで再利用できる。CASE 01〜03の写真・
+     文章・レイアウト・余白・見出し・デザインには一切影響しない。 */
+  display: none;
 }
 
 .case-preview__more-link {
@@ -3059,4 +3172,107 @@ select {
   color: var(--text-on-dark-muted);
   line-height: 1.9;
   margin-bottom: var(--space-7);
+}
+
+/* ====================================================================
+   【新規追加 / 2026-09-23】プライバシーポリシーページ専用スタイル
+   このファイルの他のセクション（Hero・ヘッダー・施工事例・会社情報・
+   お問い合わせフォーム等）のルールには一切変更を加えていない。
+   .legal-page* は本ページ専用の新規クラスで、既存クラスとの重複なし。
+   ==================================================================== */
+
+/* ページ冒頭の見出しブロック（黒背景＋ゴールド、既存の世界観に合わせる） */
+.legal-page-header {
+  background: var(--color-black);
+  padding-block: var(--space-8) var(--space-6);
+}
+
+.legal-page-header__title {
+  margin-bottom: var(--space-5);
+}
+
+.legal-page-header__back {
+  display: inline-block;
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+  border-bottom: 1px solid rgba(245, 243, 238, 0.3);
+  padding-bottom: 2px;
+  transition: color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.legal-page-header__back:hover {
+  color: var(--color-bronze-light);
+  border-color: var(--color-bronze-light);
+}
+
+/* 本文：読みやすさを最優先し、白背景に十分な行間・余白を確保 */
+.legal-page {
+  background: var(--color-bg);
+}
+
+.legal-page__container {
+  max-width: 760px;
+}
+
+.legal-page__intro {
+  font-size: var(--fs-md);
+  line-height: 1.9;
+  color: var(--text-on-light);
+  margin-bottom: var(--space-8);
+}
+
+.legal-page__article {
+  padding-block: var(--space-6);
+  border-top: 1px solid var(--color-border);
+}
+
+.legal-page__article:last-of-type {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.legal-page__heading {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  color: var(--text-on-light);
+  letter-spacing: 0.02em;
+  margin-bottom: var(--space-4);
+}
+
+.legal-page__article p {
+  font-size: var(--fs-base);
+  line-height: 1.9;
+  color: var(--text-on-light-muted);
+}
+
+.legal-page__article p + p {
+  margin-top: var(--space-4);
+}
+
+.legal-page__list {
+  margin-top: var(--space-3);
+  padding-left: 1.4em;
+  list-style: disc;
+}
+
+.legal-page__list li {
+  font-size: var(--fs-base);
+  line-height: 1.9;
+  color: var(--text-on-light-muted);
+}
+
+.legal-page__list li + li {
+  margin-top: var(--space-2);
+}
+
+.legal-page__list--plain {
+  padding-left: 0;
+  list-style: none;
+}
+
+.legal-page__enacted {
+  margin-top: var(--space-6);
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  text-align: right;
 }
