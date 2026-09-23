@@ -2630,6 +2630,12 @@ select {
   .case-reform-item {
     flex-direction: row-reverse;
   }
+
+  /* 2件目（屋外排水管）は写真を左側に戻し、交互配置を続ける。
+     既存の :nth-child(2n) の反転より優先させるため親クラスを付けている。 */
+  .case-reform__list .case-reform-item--photo-left {
+    flex-direction: row;
+  }
 }
 
 /* --- スマホ幅のCTAボタンはみ出し対策（2026-09-24 追加） ---
