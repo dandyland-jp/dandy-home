@@ -2515,6 +2515,154 @@ select {
   }
 }
 
+/* --- 住宅リフォーム施工事例（施工事例セクション内のサブカテゴリー） ---
+   2026-09-23 追加 / 2026-09-24 再調整。基礎・床下のCASE 01〜03の後に置く控えめな補足ブロック。
+   既存の施工事例（.case-preview-*）の写真枠・ラベル・タイポグラフィを再利用し、
+   ここでは区切り・小見出し・「完成写真を主役にした」写真構成のみを定義する。
+   新しい色・装飾は追加せず、既存のトークンのみを使用する。 */
+.case-reform {
+  border-top: 1px solid var(--color-border);
+  padding-top: var(--space-8);
+  margin-bottom: var(--space-7);
+}
+
+.case-reform__header {
+  margin-bottom: var(--space-6);
+}
+
+/* 小見出しはセクションの eyebrow と同じ文字組み（ゴールド・小さめ・字間広め）にし、
+   既存の施工事例から自然につながる「サブカテゴリー」として見せる。 */
+.case-reform__heading {
+  font-family: var(--font-base);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-2);
+}
+
+.case-reform__lead {
+  max-width: 640px;
+  font-size: var(--fs-sm);
+  color: var(--text-on-light-muted);
+  line-height: 1.85;
+}
+
+.case-reform__list {
+  margin-bottom: 0;
+}
+
+/* 写真構成：完成（浴室内部）を大きなメイン写真にし、
+   施工前 → 施工中 → 完成 の3枚は小さな補足写真として添える。
+   スマホ：メイン写真（全幅）→ 補足3枚を横並び。
+   640px以上：左に補足3枚を縦に、右にメイン写真。 */
+.case-reform-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.case-reform-gallery__main {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-reform-gallery__main-photo {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+  box-shadow: 0 16px 36px rgba(20, 18, 14, 0.08);
+  margin-bottom: var(--space-3);
+}
+
+.case-reform-gallery__main-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-reform-gallery__steps {
+  display: flex;
+  gap: var(--space-3);
+}
+
+@media (min-width: 640px) {
+  .case-reform-gallery {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 3.4fr);
+    gap: var(--space-4);
+  }
+
+  .case-reform-gallery__steps {
+    grid-column: 1;
+    grid-row: 1;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .case-reform-gallery__main {
+    grid-column: 2;
+    grid-row: 1;
+  }
+
+  /* 左の補足写真3枚の高さに合わせてメイン写真を伸ばす（比率差はわずかなため
+     トリミングは最小限）。 */
+  .case-reform-gallery__main-photo {
+    flex: 1;
+    aspect-ratio: auto;
+    min-height: 0;
+  }
+
+  .case-reform-gallery__steps .case-preview-step {
+    flex: 0 0 auto;
+  }
+}
+
+/* 長めの工事名が「…工／事」のように1文字だけ折り返さないよう、語句単位で改行する。 */
+.case-reform__phrase {
+  display: inline-block;
+}
+
+/* PC版：既存CASEの交互配置（写真左→右→左）に続けて、写真を右側に置く。 */
+@media (min-width: 1024px) {
+  .case-reform-item {
+    flex-direction: row-reverse;
+  }
+}
+
+/* --- スマホ幅のCTAボタンはみ出し対策（2026-09-24 追加） ---
+   黒いカード（症状メッセージ／サービスCTA）の内側幅がボタン幅より狭くなり、
+   ゴールドのCTAが右にはみ出していたため、スマホ幅のみ調整する。
+   ボタンの色・高さ・角丸・文字サイズは変更しない。 */
+@media (max-width: 480px) {
+  .symptom-detail__message,
+  .capabilities__cta {
+    padding-left: var(--space-5);
+    padding-right: var(--space-5);
+  }
+
+  /* カード内のCTAはカード幅いっぱいにし、左右の余白を均等にする。 */
+  .symptom-detail__cta .btn,
+  .capabilities__cta .btn {
+    width: 100%;
+  }
+
+  .btn--large {
+    max-width: 100%;
+  }
+}
+
+/* 360px前後以下の狭い端末のみ、ボタン左右の内側余白を少し詰めて
+   文字が折り返さず1行に収まるようにする。 */
+@media (max-width: 374px) {
+  .btn--large {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
 /* --- 無料床下点検の流れ（施工事例の直後） ---
    【FIXED / 確定済み】ユーザー確認済み・変更禁止。
    アイコン付きカードを並べる代わりに、STEP番号・細いゴールドのライン・
