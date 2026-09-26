@@ -1164,6 +1164,15 @@ select {
   word-break: keep-all;
 }
 
+/* 2026-09-26 追加：375px前後で2行目末尾の「。」だけが3行目に落ちていたため、
+   390px未満のみ字間をわずかに詰めて2行に収める（文字サイズは変更しない）。
+   さらに狭い画面では HTML 側の <wbr>（「住まいの」の後）で自然に改行する。 */
+@media (max-width: 389px) {
+  .hero__lead {
+    letter-spacing: 0.02em;
+  }
+}
+
 /* 完成イメージ実測：メインコピー〜CTAの間隔が現在より詰まっているため
    PCのみ圧縮する（スマホは対象外） */
 @media (min-width: 1200px) {
@@ -2177,6 +2186,21 @@ select {
   font-size: var(--fs-sm);
   color: var(--text-on-light-muted);
   line-height: 1.85;
+}
+
+/* 2026-09-26 SEO調整：サービス名を <p> から <h3> に、セクション見出しを
+   eyebrow 側の <h2> に変更した。見出しタグ共通の折り返し指定（keep-all /
+   balance）で見た目が変わらないよう、変更前と同じ折り返し方に固定する。 */
+.capability-item__title {
+  word-break: normal;
+  overflow-wrap: normal;
+  text-wrap: wrap;
+}
+
+.capabilities .section-title {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .capabilities__cta {
