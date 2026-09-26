@@ -3810,7 +3810,9 @@ select {
    どの画面幅でも図全体を枠いっぱいに縮小表示する（トリミング・横スクロールなし）。
    スマホでは細かい文字が小さくなるため、キャプションに「拡大して見る」リンクを出す。 */
 .sp-diagram {
-  margin: var(--space-7) 0 0;
+  margin: var(--space-7) auto 0;
+  /* 縦長に近い図のため、PCでは1画面に収まる幅に抑えて中央に置く */
+  max-width: 640px;
 }
 
 .sp-diagram__frame {
@@ -4058,16 +4060,9 @@ select {
 }
 
 /* --- /termite/ 用の追加指定（2026-09-26 追加・既存ルールは変更しない） --- */
-/* Hero の画像にキャプション（施工イメージ表記）を付けるための枠 */
+/* Hero の画像を figure で囲むための枠 */
 .sp-hero__figure {
   margin: 0;
-}
-
-.sp-hero__caption {
-  margin-top: var(--space-2);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.04em;
-  color: var(--text-on-dark-muted);
 }
 
 /* 本文中の補足文・余白調整 */
