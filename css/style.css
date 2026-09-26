@@ -4056,3 +4056,108 @@ select {
   color: var(--text-on-light-muted);
   line-height: 1.9;
 }
+
+/* --- /termite/ 用の追加指定（2026-09-26 追加・既存ルールは変更しない） --- */
+/* Hero の画像にキャプション（施工イメージ表記）を付けるための枠 */
+.sp-hero__figure {
+  margin: 0;
+}
+
+.sp-hero__caption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+}
+
+/* 本文中の補足文・余白調整 */
+.sp-lead--note {
+  margin-top: calc(-1 * var(--space-5));
+  font-size: var(--fs-sm);
+}
+
+.sp-lead--flush {
+  margin-bottom: 0;
+}
+
+.sp-text-link {
+  color: var(--color-bronze);
+  border-bottom: 1px solid rgba(169, 129, 47, 0.4);
+  transition: color var(--transition-fast);
+}
+
+.sp-text-link:hover {
+  color: var(--color-bronze-dark);
+}
+
+/* 横長の施工イメージ画像（4:3） */
+.sp-figure--landscape {
+  max-width: 560px;
+}
+
+.sp-figure--landscape .sp-figure__photo {
+  aspect-ratio: 4 / 3;
+}
+
+/* 施工時間・保証・再施工・使用薬剤の情報欄（細い線で区切る） */
+.sp-info {
+  margin: var(--space-8) 0 0;
+  max-width: 820px;
+  border-top: 1px solid var(--color-border);
+}
+
+.sp-info__row {
+  display: grid;
+  gap: var(--space-1);
+  padding-block: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.sp-info dt {
+  font-family: var(--font-base);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--color-bronze);
+}
+
+.sp-info dd {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  line-height: 1.7;
+  color: var(--text-on-light);
+}
+
+.sp-info__note {
+  display: block;
+  margin-top: var(--space-1);
+  font-family: var(--font-base);
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+@media (min-width: 768px) {
+  .sp-info__row {
+    grid-template-columns: 9rem minmax(0, 1fr);
+    gap: var(--space-5);
+    align-items: baseline;
+  }
+}
+
+.sp-cta-row {
+  margin-top: var(--space-7);
+  text-align: center;
+}
+
+/* サービス詳細ページの本文：最終行が「す。」のように1〜2文字だけになる折り返しを
+   ブラウザ側で避ける（text-wrap: pretty。未対応ブラウザでは従来どおり表示）。 */
+.service-page p,
+.service-page li,
+.service-page dd,
+.service-page figcaption {
+  text-wrap: pretty;
+}

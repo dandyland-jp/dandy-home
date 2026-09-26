@@ -11,6 +11,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://dandyland.co.jp/termite/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://dandyland.co.jp/privacy-policy/</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
