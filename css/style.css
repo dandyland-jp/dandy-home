@@ -3525,9 +3525,87 @@ select {
    明朝体見出し）のみを使い、既存ルールは変更しない（追加のみ）。
    ========================================================================== */
 
-/* トップページのサービスカード／施工事例から詳細ページへのリンク */
+/* トップページのサービスカード／施工事例から詳細ページへのリンク
+   黒地×ゴールドの横長ボタン。主CTA（ゴールドのグラデーション）より控えめにし、
+   文字は語句単位（.sp-phrase）で改行、矢印は右端の円に固定する。 */
 .service-link {
-  margin-top: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.service-link__btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 440px;
+  min-height: 56px;
+  padding: 0.8rem 0.8rem 0.8rem 1.5rem;
+  border: 1px solid rgba(199, 154, 75, 0.45);
+  border-radius: 999px;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  text-align: left;
+  box-shadow: 0 8px 20px rgba(14, 14, 15, 0.12);
+  transition: background var(--transition-fast), border-color var(--transition-fast),
+    box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.service-link__btn:hover {
+  background: #1d1b18;
+  border-color: var(--color-bronze-light);
+  box-shadow: 0 10px 24px rgba(14, 14, 15, 0.18);
+  transform: translateY(-1px);
+}
+
+.service-link__btn:focus-visible {
+  outline: 2px solid var(--color-bronze-light);
+  outline-offset: 3px;
+}
+
+.service-link__text {
+  min-width: 0;
+  text-wrap: balance;
+}
+
+.service-link__arrow {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+  transition: transform var(--transition-fast);
+}
+
+.service-link__arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.service-link__btn:hover .service-link__arrow {
+  transform: translateX(3px);
+}
+
+@media (max-width: 480px) {
+  .service-link__btn {
+    max-width: none;
+    padding: 0.75rem 0.7rem 0.75rem 1.25rem;
+    font-size: 0.875rem;
+    letter-spacing: 0.03em;
+  }
+
+  .service-link__arrow {
+    width: 32px;
+    height: 32px;
+  }
 }
 
 /* --- Hero（下層ページ用） --- */
