@@ -36,7 +36,7 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;800;900&display=swap"
   >
 
-  <link rel="stylesheet" href="/css/style.css?v=20260927-4">
+  <link rel="stylesheet" href="/css/style.css?v=20260927-5">
 
   <!-- 構造化データ（LocalBusiness）。会社情報確定に応じ src/templates/layout.js の
        buildStructuredData() が自動生成します。 -->
@@ -374,12 +374,12 @@
       </li>
       <li class="capability-item" id="service-underfloor-repair">
         <div class="capability-item__photo">
-          <img src="/images/services/wood-reinforcement.jpg" alt="床下の木部を金物で補強している施工写真" width="1536" height="1024" />
+          <img src="/images/case-studies/underfloor-07-hardware-joint.jpg" alt="床下の木部同士の接合部分に施工した補強金物" width="1600" height="1200" />
         </div>
         <span class="capability-item__rule" aria-hidden="true"></span>
         <p class="capability-item__number">02</p>
-        <h3 class="capability-item__title">床下木部補強</h3>
-        <p class="capability-item__desc">土台・大引き・床組などの状態を確認し、傷みや強度に応じた補修・補強を行います。</p>
+        <h3 class="capability-item__title">床下木部補強・耐震補強</h3>
+        <p class="capability-item__desc">床下の木部や接合部の状態を確認し、アラミド繊維による木部補強や、補強金物による接合部の補強を行います。</p>
         <p class="service-link"><a href="/underfloor-repair/" class="service-link__btn"><span class="service-link__text"><span class="sp-phrase">床下木部補強・</span><span class="sp-phrase">耐震補強について</span><span class="sp-phrase">詳しく見る</span></span><span class="service-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></p>
       </li>
       <li class="capability-item" id="service-termite">
@@ -442,26 +442,37 @@
           <p class="service-link"><a href="/foundation-repair/" class="service-link__btn"><span class="service-link__text"><span class="sp-phrase">基礎補強・</span><span class="sp-phrase">基礎ひび割れ補修について</span><span class="sp-phrase">詳しく見る</span></span><span class="service-link__arrow" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span></a></p>
         </div>
       </li>
-      <li class="case-preview-item">
-        <div class="case-preview-item__photo case-preview-item__photo--pair">
-          <ul class="case-preview-pair">
-        <li class="case-preview-pair-item">
-          <div class="case-preview-pair-item__photo">
-            <img src="/images/case-studies/wood-01-before.jpg" alt="木部補強前の土台の状態" width="1200" height="675" loading="eager" />
+      <!-- CASE 02：3枚は同一住宅の施工前後と確認できないため、
+           「木部補強・耐震補強の施工例」として工程の流れを示す構成にする -->
+      <li class="case-preview-item case-preview-item--uf">
+        <div class="case-preview-item__photo case-preview-item__photo--steps">
+          <ul class="case-preview-steps">
+        <li class="case-preview-step">
+          <div class="case-preview-step__photo case-preview-step__photo--crack">
+            <img src="/images/case-studies/underfloor-01-wood-crack.jpg" alt="床下の木部に見られた割れ" width="1600" height="900" loading="eager" />
           </div>
-          <p class="case-preview-pair-item__label">施工前</p>
+          <p class="case-preview-step__label"><span>1</span><span class="case-step-text"><span class="sp-phrase">施工前｜</span><span class="sp-phrase">木部の割れ</span></span></p>
         </li>
-        <li class="case-preview-pair-item">
-          <div class="case-preview-pair-item__photo">
-            <img src="/images/case-studies/wood-02-after.jpg" alt="木部補強施工後の様子" width="1200" height="675" loading="eager" />
+        <li class="case-preview-step">
+          <div class="case-preview-step__photo">
+            <img src="/images/case-studies/underfloor-02-aramid-after.jpg" alt="床下の木部にアラミド繊維を施工した補強後の様子" width="1600" height="1200" loading="eager" />
           </div>
-          <p class="case-preview-pair-item__label">施工後</p>
-        </li></ul>
+          <p class="case-preview-step__label"><span>2</span><span class="case-step-text"><span class="sp-phrase">木部補強｜</span><span class="sp-phrase">アラミド繊維施工</span></span></p>
+        </li>
+        <li class="case-preview-step">
+          <div class="case-preview-step__photo">
+            <img src="/images/case-studies/underfloor-04-hardware-base.jpg" alt="床下の基礎と土台の接合部分に施工した補強金物" width="1600" height="1200" loading="eager" />
+          </div>
+          <p class="case-preview-step__label"><span>3</span><span class="case-step-text"><span class="sp-phrase">耐震補強｜</span><span class="sp-phrase">補強金物施工</span></span></p>
+        </li>
+          </ul>
+          <p class="case-preview-steps__note">※写真はいずれも木部補強・耐震補強の施工例です（同一住宅の施工前後を示すものではありません）。</p>
         </div>
         <div class="case-preview-item__body">
           <p class="case-preview-item__number">CASE 02</p>
-          <p class="case-preview-item__title">木部補強</p>
-          <p class="case-preview-item__desc">土台・大引きなどの状態を確認し、傷みや強度に合わせて補強します。</p>
+          <p class="case-preview-item__title">木部補強・耐震補強</p>
+          <p class="case-preview-item__desc">床下の木部と接合部の状態を確認し、木部へのアラミド繊維補強と、必要な箇所への補強金物施工を行いました。</p>
+          <p class="case-preview-item__link"><a href="/underfloor-repair/"><span class="sp-phrase">床下木部補強・</span><span class="sp-phrase">耐震補強について</span><span class="sp-phrase">詳しく見る<span class="case-preview-item__link-arrow" aria-hidden="true">→</span></span></a></p>
         </div>
       </li>
       <li class="case-preview-item">

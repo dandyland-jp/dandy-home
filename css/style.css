@@ -4693,3 +4693,110 @@ select {
 .uf-related .service-link {
   margin-top: var(--space-5);
 }
+
+/* --- トップ：CASE 02（木部補強・耐震補強の施工例） --- */
+/* 番号バッジ用の span 指定を文字用 span では打ち消す */
+.case-preview-item--uf .case-preview-step__label {
+  align-items: flex-start;
+}
+
+.case-preview-item--uf .case-preview-step__label .case-step-text,
+.case-preview-item--uf .case-preview-step__label .sp-phrase {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  flex-shrink: 1;
+}
+
+.case-preview-item--uf .case-preview-step__label .case-step-text {
+  display: block;
+  min-width: 0;
+}
+
+.case-preview-item--uf .case-preview-step__label .sp-phrase {
+  display: inline-block;
+}
+
+/* 横長写真の割れ部分（右寄り）が縦長枠に入るよう位置を調整 */
+.case-preview-step__photo--crack img {
+  object-position: 90% center;
+}
+
+.case-preview-steps__note {
+  margin-top: var(--space-3);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--text-on-light-muted);
+}
+
+.case-preview-item__link {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+}
+
+.case-preview-item__link a {
+  color: var(--color-bronze);
+  border-bottom: 1px solid currentColor;
+  transition: color var(--transition-fast);
+}
+
+.case-preview-item__link a:hover {
+  color: var(--color-bronze-dark);
+}
+
+.case-preview-item__link-arrow {
+  margin-left: 0.4em;
+}
+
+/* スマホ：3枚を横並びにすると工程名が細かく折り返すため、
+   「写真＋工程名」の行を縦に3つ並べる（写真は横長のまま見せる） */
+@media (max-width: 639px) {
+  .case-preview-item--uf .case-preview-steps {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .case-preview-item--uf .case-preview-step {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .case-preview-item--uf .case-preview-step__photo {
+    flex: 0 0 46%;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 0;
+  }
+
+  .case-preview-item--uf .case-preview-step__label {
+    flex: 1;
+    align-items: center;
+    font-size: var(--fs-sm);
+  }
+
+  .case-preview-item--uf .case-preview-step__label .sp-phrase {
+    display: block;
+  }
+
+  .case-preview-item--uf .case-preview-step__photo--crack img {
+    object-position: 75% center;
+  }
+}
+
+/* 320px前後：工程名（アラミド繊維施工）が1行に収まるよう写真幅を少し詰める */
+@media (max-width: 359px) {
+  .case-preview-item--uf .case-preview-step__photo {
+    flex-basis: 40%;
+  }
+
+  .case-preview-item--uf .case-preview-step {
+    gap: var(--space-3);
+  }
+}
