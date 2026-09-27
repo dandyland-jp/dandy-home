@@ -4582,3 +4582,114 @@ select {
     gap: var(--space-3);
   }
 }
+
+/* ==========================================================================
+   /underfloor-repair/（床下木部補強・耐震補強）2026-09-27 追加
+   既存の .sp-* コンポーネントを再利用し、足りない見せ方だけを最小限追加する。
+   .sp-gallery / .sp-figure--wide / .sp-steps--4 / .sp-point__tag は
+   他ページでも使える汎用の追加。.uf-* は本ページ専用。
+   ========================================================================== */
+
+/* Hero：H1の下に置くメインコピー（本文より一段強く、H1よりは控えめ） */
+.sp-hero__copy {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--fs-lg);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--color-bronze-light);
+  margin-bottom: var(--space-4);
+}
+
+/* 実施工写真を大きく見せる横長の写真（16:9） */
+.sp-figure--wide {
+  max-width: 880px;
+}
+
+.sp-figure--wide .sp-figure__photo {
+  aspect-ratio: 16 / 9;
+}
+
+/* 実施工写真の並び（スマホ1列／タブレット以上2列／--3はPC3列） */
+.sp-gallery {
+  display: grid;
+  gap: var(--space-6) var(--space-5);
+  margin-top: var(--space-7);
+  padding: 0;
+  list-style: none;
+}
+
+.sp-gallery .sp-figure {
+  max-width: none;
+}
+
+@media (min-width: 640px) {
+  .sp-gallery {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .sp-gallery--3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* 4工程のSTEPはPCで横4列に並べる */
+@media (min-width: 1024px) {
+  .sp-steps--4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    column-gap: var(--space-6);
+  }
+}
+
+/* カード内の小さな補足ラベル（例：用途：仕口緊結） */
+.sp-point__tag {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-bronze);
+  margin-bottom: var(--space-2);
+}
+
+/* 施工例の番号（キャプションの頭に小さく） */
+.uf-example-no {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--color-bronze);
+  margin-bottom: 2px;
+}
+
+/* 確認対象（基礎・土台・柱…）は名称のみの短い項目なので間隔を詰める */
+.uf-targets {
+  gap: var(--space-5) var(--space-6);
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .uf-targets {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+/* まとめの一文 */
+.uf-summary-note {
+  margin-top: var(--space-7);
+  text-align: center;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: var(--fs-md);
+  letter-spacing: 0.04em;
+  color: var(--text-on-light);
+}
+
+/* 関連サービス：見出しはカード内のH2（見た目はカード見出しと同じ） */
+.uf-related__title {
+  margin-bottom: var(--space-3);
+}
+
+.uf-related .service-link {
+  margin-top: var(--space-5);
+}
