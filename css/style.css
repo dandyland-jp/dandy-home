@@ -4733,28 +4733,6 @@ select {
   color: var(--text-on-light-muted);
 }
 
-.case-preview-item__link {
-  margin-top: var(--space-4);
-  font-size: var(--fs-sm);
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  line-height: 1.7;
-}
-
-.case-preview-item__link a {
-  color: var(--color-bronze);
-  border-bottom: 1px solid currentColor;
-  transition: color var(--transition-fast);
-}
-
-.case-preview-item__link a:hover {
-  color: var(--color-bronze-dark);
-}
-
-.case-preview-item__link-arrow {
-  margin-left: 0.4em;
-}
-
 /* スマホ：3枚を横並びにすると工程名が細かく折り返すため、
    「写真＋工程名」の行を縦に3つ並べる（写真は横長のまま見せる） */
 @media (max-width: 639px) {
