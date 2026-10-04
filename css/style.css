@@ -4778,3 +4778,236 @@ select {
     gap: var(--space-3);
   }
 }
+
+/* ==========================================================================
+   トップ：OUR BELIEF（訪問営業を続ける理由）2026-10-04
+   ・黒地に本文はやや抑えた明るさ、キーメッセージだけ明朝で一段明るく。
+   ・後半ほどキーメッセージを少しずつ大きくし、最後に中央のクライマックスへ。
+   ・アニメーション・グラデーションは使わず、細いゴールドラインのみで構成。
+   ========================================================================== */
+.belief {
+  background: var(--color-black);
+  color: var(--text-on-dark-muted);
+}
+
+.belief__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+}
+
+.belief__title {
+  margin-bottom: var(--space-5);
+}
+
+.belief__head-rule {
+  display: block;
+  width: 48px;
+  height: 1px;
+  background: var(--color-bronze);
+}
+
+.belief__body {
+  max-width: 640px;
+  word-break: auto-phrase;
+}
+
+.belief__chapter > * + * {
+  margin-top: var(--space-5);
+}
+
+.belief__chapter + .belief__chapter {
+  margin-top: var(--space-7);
+}
+
+.belief__text {
+  font-size: 0.9375rem;
+  line-height: 2.05;
+  letter-spacing: 0.03em;
+  color: var(--text-on-dark-muted);
+}
+
+/* 「自分の家は大丈夫」：お客様の心の声として、明朝・控えめな明るさで */
+.belief__voice {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--text-on-dark);
+}
+
+.belief__wishes {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.belief__wishes li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.9375rem;
+  line-height: 2.05;
+  letter-spacing: 0.03em;
+  color: var(--text-on-dark);
+}
+
+.belief__wishes li + li {
+  margin-top: var(--space-3);
+}
+
+.belief__wishes li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 1.05em;
+  width: 0.75rem;
+  height: 1px;
+  background: var(--color-bronze);
+}
+
+/* キーメッセージ：明朝＋左の細いゴールドライン */
+.belief__key {
+  margin-block: var(--space-7);
+  padding-left: var(--space-4);
+  border-left: 1px solid var(--color-bronze);
+  font-family: var(--font-serif);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.8;
+  letter-spacing: 0.06em;
+  color: var(--text-on-dark);
+}
+
+/* 段落の流れの中に置くキーメッセージは上下の間隔を本文並みに */
+.belief__chapter .belief__key--inline {
+  margin-block: var(--space-5);
+}
+
+/* 「それでもいい。」：ラインを外し、余白で間を取る短い一言 */
+.belief__key--short {
+  margin-block: var(--space-8);
+  padding-left: 0;
+  border-left: 0;
+  font-size: var(--fs-xl);
+  letter-spacing: 0.12em;
+}
+
+/* 後半のキーメッセージは一段大きく */
+.belief__key--strong {
+  font-size: 1.25rem;
+}
+
+/* クライマックス */
+.belief__climax {
+  margin-top: var(--space-8);
+  padding-top: var(--space-8);
+  border-top: 1px solid rgba(169, 129, 47, 0.35);
+  text-align: center;
+  word-break: auto-phrase;
+}
+
+.belief__climax-lead {
+  font-family: var(--font-serif);
+  font-size: var(--fs-xl);
+  font-weight: 600;
+  line-height: 1.9;
+  letter-spacing: 0.06em;
+  color: var(--text-on-dark);
+}
+
+.belief__climax-text {
+  margin-top: var(--space-5);
+  font-size: 0.9375rem;
+  line-height: 2;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+}
+
+.belief__climax-rule {
+  display: block;
+  width: 1px;
+  height: 56px;
+  margin: var(--space-7) auto;
+  background: var(--color-bronze);
+}
+
+.belief__climax-main {
+  font-family: var(--font-serif);
+  font-size: var(--fs-3xl);
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.2em;
+  /* 字間の分だけ右に寄って見えるのを打ち消す */
+  margin-right: -0.2em;
+  color: var(--color-bronze-light);
+}
+
+.belief__climax-sub {
+  margin-top: var(--space-4);
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--text-on-dark);
+}
+
+@media (min-width: 768px) {
+  .belief__text,
+  .belief__wishes li,
+  .belief__climax-text {
+    font-size: var(--fs-base);
+  }
+
+  .belief__key {
+    font-size: 1.25rem;
+  }
+
+  .belief__key--strong {
+    font-size: var(--fs-lg);
+  }
+
+  .belief__key--short {
+    font-size: var(--fs-2xl);
+  }
+
+  .belief__climax-sub {
+    font-size: var(--fs-lg);
+    letter-spacing: 0.1em;
+  }
+}
+
+/* PC：本文は読みやすい幅の1カラムに集約し、見出しも同じ軸に揃える
+   （サイト全体で html/body に overflow-x を指定しているため sticky は使わない） */
+@media (min-width: 1024px) {
+  .belief__layout {
+    max-width: 720px;
+    margin-inline: auto;
+    gap: var(--space-7);
+  }
+
+  .belief__body {
+    max-width: none;
+  }
+
+  /* キーメッセージは左のゴールドラインを本文の外側にずらして見せる */
+  .belief__key:not(.belief__key--short) {
+    margin-left: calc(var(--space-6) * -1);
+    padding-left: calc(var(--space-6) - 1px);
+  }
+
+  .belief__climax {
+    max-width: 880px;
+    margin: var(--space-9) auto 0;
+    padding-top: var(--space-9);
+  }
+}
+
+/* OUR BELIEF：スマホの通常本文（キーメッセージ・クライマックス以外）を
+   少し大きく、行間も広げて読みやすくする */
+@media (max-width: 767px) {
+  .belief__text,
+  .belief__wishes li {
+    font-size: 1rem;
+    line-height: 2.15;
+  }
+}
