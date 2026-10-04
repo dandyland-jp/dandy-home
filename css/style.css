@@ -5011,3 +5011,57 @@ select {
     line-height: 2.15;
   }
 }
+
+/* 2026-10-05 スマホの折り返し調整：スマホのトップ（OUR BELIEF以外）とプライバシーポリシーの本文も、
+   サービス詳細ページと同じく最終行が「す。」のような1〜2文字だけになる折り返しを
+   ブラウザ側で避ける（text-wrap: pretty。未対応ブラウザでは従来どおり表示）。 */
+@media (max-width: 767px) {
+  .hero ~ .section:not(.belief) p,
+  .hero ~ .section:not(.belief) li,
+  .hero ~ .section:not(.belief) dd,
+  .legal-page p,
+  .legal-page li {
+    text-wrap: pretty;
+  }
+}
+
+/* 対応エリア（お問い合わせ横）：項目名「対応エリア」が狭い幅で縮んで
+   途中で改行しないよう項目名の幅は縮めない。320px前後では値の既定の左余白（40px）を外し、
+   「神奈川県全域・／東京都」が語句の途中で切れないようにする */
+.contact__aside-area dt {
+  flex-shrink: 0;
+}
+
+@media (max-width: 359px) {
+  .contact__aside-area dd {
+    margin-left: 0;
+  }
+}
+
+/* 施工事例のステップ写真ラベル：工程名を語句単位で折り返すための文字用 span は、
+   番号バッジ用の span 指定を打ち消す（CASE 03「防除施工中」） */
+.case-preview-step__label .case-step-text,
+.case-preview-step__label .case-step-text .sp-phrase {
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  flex-shrink: 1;
+}
+
+.case-preview-step__label .case-step-text {
+  display: block;
+  min-width: 0;
+}
+
+/* 工程名が2行になっても番号バッジを1行目に揃え、隣のラベルと高さを合わせる */
+.case-preview-step__label:has(.case-step-text) {
+  align-items: flex-start;
+}
+
+.case-preview-step__label .case-step-text .sp-phrase {
+  display: inline-block;
+}
