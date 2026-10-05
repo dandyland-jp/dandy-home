@@ -326,6 +326,7 @@
        ・施工カテゴリ名は次の表記に統一する（data-category にも同じ名称を入れる）：
          基礎補強／シロアリ防除／木部補強／耐震補強／湿気・カビ対策／排水管高圧洗浄
        ・写真のラベルは「施工前」「施工中」「施工後」「シロアリ被害」のみ（メイン2枚は works-card__tag、補助写真は figcaption）。
+         ゴールドのラベル（works-card__tag--after）は「施工中」「施工後」にだけ付ける。
          補足表記（別の箇所・別角度など）や「※」の注記は付けない。
        ・補助写真（施工中など）は <ul class="works-card__subs"> に <li> を追加（不要なら ul ごと削除可）。
        ・表示順はHTMLの並び順どおり（ランダム表示はしない）。同じカテゴリが続きすぎないよう、<li> ごと入れ替えて調整する。
@@ -346,44 +347,6 @@
       </div>
 
       <ul class="works__track" id="works-track" tabindex="0" aria-label="施工事例ギャラリー（横にスクロールできます）">
-        <li class="works-card" data-case="01" data-category="基礎補強">
-          <div class="works-card__head">
-            <h3 class="works-card__title">基礎補強</h3>
-          </div>
-          <div class="works-card__pair">
-            <figure class="works-card__shot">
-              <img src="/images/works/works-01-before.jpg" alt="床下の換気口まわりの基礎コンクリート。施工前の状態で、換気口の下にひび割れが見られる" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
-            </figure>
-            <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-01-after.jpg" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
-            </figure>
-          </div>
-          <ul class="works-card__subs">
-              <li class="works-card__sub">
-                <figure>
-                  <img src="/images/works/works-01-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けている施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
-                  <figcaption>施工中</figcaption>
-                </figure>
-              </li>
-          </ul>
-        </li>
-        <li class="works-card" data-case="06" data-category="シロアリ防除">
-          <div class="works-card__head">
-            <h3 class="works-card__title">シロアリ防除</h3>
-          </div>
-          <div class="works-card__pair">
-            <figure class="works-card__shot">
-              <img src="/images/works/works-06-before.jpg" alt="床下の木部と基礎まわり。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
-            </figure>
-            <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-06-progress.jpg" alt="床下の木部と基礎まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
-            </figure>
-          </div>
-        </li>
         <li class="works-card" data-case="02" data-category="基礎補強">
           <div class="works-card__head">
             <h3 class="works-card__title">基礎補強</h3>
@@ -407,6 +370,36 @@
               </li>
           </ul>
         </li>
+        <li class="works-card" data-case="10" data-category="シロアリ防除">
+          <div class="works-card__head">
+            <h3 class="works-card__title">シロアリ防除</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-10-damage.jpg" alt="建物外側の基礎表面に見られるシロアリの蟻道" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-10-progress.jpg" alt="建物外周の基礎まわりの土壌に薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+          </div>
+        </li>
+        <li class="works-card" data-case="14" data-category="湿気・カビ対策">
+          <div class="works-card__head">
+            <h3 class="works-card__title">湿気・カビ対策</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-14-before.jpg" alt="黒ずみが見られる床下の地面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-14-after.jpg" alt="床下の地面一面に白い調湿材を敷設した施工後の様子。奥に換気口が見える" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+        </li>
         <li class="works-card" data-case="03" data-category="基礎補強">
           <div class="works-card__head">
             <h3 class="works-card__title">基礎補強</h3>
@@ -417,20 +410,59 @@
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-03-after.jpg" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-03-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+          </div>
+        </li>
+        <li class="works-card" data-case="06" data-category="シロアリ防除">
+          <div class="works-card__head">
+            <h3 class="works-card__title">シロアリ防除</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-06-before.jpg" alt="床下の木部と基礎まわり。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-06-progress.jpg" alt="床下の木部と基礎まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+          </div>
+        </li>
+        <li class="works-card" data-case="04" data-category="基礎補強">
+          <div class="works-card__head">
+            <h3 class="works-card__title">基礎補強</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-04-before.jpg" alt="表面に白い汚れや荒れが見られる、施工前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-04-before-other.jpg" alt="施工前の基礎面（別の箇所）。表面に汚れや荒れが見られる" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+          </div>
+        </li>
+        <li class="works-card" data-case="12" data-category="湿気・カビ対策">
+          <div class="works-card__head">
+            <h3 class="works-card__title">湿気・カビ対策</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-12-after.jpg" alt="床下の地面一面に白い調湿材を敷設した施工後の様子。換気口まわりの基礎面には仕上げが施されている" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-12-after-2.jpg" alt="白い調湿材を敷設した床下と、仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-03-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
-                  <figcaption>施工中</figcaption>
-                </figure>
-              </li>
-              <li class="works-card__sub">
-                <figure>
-                  <img src="/images/works/works-03-after-other.jpg" alt="同じ施工での、別の箇所の施工後の基礎面" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-12-after-sub.jpg" alt="白い調湿材を敷き込んだ床下の地面と基礎面" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption>施工後</figcaption>
                 </figure>
               </li>
@@ -455,29 +487,6 @@
                 <figure>
                   <img src="/images/works/works-07-damage-sub.jpg" alt="シロアリ被害が見られる床下の土台" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption><span class="sp-phrase">シロアリ</span><span class="sp-phrase">被害</span></figcaption>
-                </figure>
-              </li>
-          </ul>
-        </li>
-        <li class="works-card" data-case="04" data-category="基礎補強">
-          <div class="works-card__head">
-            <h3 class="works-card__title">基礎補強</h3>
-          </div>
-          <div class="works-card__pair">
-            <figure class="works-card__shot">
-              <img src="/images/works/works-04-before.jpg" alt="表面に白い汚れや荒れが見られる、施工前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
-            </figure>
-            <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-04-after.jpg" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
-            </figure>
-          </div>
-          <ul class="works-card__subs">
-              <li class="works-card__sub">
-                <figure>
-                  <img src="/images/works/works-04-before-other.jpg" alt="施工前の基礎面（別の箇所）。表面に汚れや荒れが見られる" width="640" height="480" loading="lazy" decoding="async" />
-                  <figcaption>施工前</figcaption>
                 </figure>
               </li>
           </ul>
@@ -534,6 +543,21 @@
               </li>
           </ul>
         </li>
+        <li class="works-card" data-case="15" data-category="湿気・カビ対策">
+          <div class="works-card__head">
+            <h3 class="works-card__title">湿気・カビ対策</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-15-before.jpg" alt="湿気を帯びた床下の土壌。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-15-after.jpg" alt="基礎沿いの床下の地面に白い調湿材を敷設した施工後の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+        </li>
         <li class="works-card" data-case="09" data-category="基礎補強">
           <div class="works-card__head">
             <h3 class="works-card__title">基礎補強</h3>
@@ -541,7 +565,7 @@
           <div class="works-card__pair">
             <figure class="works-card__shot">
               <img src="/images/works/works-09-after.jpg" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
-              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工後</span></figcaption>
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
               <img src="/images/works/works-09-after-detail.jpg" alt="施工後の基礎面の仕上げを近くから撮影した様子" width="1000" height="750" loading="lazy" decoding="async" />
@@ -557,6 +581,27 @@
               </li>
           </ul>
         </li>
+        <li class="works-card" data-case="11" data-category="シロアリ防除">
+          <div class="works-card__head">
+            <h3 class="works-card__title">シロアリ防除</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-11-damage.jpg" alt="室内の床と壁の際に見られる多数のシロアリ" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-11-progress.jpg" alt="室内の柱と壁の際から薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-11-progress-sub.jpg" alt="壁の際の穴から薬剤を注入している施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption>施工中</figcaption>
+                </figure>
+              </li>
           </ul>
         </li>
       </ul>
