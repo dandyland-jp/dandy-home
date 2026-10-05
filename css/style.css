@@ -5245,6 +5245,8 @@ select {
 /* 横スクロールの列：画面端まで伸ばし、次のカードが少し見えるようにする */
 .works__track {
   display: flex;
+  /* 補助写真の有無でカードの高さが変わっても、下に空白を作らない */
+  align-items: flex-start;
   /* 無限ループで左側にも前のカードが並ぶため、間隔を左右の余白と同じにして
      画面左端に前のカードの端がわずかに見えないようにする */
   gap: var(--container-padding);
@@ -5320,12 +5322,6 @@ select {
   color: var(--color-white);
 }
 
-.works-card__tag-en {
-  font-family: var(--font-display);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-}
 
 .works-card__tag-ja {
   font-size: 0.6875rem;
@@ -5366,19 +5362,7 @@ select {
   color: var(--text-on-dark-muted);
 }
 
-.works-card__body {
-  margin-top: var(--space-4);
-  padding: 0 var(--space-2) var(--space-2);
-}
 
-.works-card__no {
-  font-family: var(--font-display);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  color: var(--color-bronze-light);
-  margin-bottom: var(--space-1);
-}
 
 .works-card__title {
   font-family: var(--font-serif);
@@ -5389,19 +5373,7 @@ select {
   color: var(--text-on-dark);
 }
 
-.works-card__meta {
-  margin-top: var(--space-1);
-  font-size: var(--fs-xs);
-  letter-spacing: 0.08em;
-  color: var(--text-on-dark-muted);
-}
 
-.works-card__note {
-  margin-top: var(--space-2);
-  font-size: 0.6875rem;
-  line-height: 1.7;
-  color: var(--text-on-dark-muted);
-}
 
 @media (min-width: 768px) {
   .works__track {
