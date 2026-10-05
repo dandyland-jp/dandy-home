@@ -5430,3 +5430,20 @@ select {
     flex-basis: calc((100% - var(--space-5) * 2) / 3);
   }
 }
+
+/* WORKS：カード上部の施工カテゴリ名（基礎補強・シロアリ防除など）。
+   お客様向けにはCASE番号ではなくカテゴリ名を主役にする。 */
+.works-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-1) var(--space-2) var(--space-3);
+}
+
+.works-card__head::before {
+  content: "";
+  flex-shrink: 0;
+  width: 18px;
+  height: 1px;
+  background: var(--color-bronze-light);
+}
