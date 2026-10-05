@@ -183,58 +183,124 @@
   }
 
   /* ------------------------------------------------------------------
-   * WORKS（施工事例の横スライド）
-   * 横スクロール自体はCSS（scroll-snap）で動くため、ここでは
-   * 左右ボタン・表示中の番号・端でのボタン無効化だけを扱う。
-   * カード（.works-card）を増やしても、この処理の変更は不要。
+   * WORKS（施工事例ギャラリーの横スライド・無限ループ）
+   * 横スクロール自体はCSS（scroll-snap）で動く。ここでは
+   *  1) HTML上のカード一式を前後に1セットずつ複製し（表示専用・読み上げ対象外）、
+   *     「複製 / 本物 / 複製」の3セットを並べる
+   *  2) スクロールが止まった時点で前後の複製セット側にいたら、
+   *     見た目が同じ本物セットの位置へ瞬時に移す（1セット分だけずらすので画面は変わらない）
+   *  3) 左右ボタンはカード1枚分ずつ送る（端でも無効化しない）
+   * カード枚数はDOMから取得するため、.works-card を増やしてもこの処理の変更は不要。
    * ------------------------------------------------------------------ */
   var worksTrack = document.getElementById("works-track");
   if (worksTrack) {
     var worksSection = worksTrack.closest(".works");
-    var worksCards = worksTrack.querySelectorAll(".works-card");
     var worksPrev = worksSection.querySelector(".works__nav--prev");
     var worksNext = worksSection.querySelector(".works__nav--next");
-    var worksCurrent = worksSection.querySelector(".works__count-current");
-    var worksTotal = worksSection.querySelector(".works__count-total");
+    var worksOriginals = Array.prototype.slice.call(worksTrack.querySelectorAll(".works-card"));
+    var worksCount = worksOriginals.length;
+    var worksLoop = worksCount >= 2;
 
-    function pad2(n) {
-      return n < 10 ? "0" + n : String(n);
+    function makeWorksClone(card) {
+      var clone = card.cloneNode(true);
+      clone.setAttribute("aria-hidden", "true");
+      clone.setAttribute("inert", "");
+      clone.classList.add("works-card--clone");
+      clone.removeAttribute("data-case");
+      Array.prototype.forEach.call(clone.querySelectorAll("img"), function (img) {
+        img.setAttribute("alt", "");
+      });
+      return clone;
+    }
+
+    if (worksLoop) {
+      var worksBefore = document.createDocumentFragment();
+      var worksAfter = document.createDocumentFragment();
+      worksOriginals.forEach(function (card) {
+        worksBefore.appendChild(makeWorksClone(card));
+        worksAfter.appendChild(makeWorksClone(card));
+      });
+      worksTrack.insertBefore(worksBefore, worksOriginals[0]);
+      worksTrack.appendChild(worksAfter);
+    }
+
+    // カード左端のスクロール位置（scroll-padding 分を差し引いた、スナップ位置と同じ基準）
+    function worksPos(card) {
+      var padding = parseFloat(getComputedStyle(worksTrack).scrollPaddingLeft) || 0;
+      return (
+        card.getBoundingClientRect().left -
+        worksTrack.getBoundingClientRect().left +
+        worksTrack.scrollLeft -
+        padding
+      );
     }
 
     function worksStep() {
-      if (worksCards.length < 2) return worksTrack.clientWidth;
-      return worksCards[1].offsetLeft - worksCards[0].offsetLeft;
+      var cards = worksTrack.querySelectorAll(".works-card");
+      if (cards.length < 2) return worksTrack.clientWidth;
+      return worksPos(cards[1]) - worksPos(cards[0]);
     }
 
-    function updateWorks() {
-      var maxScroll = worksTrack.scrollWidth - worksTrack.clientWidth;
-      var step = worksStep();
-      // 番号は「左端に表示中のカード」。右端まで送ったときは、
-      // 画面内に並ぶ枚数（PC約3枚・スマホ1枚）を考慮して最後の位置に合わせる
-      var visibleCount = Math.max(1, Math.round(worksTrack.clientWidth / step));
-      var index = Math.round(worksTrack.scrollLeft / step);
-      if (worksTrack.scrollLeft >= maxScroll - 2) index = worksCards.length - visibleCount;
-      index = Math.max(0, Math.min(worksCards.length - 1, index));
-      if (worksCurrent) worksCurrent.textContent = pad2(index + 1);
-      if (worksPrev) worksPrev.disabled = worksTrack.scrollLeft <= 2;
-      if (worksNext) worksNext.disabled = worksTrack.scrollLeft >= maxScroll - 2;
+    function worksSetWidth() {
+      return worksStep() * worksCount;
     }
 
-    if (worksTotal) worksTotal.textContent = pad2(worksCards.length);
+    // 前後の複製セットにいる場合、1セット分ずらして本物セットへ戻す（瞬時・見た目は同じ）
+    function normalizeWorks() {
+      if (!worksLoop) return;
+      var start = worksPos(worksOriginals[0]);
+      var setWidth = worksSetWidth();
+      var x = worksTrack.scrollLeft;
+      if (x < start - worksStep() / 2) {
+        worksTrack.scrollLeft = x + setWidth;
+      } else if (x >= start + setWidth - worksStep() / 2) {
+        worksTrack.scrollLeft = x - setWidth;
+      }
+    }
+
+    function moveWorks(direction) {
+      normalizeWorks();
+      worksTrack.scrollBy({ left: direction * worksStep(), behavior: "smooth" });
+    }
 
     if (worksPrev) {
       worksPrev.addEventListener("click", function () {
-        worksTrack.scrollBy({ left: -worksStep(), behavior: "smooth" });
+        moveWorks(-1);
       });
     }
     if (worksNext) {
       worksNext.addEventListener("click", function () {
-        worksTrack.scrollBy({ left: worksStep(), behavior: "smooth" });
+        moveWorks(1);
       });
     }
 
-    worksTrack.addEventListener("scroll", updateWorks, { passive: true });
-    window.addEventListener("resize", updateWorks);
-    updateWorks();
+    // スクロールが止まったら位置を整える（scrollend 未対応ブラウザは一定時間の停止で判定）
+    var worksIdleTimer = null;
+    worksTrack.addEventListener(
+      "scroll",
+      function () {
+        clearTimeout(worksIdleTimer);
+        worksIdleTimer = setTimeout(normalizeWorks, 160);
+      },
+      { passive: true }
+    );
+    if ("onscrollend" in window) {
+      worksTrack.addEventListener("scrollend", function () {
+        clearTimeout(worksIdleTimer);
+        normalizeWorks();
+      });
+    }
+
+    // 初期表示・画面幅変更時は、本物セットの1枚目を左端に合わせる
+    function resetWorks() {
+      if (!worksLoop) return;
+      worksTrack.scrollLeft = worksPos(worksOriginals[0]);
+    }
+    resetWorks();
+    var worksResizeTimer = null;
+    window.addEventListener("resize", function () {
+      clearTimeout(worksResizeTimer);
+      worksResizeTimer = setTimeout(normalizeWorks, 160);
+    });
   }
 })();

@@ -5205,22 +5205,8 @@ select {
   gap: var(--space-3);
 }
 
-.works__count {
-  margin-right: var(--space-2);
-  font-family: var(--font-display);
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--text-on-dark-muted);
-}
 
-.works__count-current {
-  color: var(--color-bronze-light);
-}
 
-.works__count-sep {
-  margin-inline: 0.4em;
-}
 
 .works__nav {
   display: inline-flex;
@@ -5259,7 +5245,9 @@ select {
 /* 横スクロールの列：画面端まで伸ばし、次のカードが少し見えるようにする */
 .works__track {
   display: flex;
-  gap: var(--space-4);
+  /* 無限ループで左側にも前のカードが並ぶため、間隔を左右の余白と同じにして
+     画面左端に前のカードの端がわずかに見えないようにする */
+  gap: var(--container-padding);
   margin: 0 calc(var(--container-padding) * -1);
   padding: 0 var(--container-padding) var(--space-2);
   list-style: none;
