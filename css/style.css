@@ -5165,3 +5165,268 @@ select {
   height: 1.125rem;
   color: var(--color-bronze);
 }
+
+/* ==========================================================================
+   トップ：WORKS（Before / After 施工事例の横スライド）2026-10-05
+   ・カード1枚＝BEFORE（上）→ AFTER（下）＋補助写真＋短い工事名。
+   ・CASEの追加は HTML の <li class="works-card"> を複製するだけで同じ見た目になる。
+   ・横スライドはブラウザ標準の横スクロール＋スクロールスナップ
+     （トラックパッド・Shift+ホイール・スワイプで操作可能）。左右ボタンは js/main.js。
+   ========================================================================== */
+.works {
+  background: var(--color-black);
+  color: var(--text-on-dark-muted);
+  overflow: hidden;
+}
+
+.works__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-5);
+  margin-bottom: var(--space-7);
+}
+
+.works__title {
+  margin-bottom: var(--space-3);
+}
+
+.works__lead {
+  font-size: var(--fs-sm);
+  line-height: 1.9;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+}
+
+.works__controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.works__count {
+  margin-right: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--text-on-dark-muted);
+}
+
+.works__count-current {
+  color: var(--color-bronze-light);
+}
+
+.works__count-sep {
+  margin-inline: 0.4em;
+}
+
+.works__nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(199, 154, 75, 0.55);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-bronze-light);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), opacity var(--transition-fast);
+}
+
+.works__nav svg {
+  width: 18px;
+  height: 18px;
+}
+
+.works__nav:hover:not(:disabled) {
+  background: rgba(199, 154, 75, 0.12);
+}
+
+.works__nav:focus-visible {
+  outline: 2px solid var(--color-bronze-light);
+  outline-offset: 3px;
+}
+
+.works__nav:disabled {
+  opacity: 0.3;
+  cursor: default;
+}
+
+/* 横スクロールの列：画面端まで伸ばし、次のカードが少し見えるようにする */
+.works__track {
+  display: flex;
+  gap: var(--space-4);
+  margin: 0 calc(var(--container-padding) * -1);
+  padding: 0 var(--container-padding) var(--space-2);
+  list-style: none;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--container-padding);
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.works__track::-webkit-scrollbar {
+  display: none;
+}
+
+.works__track:focus-visible {
+  outline: 1px solid rgba(199, 154, 75, 0.6);
+  outline-offset: 6px;
+}
+
+.works-card {
+  flex: 0 0 84%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: var(--space-3);
+  border: 1px solid rgba(169, 129, 47, 0.28);
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+}
+
+.works-card__pair {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.works-card__shot {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 3 / 2;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-black);
+}
+
+.works-card__shot img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* BEFORE / AFTER のラベル（写真の左上） */
+.works-card__tag {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5em;
+  padding: 0.3em 0.75em;
+  border-radius: 999px;
+  background: rgba(14, 14, 15, 0.78);
+  color: var(--text-on-dark);
+  line-height: 1.4;
+}
+
+.works-card__tag--after {
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+}
+
+.works-card__tag-en {
+  font-family: var(--font-display);
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.works-card__tag-ja {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+/* 補助写真（施工中・別角度など） */
+.works-card__subs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.works-card__subs:empty {
+  display: none;
+}
+
+.works-card__sub figure {
+  margin: 0;
+}
+
+.works-card__sub img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.works-card__sub figcaption {
+  margin-top: 0.35rem;
+  font-size: 0.6875rem;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+}
+
+.works-card__body {
+  margin-top: var(--space-4);
+  padding: 0 var(--space-2) var(--space-2);
+}
+
+.works-card__no {
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  color: var(--color-bronze-light);
+  margin-bottom: var(--space-1);
+}
+
+.works-card__title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+}
+
+.works-card__meta {
+  margin-top: var(--space-1);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  color: var(--text-on-dark-muted);
+}
+
+.works-card__note {
+  margin-top: var(--space-2);
+  font-size: 0.6875rem;
+  line-height: 1.7;
+  color: var(--text-on-dark-muted);
+}
+
+@media (min-width: 768px) {
+  .works__track {
+    gap: var(--space-5);
+  }
+
+  .works-card {
+    flex-basis: calc((100% - var(--space-5)) / 2);
+  }
+}
+
+@media (min-width: 1024px) {
+  .works-card {
+    flex-basis: calc((100% - var(--space-5) * 2) / 3);
+  }
+}

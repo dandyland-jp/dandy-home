@@ -181,4 +181,60 @@
         });
     });
   }
+
+  /* ------------------------------------------------------------------
+   * WORKS（施工事例の横スライド）
+   * 横スクロール自体はCSS（scroll-snap）で動くため、ここでは
+   * 左右ボタン・表示中の番号・端でのボタン無効化だけを扱う。
+   * カード（.works-card）を増やしても、この処理の変更は不要。
+   * ------------------------------------------------------------------ */
+  var worksTrack = document.getElementById("works-track");
+  if (worksTrack) {
+    var worksSection = worksTrack.closest(".works");
+    var worksCards = worksTrack.querySelectorAll(".works-card");
+    var worksPrev = worksSection.querySelector(".works__nav--prev");
+    var worksNext = worksSection.querySelector(".works__nav--next");
+    var worksCurrent = worksSection.querySelector(".works__count-current");
+    var worksTotal = worksSection.querySelector(".works__count-total");
+
+    function pad2(n) {
+      return n < 10 ? "0" + n : String(n);
+    }
+
+    function worksStep() {
+      if (worksCards.length < 2) return worksTrack.clientWidth;
+      return worksCards[1].offsetLeft - worksCards[0].offsetLeft;
+    }
+
+    function updateWorks() {
+      var maxScroll = worksTrack.scrollWidth - worksTrack.clientWidth;
+      var step = worksStep();
+      // 番号は「左端に表示中のカード」。右端まで送ったときは、
+      // 画面内に並ぶ枚数（PC約3枚・スマホ1枚）を考慮して最後の位置に合わせる
+      var visibleCount = Math.max(1, Math.round(worksTrack.clientWidth / step));
+      var index = Math.round(worksTrack.scrollLeft / step);
+      if (worksTrack.scrollLeft >= maxScroll - 2) index = worksCards.length - visibleCount;
+      index = Math.max(0, Math.min(worksCards.length - 1, index));
+      if (worksCurrent) worksCurrent.textContent = pad2(index + 1);
+      if (worksPrev) worksPrev.disabled = worksTrack.scrollLeft <= 2;
+      if (worksNext) worksNext.disabled = worksTrack.scrollLeft >= maxScroll - 2;
+    }
+
+    if (worksTotal) worksTotal.textContent = pad2(worksCards.length);
+
+    if (worksPrev) {
+      worksPrev.addEventListener("click", function () {
+        worksTrack.scrollBy({ left: -worksStep(), behavior: "smooth" });
+      });
+    }
+    if (worksNext) {
+      worksNext.addEventListener("click", function () {
+        worksTrack.scrollBy({ left: worksStep(), behavior: "smooth" });
+      });
+    }
+
+    worksTrack.addEventListener("scroll", updateWorks, { passive: true });
+    window.addEventListener("resize", updateWorks);
+    updateWorks();
+  }
 })();

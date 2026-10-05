@@ -36,7 +36,7 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;800;900&display=swap"
   >
 
-  <link rel="stylesheet" href="/css/style.css?v=20261005-3">
+  <link rel="stylesheet" href="/css/style.css?v=20261005-4">
 
   <!-- 構造化データ（LocalBusiness）。会社情報確定に応じ src/templates/layout.js の
        buildStructuredData() が自動生成します。 -->
@@ -593,6 +593,167 @@
     </div>
   </section>
 
+  <!-- WORKS：Before / After 施工事例（横スライド）。
+       CASEを増やすときは、下の <li class="works-card"> を1つ複製し、画像（/images/works/）・alt・工事名を差し替えるだけでよい。
+       ・同一箇所の施工前後と確認できる写真 …… <li class="works-card">
+       ・同一箇所と確認できない写真 …………… <li class="works-card works-card--reference">（ラベルは「施工前」「施工後」、注記を表示）
+       ・工事名（works-card__title）は施工カテゴリ名に統一する：
+         基礎工事＝基礎補強／木部工事＝木部補強／補強金物＝耐震補強／シロアリ＝シロアリ防除
+       ・補助写真（施工中・別角度など）は <ul class="works-card__subs"> に <li> を追加（不要なら ul ごと削除可）。
+       写真は長辺1000px（補助写真は640px）程度に縮小・圧縮してから配置する。 -->
+  <section class="section works" id="works" aria-labelledby="works-title">
+    <div class="container">
+      <div class="works__header">
+        <div class="works__heading">
+          <p class="section-eyebrow section-eyebrow--light">WORKS</p>
+          <h2 class="section-title section-title--light works__title" id="works-title">施工事例</h2>
+          <p class="works__lead"><span class="sp-phrase">実際の住宅で行った</span><span class="sp-phrase">基礎・床下工事の施工例を</span><span class="sp-phrase">ご紹介します。</span></p>
+        </div>
+        <div class="works__controls">
+          <p class="works__count" aria-hidden="true"><span class="works__count-current">01</span><span class="works__count-sep">/</span><span class="works__count-total">05</span></p>
+          <button type="button" class="works__nav works__nav--prev" aria-label="前の施工事例へ" aria-controls="works-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg></button>
+          <button type="button" class="works__nav works__nav--next" aria-label="次の施工事例へ" aria-controls="works-track"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+
+      <ul class="works__track" id="works-track" tabindex="0" aria-label="Before / After 施工事例（横にスクロールできます）">
+        <li class="works-card">
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-01-before.jpg" alt="床下の換気口まわりの基礎コンクリート。施工前の状態で、換気口の下にひび割れが見られる" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-en">BEFORE</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-01-after.jpg" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-en">AFTER</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-01-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けている施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption>施工中</figcaption>
+                </figure>
+              </li>
+          </ul>
+          <div class="works-card__body">
+            <p class="works-card__no">CASE 01</p>
+            <h3 class="works-card__title">基礎補強</h3>
+            <p class="works-card__meta">住宅基礎｜施工例</p>
+          </div>
+        </li>
+        <li class="works-card">
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-02-before.jpg" alt="換気口まわりを含む基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-en">BEFORE</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-02-after.jpg" alt="補強後に仕上げを施した、換気口まわりを含む基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-en">AFTER</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-02-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption>施工中</figcaption>
+                </figure>
+              </li>
+          </ul>
+          <div class="works-card__body">
+            <p class="works-card__no">CASE 02</p>
+            <h3 class="works-card__title">基礎補強</h3>
+            <p class="works-card__meta">住宅基礎｜施工例</p>
+          </div>
+        </li>
+        <li class="works-card">
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-03-before.jpg" alt="換気口のある基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-en">BEFORE</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-03-after.jpg" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-en">AFTER</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-03-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption>施工中</figcaption>
+                </figure>
+              </li>
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-03-after-other.jpg" alt="同じ施工での、別の箇所の施工後の基礎面" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption><span class="sp-phrase">施工後｜</span><span class="sp-phrase">別の箇所</span></figcaption>
+                </figure>
+              </li>
+          </ul>
+          <div class="works-card__body">
+            <p class="works-card__no">CASE 03</p>
+            <h3 class="works-card__title">基礎補強</h3>
+            <p class="works-card__meta">住宅基礎｜施工例</p>
+          </div>
+        </li>
+        <li class="works-card works-card--reference">
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-04-before.jpg" alt="表面に白い汚れや荒れが見られる、施工前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-04-after.jpg" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-04-before-other.jpg" alt="施工前の基礎面（別の箇所）。表面に汚れや荒れが見られる" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption><span class="sp-phrase">施工前｜</span><span class="sp-phrase">別の箇所</span></figcaption>
+                </figure>
+              </li>
+          </ul>
+          <div class="works-card__body">
+            <p class="works-card__no">CASE 04</p>
+            <h3 class="works-card__title">基礎補強</h3>
+            <p class="works-card__meta">住宅基礎｜施工例</p>
+          <p class="works-card__note"><span class="sp-phrase">※施工前・施工後の状態の例です</span><span class="sp-phrase">（同じ位置・角度からの</span><span class="sp-phrase">比較写真ではありません）。</span></p>
+          </div>
+        </li>
+        <li class="works-card works-card--reference">
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-05-before.jpg" alt="床下の長い基礎面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-05-after.jpg" alt="補強後に仕上げを施した長い基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+          <ul class="works-card__subs">
+              <li class="works-card__sub">
+                <figure>
+                  <img src="/images/works/works-05-after-angle.jpg" alt="補強後の基礎面を別の角度から撮影した様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <figcaption><span class="sp-phrase">施工後｜</span><span class="sp-phrase">別角度</span></figcaption>
+                </figure>
+              </li>
+          </ul>
+          <div class="works-card__body">
+            <p class="works-card__no">CASE 05</p>
+            <h3 class="works-card__title">基礎補強</h3>
+            <p class="works-card__meta">住宅基礎｜施工例</p>
+          <p class="works-card__note"><span class="sp-phrase">※施工前・施工後の状態の例です</span><span class="sp-phrase">（同じ位置・角度からの</span><span class="sp-phrase">比較写真ではありません）。</span></p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <section class="section free-flow" id="inspection">
     <div class="container">
       <p class="section-eyebrow">無料床下点検</p>
@@ -961,6 +1122,6 @@
     <a href="/#contact" class="fixed-cta__btn fixed-cta__btn--primary">無料点検</a><a href="https://lin.ee/wMZ3Qpj" class="fixed-cta__btn fixed-cta__btn--line" target="_blank" rel="noopener noreferrer" aria-label="LINEで相談（公式LINE・新しいタブで開きます）"><svg class="fixed-cta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.5c-4.97 0-9 3.13-9 7 0 3.47 3.24 6.35 7.49 6.9l-.55 2.06c-.1.38.32.67.64.45l3.3-2.4C18 17.86 21 15 21 11.5c0-3.87-4.03-7-9-7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>LINEで相談</span></a><a href="/#contact" class="fixed-cta__btn fixed-cta__btn--secondary">お問い合わせ</a>
   </div>
 
-  <script src="/js/main.js" defer></script>
+  <script src="/js/main.js?v=20261005-4" defer></script>
 </body>
 </html>
