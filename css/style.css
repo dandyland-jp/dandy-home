@@ -5407,3 +5407,42 @@ select {
   height: 1px;
   background: var(--color-bronze-light);
 }
+
+/* ==========================================================================
+   2026-10-07 スマホ固定CTA：「無料点検」「電話で相談」「LINEで相談」の3導線
+   ・電話は黒地＋ゴールドの細線アイコン、LINEはチャコール地＋ゴールドのアイコン。
+   ・iPhoneのホームインジケーター（Safe Area）分だけバーの下に余白を足し、
+     ボタン自体の高さ（60px）は変えない。--fixed-cta-height を使う
+     本文の下余白・ヒーローの高さ計算にも同じ分が反映される。
+   ========================================================================== */
+:root {
+  --fixed-cta-height: calc(60px + env(safe-area-inset-bottom, 0px));
+}
+
+.fixed-cta {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  background: var(--color-black);
+}
+
+.fixed-cta__btn--tel {
+  gap: 0.375rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  border-left: 1px solid rgba(169, 129, 47, 0.35);
+}
+
+.fixed-cta__btn--line {
+  background: var(--color-charcoal);
+  border-right: 0;
+}
+
+.fixed-cta__btn:focus-visible {
+  outline: 2px solid var(--color-bronze-light);
+  outline-offset: -3px;
+}
+
+@media (max-width: 374px) {
+  .fixed-cta__btn--tel {
+    gap: 0.25rem;
+  }
+}
