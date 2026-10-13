@@ -5446,3 +5446,38 @@ select {
     gap: 0.25rem;
   }
 }
+
+/* 2026-10-13 ファーストビューの「無料床下点検を相談する」ボタン：
+   上段に小さく「ダンディ式 床下点検」を添える2段構成。
+   下段の文言・リンク先は従来どおり。上下の余白を詰めて、
+   ボタン全体の高さは従来（約63px）とほぼ同じに保つ。 */
+.hero__cta .hero__cta-stack {
+  flex-direction: column;
+  gap: 0.2rem;
+  padding-block: 0.7rem;
+  line-height: 1.3;
+}
+
+.hero__cta-eyebrow {
+  font-family: var(--font-serif);
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  color: rgba(14, 14, 15, 0.78);
+}
+
+.hero__cta-label {
+  letter-spacing: inherit;
+}
+
+/* 下段の文言（無料点検を相談する）が短くなっても、ボタンの幅は
+   従来（無料床下点検を相談する の時）と同じに保つ */
+.hero__cta .hero__cta-stack {
+  min-width: 270px;
+}
+
+@media (min-width: 1200px) {
+  .hero__cta .hero__cta-stack {
+    min-width: 331px;
+  }
+}
