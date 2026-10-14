@@ -203,9 +203,12 @@
 
     function makeWorksClone(card) {
       var clone = card.cloneNode(true);
+      // 複製は読み上げ・キーボード操作の対象外にする（タップで詳細を開くことはできる）
       clone.setAttribute("aria-hidden", "true");
-      clone.setAttribute("inert", "");
       clone.classList.add("works-card--clone");
+      Array.prototype.forEach.call(clone.querySelectorAll("button, a"), function (el) {
+        el.setAttribute("tabindex", "-1");
+      });
       clone.removeAttribute("data-case");
       Array.prototype.forEach.call(clone.querySelectorAll("img"), function (img) {
         img.setAttribute("alt", "");
@@ -301,6 +304,50 @@
     window.addEventListener("resize", function () {
       clearTimeout(worksResizeTimer);
       worksResizeTimer = setTimeout(normalizeWorks, 160);
+    });
+
+    // 施工内容の詳細：data-detail を持つカード（複製を含む）をタップすると、
+    // 同じIDの dialog を開く。閉じたら元のカードのボタンへフォーカスを戻す。
+    var worksReturnFocus = null;
+
+    function openWorksDetail(id, card) {
+      var dialog = document.getElementById(id);
+      if (!dialog) return;
+      var original = worksTrack.querySelector('.works-card[data-detail="' + id + '"]:not(.works-card--clone)');
+      worksReturnFocus = original ? original.querySelector(".works-card__more") : null;
+      if (typeof dialog.showModal === "function") {
+        dialog.showModal();
+      } else {
+        dialog.setAttribute("open", "");
+      }
+      document.body.style.overflow = "hidden";
+    }
+
+    worksTrack.addEventListener("click", function (e) {
+      var card = e.target.closest(".works-card[data-detail]");
+      if (!card) return;
+      openWorksDetail(card.getAttribute("data-detail"), card);
+    });
+
+    Array.prototype.forEach.call(worksSection.querySelectorAll(".works-dialog"), function (dialog) {
+      var closeBtn = dialog.querySelector(".works-dialog__close");
+      function closeDialog() {
+        if (typeof dialog.close === "function") {
+          dialog.close();
+        } else {
+          dialog.removeAttribute("open");
+          dialog.dispatchEvent(new Event("close"));
+        }
+      }
+      if (closeBtn) closeBtn.addEventListener("click", closeDialog);
+      // 写真や文章の外側（暗い背景部分）をタップしても閉じる
+      dialog.addEventListener("click", function (e) {
+        if (e.target === dialog) closeDialog();
+      });
+      dialog.addEventListener("close", function () {
+        document.body.style.overflow = "";
+        if (worksReturnFocus) worksReturnFocus.focus({ preventScroll: true });
+      });
     });
   }
 })();

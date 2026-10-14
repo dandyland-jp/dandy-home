@@ -5481,3 +5481,205 @@ select {
     min-width: 331px;
   }
 }
+
+/* ==========================================================================
+   2026-10-14 WORKS：施工内容の詳細表示
+   ・data-detail を持つカードは、カード全体をタップすると詳細（dialog）が開く。
+   ・詳細には施工前・施工中・施工後の写真とキャプション、施工内容を表示する。
+   ========================================================================== */
+.works-card--detail {
+  position: relative;
+  cursor: pointer;
+}
+
+.works-card__more {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  margin: var(--space-3) var(--space-2) var(--space-1);
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--color-bronze-light);
+  cursor: pointer;
+}
+
+/* ボタンの押せる範囲をカード全体に広げる */
+.works-card__more::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--radius-lg);
+}
+
+.works-card__more:focus-visible {
+  outline: none;
+}
+
+.works-card__more:focus-visible::after {
+  outline: 2px solid var(--color-bronze-light);
+  outline-offset: -2px;
+}
+
+.works-card__more-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border: 1px solid rgba(199, 154, 75, 0.6);
+  border-radius: 50%;
+  font-size: 0.75rem;
+  line-height: 1;
+}
+
+.works-dialog {
+  width: min(960px, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  margin: auto;
+  padding: 0;
+  border: 1px solid rgba(169, 129, 47, 0.35);
+  border-radius: var(--radius-lg);
+  background: var(--color-charcoal);
+  color: var(--text-on-dark-muted);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.works-dialog::backdrop {
+  background: rgba(8, 8, 9, 0.78);
+}
+
+.works-dialog__inner {
+  position: relative;
+  padding: var(--space-6) var(--space-4) var(--space-5);
+}
+
+.works-dialog__close {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgba(199, 154, 75, 0.55);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-bronze-light);
+  cursor: pointer;
+}
+
+.works-dialog__close svg {
+  width: 18px;
+  height: 18px;
+}
+
+.works-dialog__close:focus-visible {
+  outline: 2px solid var(--color-bronze-light);
+  outline-offset: 3px;
+}
+
+.works-dialog__category {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding-right: 3.5rem;
+  font-family: var(--font-serif);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-bronze-light);
+}
+
+.works-dialog__category::before {
+  content: "";
+  width: 18px;
+  height: 1px;
+  background: var(--color-bronze-light);
+}
+
+.works-dialog__title {
+  margin: var(--space-2) 0 var(--space-5);
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 600;
+  line-height: 1.6;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark);
+}
+
+.works-dialog__steps {
+  display: grid;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.works-dialog__step figure {
+  margin: 0;
+}
+
+.works-dialog__photo {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background: var(--color-black);
+}
+
+.works-dialog__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.works-dialog__step figcaption {
+  margin-top: var(--space-2);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  letter-spacing: 0.04em;
+  color: var(--text-on-dark-muted);
+}
+
+.works-dialog__body {
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid rgba(169, 129, 47, 0.25);
+  font-size: var(--fs-sm);
+  line-height: 1.9;
+}
+
+.works-dialog__body p + p {
+  margin-top: var(--space-2);
+}
+
+.works-dialog__subhead {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  color: var(--color-bronze-light);
+}
+
+@media (min-width: 768px) {
+  .works-dialog__inner {
+    padding: var(--space-7) var(--space-7) var(--space-6);
+  }
+
+  .works-dialog__title {
+    font-size: var(--fs-lg);
+  }
+
+  .works-dialog__steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
