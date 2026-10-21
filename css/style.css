@@ -5683,3 +5683,354 @@ select {
     grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }
+
+
+/* ==========================================================================
+   2026-10-21 お問い合わせ導線の改善（TOP・foundation-repair・termite・underfloor-repair 共通）
+   ・スマホ：LINE・電話 → フォーム → ご相談について・無料床下点検の流れ（DOM順）
+   ・PC（1024px以上）：左＝フォーム／右上＝LINE・電話／右下＝ご相談について・流れ・対応エリア
+   ・連絡先はメールアドレスか電話番号のどちらか一方（判定は js/main.js）
+   ・既存のブランドカラー・フォーム部品の見た目はそのまま使い、足りない部分だけ追加する
+   ========================================================================== */
+
+/* --- LINE・電話 --- */
+.contact-quick {
+  padding: var(--space-5);
+  border: 1px solid rgba(169, 129, 47, 0.3);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+}
+
+.contact-quick__title {
+  margin-bottom: var(--space-4);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-on-light);
+}
+
+.contact-quick__btns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+/* 320px前後では横並びだと文字が詰まるため縦に積む */
+@media (max-width: 359px) {
+  .contact-quick__btns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.contact-quick__btn {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.4rem;
+  row-gap: 0.1rem;
+  min-height: 64px;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid rgba(169, 129, 47, 0.55);
+  border-radius: var(--radius-md);
+  background: var(--color-black);
+  color: var(--color-white);
+  text-align: center;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.contact-quick__btn:hover {
+  background: var(--color-charcoal);
+  border-color: var(--color-bronze-light);
+}
+
+.contact-quick__btn:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 3px;
+}
+
+.contact-quick__icon {
+  width: 1.125rem;
+  height: 1.125rem;
+  color: var(--color-bronze-light);
+}
+
+.contact-quick__label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+
+.contact-quick__sub {
+  grid-column: 1 / -1;
+  font-family: var(--font-display);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-bronze-light);
+}
+
+/* --- フォーム：連絡先（どちらか必須） --- */
+.contact-form__contact {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.contact-form__contact-legend {
+  padding: 0;
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+
+.contact-form__hint {
+  margin-bottom: var(--space-3);
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--text-on-light-muted);
+}
+
+.contact-form textarea::placeholder {
+  color: #8a867d;
+}
+
+.contact-form [aria-invalid="true"] {
+  border-color: #b3372c;
+}
+
+/* 迷惑送信対策の入力欄（人には見せない） */
+.contact-form__hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* --- 同意チェックボックス：押しやすい大きさと範囲にする --- */
+.contact-form__row--checkbox label,
+.contact-form .contact-form__row--checkbox label {
+  position: static;
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  align-items: center;
+  column-gap: var(--space-3);
+  min-height: 52px;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  cursor: pointer;
+}
+
+.contact-form__row--checkbox input[type="checkbox"],
+.contact-form .contact-form__row--checkbox input[type="checkbox"] {
+  position: static;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--color-bronze);
+  cursor: pointer;
+}
+
+.contact-form__row--checkbox a {
+  color: var(--color-bronze-dark);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact-form__row--checkbox input[aria-invalid="true"] + span {
+  color: #b3372c;
+}
+
+/* --- 送信ボタン：スマホでは横幅いっぱいにして押しやすく --- */
+@media (max-width: 559px) {
+  .contact-form__submit {
+    align-self: stretch;
+  }
+}
+
+/* --- 送信結果（完了・失敗）：目立つ枠で表示 --- */
+.contact-form__note {
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-left-width: 3px;
+  border-radius: var(--radius-sm);
+  background: var(--color-white);
+  color: var(--text-on-light);
+}
+
+.contact-form__note:focus {
+  outline: none;
+}
+
+.contact-form__note:focus-visible {
+  outline: 2px solid var(--color-bronze);
+  outline-offset: 2px;
+}
+
+.contact-form__note-title {
+  font-family: var(--font-serif);
+  font-size: var(--fs-md);
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.contact-form__note-text {
+  margin-top: var(--space-1);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+}
+
+.contact-form__note--success {
+  border-left-color: var(--color-bronze);
+  color: var(--text-on-light);
+}
+
+.contact-form__note--success .contact-form__note-title {
+  color: var(--color-bronze-dark);
+}
+
+.contact-form__note--error {
+  border-left-color: #b3372c;
+  color: var(--text-on-light);
+}
+
+.contact-form__note--error .contact-form__note-title {
+  color: #b3372c;
+}
+
+/* --- ご相談について・無料床下点検の流れ --- */
+.contact-info {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.contact-info__assurance {
+  padding: var(--space-5);
+  border-left: 3px solid var(--color-bronze);
+  background: var(--color-bg-alt);
+}
+
+.contact-info__label {
+  margin-bottom: var(--space-2);
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--color-bronze);
+}
+
+.contact-info__text {
+  font-size: var(--fs-sm);
+  line-height: 1.9;
+  color: var(--text-on-light);
+}
+
+/* 既存の .contact__aside（流れ・対応エリア）は .contact-info の中で使う */
+.contact-info .contact__aside {
+  position: static;
+}
+
+@media (max-width: 559px) {
+  .contact-form {
+    padding: var(--space-5);
+  }
+}
+
+@media (min-width: 1024px) {
+  .contact__layout {
+    grid-template-columns: minmax(0, 640px) minmax(0, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-template-areas:
+      "form quick"
+      "form info";
+    column-gap: var(--space-8);
+    row-gap: var(--space-5);
+    align-items: start;
+  }
+
+  /* grid-area で既存の grid-column: 1 / grid-row: 1 指定を上書きする */
+  .contact__layout .contact-form {
+    grid-area: form;
+  }
+
+  .contact-quick {
+    grid-area: quick;
+    padding: var(--space-6);
+  }
+
+  .contact-info {
+    grid-area: info;
+    position: sticky;
+    top: calc(var(--header-height) + var(--space-5));
+  }
+
+  .contact-info .contact__aside {
+    grid-column: auto;
+    grid-row: auto;
+    position: static;
+  }
+}
+
+/* --- スマホ固定CTA --- */
+/* フォーム入力中は隠し、入力欄やキーボードと重ならないようにする */
+.fixed-cta {
+  transition: transform var(--transition-base), visibility var(--transition-base);
+}
+
+body.is-form-focused .fixed-cta {
+  transform: translateY(100%);
+  visibility: hidden;
+}
+
+/* 1024〜1199px：ヘッダーの相談ボタンは1200px以上でのみ表示されるため、
+   この幅でも固定CTAを表示して相談導線を確保する */
+@media (min-width: 1024px) and (max-width: 1199px) {
+  .fixed-cta {
+    display: grid;
+  }
+
+  body {
+    padding-bottom: var(--fixed-cta-height);
+  }
+
+  /* ファーストビュー（.hero / .sp-hero）が見えている間は固定CTAを隠し、
+     スクロール矢印やファーストビュー内のボタンと重ならないようにする。
+     判定は js/main.js（html.js-cta-watch / body.is-past-hero）。JSが動かない場合は常に表示 */
+  .js-cta-watch body:not(.is-past-hero) .fixed-cta {
+    transform: translateY(100%);
+    visibility: hidden;
+  }
+}
+
+/* 1024〜1099px：右列が狭く2つ並ぶと文字が収まらないため縦に積む */
+@media (min-width: 1024px) and (max-width: 1099px) {
+  .contact-quick__btns {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* スマホ：相談ボタンから移動した直後に、LINE・電話とフォームの入力欄が
+   見えるよう、お問い合わせ欄の上余白だけを少し詰める */
+@media (max-width: 767px) {
+  .section.contact {
+    padding-top: var(--space-8);
+  }
+
+  .contact__lead {
+    margin-bottom: var(--space-5);
+  }
+
+  .contact__layout {
+    gap: var(--space-5);
+  }
+}
+
+@media (max-width: 559px) {
+  .contact-form__note-title {
+    font-size: var(--fs-base);
+  }
+}

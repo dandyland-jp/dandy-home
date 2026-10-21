@@ -70,8 +70,26 @@
   }
 
   /* ------------------------------------------------------------------
+   * 固定CTA（1024〜1199px）：ファーストビューを過ぎてから表示する
+   * この幅ではヘッダーの相談ボタンが出ないため固定CTAで導線を確保するが、
+   * ファーストビュー表示中はスクロール矢印・ボタンと重ならないよう隠す（表示の切り替えは CSS）。
+   * ------------------------------------------------------------------ */
+  var firstView = document.querySelector(".hero, .sp-hero");
+  if (firstView && "IntersectionObserver" in window) {
+    document.documentElement.classList.add("js-cta-watch");
+    new IntersectionObserver(function (entries) {
+      document.body.classList.toggle("is-past-hero", !entries[0].isIntersecting);
+    }).observe(firstView);
+  }
+
+  /* ------------------------------------------------------------------
    * お問い合わせフォーム（Formspree 接続 / Ajax 送信）
    * エンドポイント: https://formspree.io/f/xaenobnw
+   * ・必須：お名前／メールアドレスか電話番号のどちらか一方／プライバシーポリシーへの同意
+   *   （HTML側の required は「お名前」「同意」のみ。連絡先はここで判定する）
+   * ・入力エラー時は最初のエラー項目へ移動し、aria-invalid で読み上げにも伝える
+   * ・メールアドレスが空欄のときは email 項目を送らない（Formspree の形式チェック対策）
+   * ・入力中はスマホ固定CTAを隠し、入力欄やキーボードと重ならないようにする
    * ------------------------------------------------------------------ */
   var form = document.getElementById("contact-form");
   var note = document.getElementById("contact-form-note");
@@ -80,63 +98,142 @@
     var submitBtn = form.querySelector(".contact-form__submit");
     var submitBtnDefaultText = submitBtn ? submitBtn.textContent : "";
     var isSubmitting = false;
+    var fieldIds = ["cf-name", "cf-email", "cf-tel", "cf-privacy"];
+    var failMessage =
+      "通信状況をご確認のうえ、時間をおいて再度お試しください。お急ぎの場合は、LINEまたはお電話（042-816-3369）でもご相談いただけます。";
 
     function setFieldError(id, message) {
       var errorEl = document.getElementById(id + "-error");
+      var input = document.getElementById(id);
       if (errorEl) errorEl.textContent = message || "";
+      if (input) {
+        if (message) {
+          input.setAttribute("aria-invalid", "true");
+        } else {
+          input.removeAttribute("aria-invalid");
+        }
+      }
     }
 
     function clearErrors() {
-      setFieldError("cf-name", "");
-      setFieldError("cf-email", "");
-      setFieldError("cf-privacy", "");
+      fieldIds.forEach(function (id) {
+        setFieldError(id, "");
+      });
     }
 
     function hideNote() {
       if (!note) return;
       note.hidden = true;
       note.textContent = "";
+      note.removeAttribute("role");
       note.classList.remove("contact-form__note--success", "contact-form__note--error");
     }
 
-    function showNote(message, isSuccess) {
+    // 送信結果は目立つ枠で表示し、フォーカスを移して読み上げ・スクロールさせる
+    function showNote(title, message, isSuccess) {
       if (!note) return;
-      note.textContent = message;
-      note.hidden = false;
+      note.textContent = "";
+      var titleEl = document.createElement("p");
+      titleEl.className = "contact-form__note-title";
+      titleEl.textContent = title;
+      var textEl = document.createElement("p");
+      textEl.className = "contact-form__note-text";
+      textEl.textContent = message;
+      note.appendChild(titleEl);
+      note.appendChild(textEl);
+      note.setAttribute("role", isSuccess ? "status" : "alert");
       note.classList.remove("contact-form__note--success", "contact-form__note--error");
       note.classList.add(isSuccess ? "contact-form__note--success" : "contact-form__note--error");
+      note.hidden = false;
+      note.focus({ preventScroll: true });
+      note.scrollIntoView({ block: "center", behavior: "smooth" });
+    }
+
+    // 全角数字・記号を半角にそろえてから、数字の桁数で電話番号らしさを判定する
+    function normalizeTel(value) {
+      return value
+        .replace(/[０-９]/g, function (c) {
+          return String.fromCharCode(c.charCodeAt(0) - 0xfee0);
+        })
+        .replace(/[ー－‐−―]/g, "-")
+        .trim();
+    }
+
+    function isValidTel(value) {
+      if (!/^[0-9+\-()（）\s]+$/.test(value)) return false;
+      var digits = value.replace(/\D/g, "");
+      return digits.length >= 10 && digits.length <= 13;
     }
 
     function validateForm() {
-      var valid = true;
+      var firstInvalid = null;
       var nameInput = document.getElementById("cf-name");
       var emailInput = document.getElementById("cf-email");
+      var telInput = document.getElementById("cf-tel");
       var privacyInput = document.getElementById("cf-privacy");
 
-      if (nameInput && !nameInput.value.trim()) {
-        setFieldError("cf-name", "お名前を入力してください。");
-        valid = false;
+      function fail(input, id, message) {
+        setFieldError(id, message);
+        if (!firstInvalid) firstInvalid = input;
       }
 
-      if (emailInput) {
-        var emailValue = emailInput.value.trim();
-        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailValue) {
-          setFieldError("cf-email", "メールアドレスを入力してください。");
-          valid = false;
-        } else if (!emailPattern.test(emailValue)) {
-          setFieldError("cf-email", "メールアドレスの形式が正しくありません。");
-          valid = false;
+      if (nameInput && !nameInput.value.trim()) {
+        fail(nameInput, "cf-name", "お名前を入力してください。");
+      }
+
+      var emailValue = emailInput ? emailInput.value.trim() : "";
+      var telValue = telInput ? normalizeTel(telInput.value) : "";
+      if (telInput) telInput.value = telValue;
+
+      if (!emailValue && !telValue) {
+        var both = "メールアドレスか電話番号の、どちらか一方を入力してください。";
+        // メッセージはメール欄の下に1回だけ出し、電話欄は枠の強調のみ
+        fail(emailInput, "cf-email", both);
+        if (telInput) telInput.setAttribute("aria-invalid", "true");
+      } else {
+        if (emailValue && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue)) {
+          fail(emailInput, "cf-email", "メールアドレスの形式が正しくありません。（例：name@example.com）");
+        }
+        if (telValue && !isValidTel(telValue)) {
+          fail(telInput, "cf-tel", "電話番号の形式をご確認ください。（例：042-816-3369）");
         }
       }
 
       if (privacyInput && !privacyInput.checked) {
-        setFieldError("cf-privacy", "プライバシーポリシーへの同意が必要です。");
-        valid = false;
+        fail(privacyInput, "cf-privacy", "プライバシーポリシーへの同意が必要です。");
       }
 
-      return valid;
+      if (firstInvalid) {
+        firstInvalid.focus({ preventScroll: true });
+        firstInvalid.scrollIntoView({ block: "center", behavior: "smooth" });
+        return false;
+      }
+      return true;
     }
+
+    // 入力し直したら、その項目のエラー表示を消す（連絡先はメール・電話の両方）
+    form.addEventListener("input", function (e) {
+      var id = e.target && e.target.id;
+      if (id === "cf-email" || id === "cf-tel") {
+        setFieldError("cf-email", "");
+        setFieldError("cf-tel", "");
+      } else if (fieldIds.indexOf(id) !== -1) {
+        setFieldError(id, "");
+      }
+    });
+    form.addEventListener("change", function (e) {
+      if (e.target && e.target.id === "cf-privacy" && e.target.checked) setFieldError("cf-privacy", "");
+    });
+
+    // 入力中はスマホ固定CTAを隠す
+    form.addEventListener("focusin", function () {
+      document.body.classList.add("is-form-focused");
+    });
+    form.addEventListener("focusout", function () {
+      setTimeout(function () {
+        if (!form.contains(document.activeElement)) document.body.classList.remove("is-form-focused");
+      }, 0);
+    });
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
@@ -147,7 +244,11 @@
 
       if (!validateForm()) return;
 
+      var data = new FormData(form);
+      if (!String(data.get("email") || "").trim()) data.delete("email");
+
       isSubmitting = true;
+      form.setAttribute("aria-busy", "true");
       if (submitBtn) {
         submitBtn.disabled = true;
         submitBtn.textContent = "送信中...";
@@ -155,25 +256,41 @@
 
       fetch(form.action, {
         method: "POST",
-        body: new FormData(form),
+        body: data,
         headers: { Accept: "application/json" },
       })
         .then(function (response) {
           if (response.ok) {
             showNote(
-              "お問い合わせありがとうございます。内容を確認のうえ、担当者よりご連絡いたします。",
+              "ご相談ありがとうございます。",
+              "内容を確認のうえ、担当者よりご連絡いたします。",
               true
             );
             form.reset();
-          } else {
-            showNote("送信できませんでした。お手数ですが、時間をおいて再度お試しください。", false);
+            return;
           }
+          return response
+            .json()
+            .catch(function () {
+              return null;
+            })
+            .then(function (body) {
+              var errors = (body && body.errors) || [];
+              var emailError = errors.some(function (err) {
+                return err && err.field === "email";
+              });
+              if (emailError) {
+                setFieldError("cf-email", "メールアドレスの形式が正しくありません。（例：name@example.com）");
+              }
+              showNote("送信できませんでした。", failMessage, false);
+            });
         })
         .catch(function () {
-          showNote("送信できませんでした。お手数ですが、時間をおいて再度お試しください。", false);
+          showNote("送信できませんでした。", failMessage, false);
         })
         .finally(function () {
           isSubmitting = false;
+          form.removeAttribute("aria-busy");
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.textContent = submitBtnDefaultText;
