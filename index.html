@@ -325,7 +325,7 @@
        施工例を増やすときは、下の <li class="works-card"> を1つ複製し、施工カテゴリ名・画像（/images/works/）・alt を差し替えるだけでよい。
        ・お客様向けに表示するのは施工カテゴリ名（works-card__title）。管理用の番号は data-case 属性に残す（画面には出さない）。
        ・施工カテゴリ名は次の表記に統一する（data-category にも同じ名称を入れる）：
-         基礎補強／シロアリ防除／木部補強／耐震補強／湿気・カビ対策／排水管高圧洗浄／木部防腐・防カビ工事
+         基礎補強／シロアリ防除／木部補強／耐震補強／湿気・カビ対策／排水管高圧洗浄／木部防腐・防カビ工事／基礎コンクリート補修・補強工事
        ・写真のラベルは「施工前」「施工中」「施工後」「シロアリ被害」「薬剤処理箇所」のみ（メイン2枚は works-card__tag、補助写真は figcaption）。
          ゴールドのラベル（works-card__tag--after）は「施工中」「施工後」「薬剤処理箇所」にだけ付ける。
          補足表記（別の箇所・別角度など）や「※」の注記は付けない。
@@ -348,6 +348,25 @@
       </div>
 
       <ul class="works__track" id="works-track" tabindex="0" aria-label="施工事例ギャラリー（横にスクロールできます）">
+        <li class="works-card" data-case="20" data-category="基礎コンクリート補修・補強工事">
+          <div class="works-card__head">
+            <h3 class="works-card__title">基礎コンクリート補修・補強工事</h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-20-before.jpg" alt="補修・補強前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-20-progress.jpg" alt="アラミド繊維シートによる基礎コンクリート補強の施工中" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-20-after.jpg" alt="アラミド繊維シートを使用した補強工事の施工完了後" width="1000" height="750" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+        </li>
         <li class="works-card" data-case="19" data-category="木部防腐・防カビ工事">
           <div class="works-card__head">
             <h3 class="works-card__title">木部防腐・防カビ工事</h3>
