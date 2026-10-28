@@ -31,7 +31,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
     rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;800;900&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;900&display=swap"
   >
 
   <link rel="stylesheet" href="/css/style.css?v=20261021-1">
@@ -101,13 +101,13 @@
       <a href="/#top" class="brand" aria-label="DANDY HOME トップへ">
         <span
           class="brand__icon"
-          style="background-image: url('/images/logo/dandy-home-logo.png');"
+          style="background-image: url('/images/logo/dandy-home-logo.png'); background-image: image-set(url('/images/logo/dandy-home-logo.webp') type('image/webp'), url('/images/logo/dandy-home-logo.png') type('image/png'));"
           role="img"
           aria-label="DANDY HOME（ダンディホーム）"
         ></span>
         <span
           class="brand__wordmark"
-          style="background-image: url('/images/logo/dandy-home-logo.png');"
+          style="background-image: url('/images/logo/dandy-home-logo.png'); background-image: image-set(url('/images/logo/dandy-home-logo.webp') type('image/webp'), url('/images/logo/dandy-home-logo.png') type('image/png'));"
           aria-hidden="true"
         ></span>
       </a>
@@ -655,13 +655,16 @@
   <footer class="site-footer" id="site-footer">
     <div class="container footer-layout">
       <div class="footer-brand">
-        <img
-          class="footer-brand__logo"
-          src="/images/logo/dandy-home-logo.png"
-          alt="DANDY HOME（ダンディホーム）"
-          width="800"
-          height="720"
-        >
+        <picture>
+          <source type="image/webp" srcset="/images/logo/dandy-home-logo.webp">
+          <img
+            class="footer-brand__logo"
+            src="/images/logo/dandy-home-logo.png"
+            alt="DANDY HOME（ダンディホーム）"
+            width="800"
+            height="720"
+          >
+        </picture>
         <p class="footer-brand__kana">ダンディホーム</p>
         <p class="footer-brand__tagline">― 家の命を守る。 ―</p>
       </div>
