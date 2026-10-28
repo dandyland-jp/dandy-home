@@ -307,6 +307,11 @@
    *  2) スクロールが止まった時点で前後の複製セット側にいたら、
    *     見た目が同じ本物セットの位置へ瞬時に移す（1セット分だけずらすので画面は変わらない）
    *  3) 左右ボタンはカード1枚分ずつ送る（端でも無効化しない）
+   *  4) 画像は表示位置の近く（前後1.5画面分）のカードだけ読み込む。
+   *     複製は <template> 内で組み立てて src を data-src に退避し、初回表示時に通信させない
+   *     （cloneNode で複製すると文書外の画像は loading="lazy" が効かず、全写真を即座に読み込んでしまうため）。
+   *     同じ事例の本物・複製（data-works-index が同じカード）はまとめて読み込み、
+   *     ループの位置合わせで本物⇔複製が入れ替わっても空白にならないようにする。
    * カード枚数はDOMから取得するため、.works-card を増やしてもこの処理の変更は不要。
    * ------------------------------------------------------------------ */
   var worksTrack = document.getElementById("works-track");
@@ -318,8 +323,25 @@
     var worksCount = worksOriginals.length;
     var worksLoop = worksCount >= 2;
 
+    worksOriginals.forEach(function (card, i) {
+      card.setAttribute("data-works-index", String(i));
+    });
+
+    // 画像の読み込み先を data-* に退避する（表示が近づいたら loadWorksCard で戻す）
+    function deferWorksImage(img) {
+      ["srcset", "src"].forEach(function (attr) {
+        if (img.hasAttribute(attr)) {
+          img.setAttribute("data-" + attr, img.getAttribute(attr));
+          img.removeAttribute(attr);
+        }
+      });
+    }
+
     function makeWorksClone(card) {
-      var clone = card.cloneNode(true);
+      // <template> の中は画像を読み込まない（inert）ため、ここで組み立ててから並べる
+      var tpl = document.createElement("template");
+      tpl.innerHTML = card.outerHTML;
+      var clone = tpl.content.firstElementChild;
       // 複製は読み上げ・キーボード操作の対象外にする（タップで詳細を開くことはできる）
       clone.setAttribute("aria-hidden", "true");
       clone.classList.add("works-card--clone");
@@ -329,6 +351,7 @@
       clone.removeAttribute("data-case");
       Array.prototype.forEach.call(clone.querySelectorAll("img"), function (img) {
         img.setAttribute("alt", "");
+        deferWorksImage(img);
       });
       return clone;
     }
@@ -342,6 +365,50 @@
       });
       worksTrack.insertBefore(worksBefore, worksOriginals[0]);
       worksTrack.appendChild(worksAfter);
+    }
+
+    // 指定したカードの写真を読み込む（srcset → src の順に戻し、lazy も解除する）
+    function loadWorksCard(card) {
+      Array.prototype.forEach.call(card.querySelectorAll("img"), function (img) {
+        ["srcset", "src"].forEach(function (attr) {
+          var v = img.getAttribute("data-" + attr);
+          if (v !== null) {
+            img.setAttribute(attr, v);
+            img.removeAttribute("data-" + attr);
+          }
+        });
+        if (img.loading === "lazy") img.loading = "eager";
+      });
+    }
+
+    // 表示中の前後1.5画面分にあるカードを、本物・複製まとめて読み込む
+    var worksLoadedIndex = {};
+    var worksNear = false;
+    function warmWorks() {
+      if (!worksNear) return;
+      var view = worksTrack.getBoundingClientRect();
+      var margin = view.width * 1.5;
+      Array.prototype.forEach.call(worksTrack.querySelectorAll(".works-card"), function (card) {
+        var idx = card.getAttribute("data-works-index");
+        if (idx === null || worksLoadedIndex[idx]) return;
+        var r = card.getBoundingClientRect();
+        if (r.right > view.left - margin && r.left < view.right + margin) {
+          worksLoadedIndex[idx] = true;
+          Array.prototype.forEach.call(
+            worksTrack.querySelectorAll('.works-card[data-works-index="' + idx + '"]'),
+            loadWorksCard
+          );
+        }
+      });
+    }
+    var worksWarmQueued = false;
+    function queueWarmWorks() {
+      if (worksWarmQueued) return;
+      worksWarmQueued = true;
+      requestAnimationFrame(function () {
+        worksWarmQueued = false;
+        warmWorks();
+      });
     }
 
     // カード左端のスクロール位置（scroll-padding 分を差し引いた、スナップ位置と同じ基準）
@@ -380,6 +447,7 @@
 
     function moveWorks(direction) {
       normalizeWorks();
+      warmWorks();
       worksTrack.scrollBy({ left: direction * worksStep(), behavior: "smooth" });
     }
 
@@ -399,6 +467,7 @@
     worksTrack.addEventListener(
       "scroll",
       function () {
+        queueWarmWorks();
         clearTimeout(worksIdleTimer);
         worksIdleTimer = setTimeout(normalizeWorks, 160);
       },
@@ -417,10 +486,29 @@
       worksTrack.scrollLeft = worksPos(worksOriginals[0]);
     }
     resetWorks();
+
+    // WORKSが画面に近づいたら（上下800px手前から）写真の読み込みを始める
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(
+        function (entries) {
+          if (entries[0].isIntersecting) {
+            worksNear = true;
+            warmWorks();
+          }
+        },
+        { rootMargin: "800px 0px" }
+      ).observe(worksSection);
+    } else {
+      worksNear = true;
+      warmWorks();
+    }
     var worksResizeTimer = null;
     window.addEventListener("resize", function () {
       clearTimeout(worksResizeTimer);
-      worksResizeTimer = setTimeout(normalizeWorks, 160);
+      worksResizeTimer = setTimeout(function () {
+        normalizeWorks();
+        warmWorks();
+      }, 160);
     });
 
     // 施工内容の詳細：data-detail を持つカード（複製を含む）をタップすると、

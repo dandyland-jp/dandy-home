@@ -36,6 +36,9 @@
     href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;800;900&display=swap"
   >
 
+  <!-- ファーストビュー背景（LCP）を先に読み込む。CSSと同じく767px以下はスマホ用の写真 -->
+  <link rel="preload" as="image" href="/images/hero/hero-foundation-mobile.jpg" media="(max-width: 767px)" fetchpriority="high">
+  <link rel="preload" as="image" href="/images/hero/hero-foundation.jpg" media="(min-width: 768px)" fetchpriority="high">
   <link rel="stylesheet" href="/css/style.css?v=20261021-1">
 
   <!-- 構造化データ（LocalBusiness）。会社情報確定に応じ src/templates/layout.js の
@@ -221,7 +224,7 @@
         
       <li class="symptom-detail-card">
         <div class="symptom-detail-card__photo">
-          <img src="/images/symptoms/crack.jpg" alt="基礎のひび割れ" width="800" height="530" />
+          <img loading="lazy" decoding="async" src="/images/symptoms/crack.jpg" alt="基礎のひび割れ" width="800" height="530" />
         </div>
         <div class="symptom-detail-card__body">
           <p class="symptom-detail-card__title">基礎のひび割れ</p>
@@ -243,7 +246,7 @@
       </li>
       <li class="symptom-detail-card">
         <div class="symptom-detail-card__photo">
-          <img src="/images/symptoms/termite.jpg" alt="木部の劣化・蟻害" width="800" height="530" />
+          <img loading="lazy" decoding="async" src="/images/symptoms/termite.jpg" alt="木部の劣化・蟻害" width="800" height="530" />
         </div>
         <div class="symptom-detail-card__body">
           <p class="symptom-detail-card__title">木部の劣化・蟻害</p>
@@ -265,7 +268,7 @@
       </li>
       <li class="symptom-detail-card">
         <div class="symptom-detail-card__photo">
-          <img src="/images/symptoms/moisture.jpg" alt="湿気・カビ" width="800" height="530" />
+          <img loading="lazy" decoding="async" src="/images/symptoms/moisture.jpg" alt="湿気・カビ" width="800" height="530" />
         </div>
         <div class="symptom-detail-card__body">
           <p class="symptom-detail-card__title">湿気・カビ</p>
@@ -287,7 +290,7 @@
       </li>
       <li class="symptom-detail-card">
         <div class="symptom-detail-card__photo">
-          <img src="/images/symptoms/sagging.jpg" alt="床の沈み・きしみ" width="800" height="530" />
+          <img loading="lazy" decoding="async" src="/images/symptoms/sagging.jpg" alt="床の沈み・きしみ" width="800" height="530" />
         </div>
         <div class="symptom-detail-card__body">
           <p class="symptom-detail-card__title">床の沈み・きしみ</p>
@@ -354,15 +357,15 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-20-before.jpg" alt="補修・補強前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-20-before.jpg" srcset="/images/works/works-20-before-640.jpg 640w, /images/works/works-20-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補修・補強前の基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-20-progress.jpg" alt="アラミド繊維シートによる基礎コンクリート補強の施工中" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-20-progress.jpg" srcset="/images/works/works-20-progress-640.jpg 640w, /images/works/works-20-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="アラミド繊維シートによる基礎コンクリート補強の施工中" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-20-after.jpg" alt="アラミド繊維シートを使用した補強工事の施工完了後" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-20-after.jpg" srcset="/images/works/works-20-after-640.jpg 640w, /images/works/works-20-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="アラミド繊維シートを使用した補強工事の施工完了後" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -373,15 +376,15 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-19-before.jpg" alt="防腐・防カビ処理前の床下の木部（大引き・根太・床板）" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-19-before.jpg" srcset="/images/works/works-19-before-640.jpg 640w, /images/works/works-19-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="防腐・防カビ処理前の床下の木部（大引き・根太・床板）" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-19-after.jpg" alt="防腐・防カビの薬剤処理後の床下の木部（施工前と同じ場所）" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-19-after.jpg" srcset="/images/works/works-19-after-640.jpg 640w, /images/works/works-19-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="防腐・防カビの薬剤処理後の床下の木部（施工前と同じ場所）" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-19-closeup.jpg" alt="床板と根太の表面に薬剤を処理した箇所の拡大" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-19-closeup.jpg" srcset="/images/works/works-19-closeup-640.jpg 640w, /images/works/works-19-closeup.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床板と根太の表面に薬剤を処理した箇所の拡大" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">薬剤処理箇所</span></figcaption>
             </figure>
           </div>
@@ -392,18 +395,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-02-before.jpg" alt="換気口まわりを含む基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-02-before.jpg" srcset="/images/works/works-02-before-640.jpg 640w, /images/works/works-02-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="換気口まわりを含む基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-02-after.jpg" alt="補強後に仕上げを施した、換気口まわりを含む基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-02-after.jpg" srcset="/images/works/works-02-after-640.jpg 640w, /images/works/works-02-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強後に仕上げを施した、換気口まわりを含む基礎面" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-02-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-02-progress.jpg" srcset="/images/works/works-02-progress-320.jpg 320w, /images/works/works-02-progress.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption>施工中</figcaption>
                 </figure>
               </li>
@@ -415,11 +418,11 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-10-damage.jpg" alt="建物外側の基礎表面に見られるシロアリの蟻道" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-10-damage.jpg" srcset="/images/works/works-10-damage-640.jpg 640w, /images/works/works-10-damage.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="建物外側の基礎表面に見られるシロアリの蟻道" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-10-progress.jpg" alt="建物外周の基礎まわりの土壌に薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-10-progress.jpg" srcset="/images/works/works-10-progress-640.jpg 640w, /images/works/works-10-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="建物外周の基礎まわりの土壌に薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
@@ -430,18 +433,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-03-before.jpg" alt="換気口のある基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-03-before.jpg" srcset="/images/works/works-03-before-640.jpg 640w, /images/works/works-03-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="換気口のある基礎コンクリート。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-12-after.jpg" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-12-after.jpg" srcset="/images/works/works-12-after-640.jpg 640w, /images/works/works-12-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強後に仕上げを施した、換気口まわりの基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-03-progress.jpg" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-03-progress.jpg" srcset="/images/works/works-03-progress-640.jpg 640w, /images/works/works-03-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="換気口まわりの基礎面に繊維シートを貼り付けた施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
                   <figcaption>施工中</figcaption>
                 </figure>
               </li>
@@ -453,11 +456,11 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-14-before.jpg" alt="黒ずみが見られる床下の地面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-14-before.jpg" srcset="/images/works/works-14-before-640.jpg 640w, /images/works/works-14-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="黒ずみが見られる床下の地面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-14-after.jpg" alt="床下の地面一面に白い調湿材を敷設した施工後の様子。奥に換気口が見える" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-14-after.jpg" srcset="/images/works/works-14-after-640.jpg 640w, /images/works/works-14-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の地面一面に白い調湿材を敷設した施工後の様子。奥に換気口が見える" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -468,11 +471,11 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-12-after-2.jpg" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-12-after-2.jpg" srcset="/images/works/works-12-after-2-640.jpg 640w, /images/works/works-12-after-2.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-12-after-sub.jpg" alt="補強後に仕上げを施した基礎面（施工後）" width="640" height="480" loading="lazy" decoding="async" />
+              <img src="/images/works/works-12-after-sub.jpg" srcset="/images/works/works-12-after-sub-320.jpg 320w, /images/works/works-12-after-sub.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="補強後に仕上げを施した基礎面（施工後）" width="640" height="480" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -483,11 +486,11 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-06-before.jpg" alt="床下の木部と基礎まわり。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-06-before.jpg" srcset="/images/works/works-06-before-640.jpg 640w, /images/works/works-06-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の木部と基礎まわり。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-06-progress.jpg" alt="床下の木部と基礎まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-06-progress.jpg" srcset="/images/works/works-06-progress-640.jpg 640w, /images/works/works-06-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の木部と基礎まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
@@ -498,18 +501,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-05-before.jpg" alt="床下の長い基礎面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-05-before.jpg" srcset="/images/works/works-05-before-640.jpg 640w, /images/works/works-05-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の長い基礎面。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-05-after.jpg" alt="補強後に仕上げを施した長い基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-05-after.jpg" srcset="/images/works/works-05-after-640.jpg 640w, /images/works/works-05-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強後に仕上げを施した長い基礎面" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-05-after-angle.jpg" alt="補強後の基礎面を別の角度から撮影した様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-05-after-angle.jpg" srcset="/images/works/works-05-after-angle-320.jpg 320w, /images/works/works-05-after-angle.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="補強後の基礎面を別の角度から撮影した様子" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption>施工後</figcaption>
                 </figure>
               </li>
@@ -521,18 +524,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-07-damage.jpg" alt="シロアリ被害で内部が傷んだ床下の土台" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-07-damage.jpg" srcset="/images/works/works-07-damage-640.jpg 640w, /images/works/works-07-damage.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="シロアリ被害で内部が傷んだ床下の土台" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-07-progress.jpg" alt="被害のある土台まわりに薬剤を散布している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-07-progress.jpg" srcset="/images/works/works-07-progress-640.jpg 640w, /images/works/works-07-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="被害のある土台まわりに薬剤を散布している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-07-damage-sub.jpg" alt="シロアリ被害が見られる床下の土台" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-07-damage-sub.jpg" srcset="/images/works/works-07-damage-sub-320.jpg 320w, /images/works/works-07-damage-sub.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="シロアリ被害が見られる床下の土台" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption><span class="sp-phrase">シロアリ</span><span class="sp-phrase">被害</span></figcaption>
                 </figure>
               </li>
@@ -544,18 +547,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-09-after.jpg" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-09-after.jpg" srcset="/images/works/works-09-after-640.jpg 640w, /images/works/works-09-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強後に仕上げを施した基礎面" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-09-after-detail.jpg" alt="施工中の基礎面を近くから撮影した様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-09-after-detail.jpg" srcset="/images/works/works-09-after-detail-640.jpg 640w, /images/works/works-09-after-detail.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="施工中の基礎面を近くから撮影した様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-09-after-sub.jpg" alt="施工中の基礎面の表面" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-09-after-sub.jpg" srcset="/images/works/works-09-after-sub-320.jpg 320w, /images/works/works-09-after-sub.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="施工中の基礎面の表面" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption>施工中</figcaption>
                 </figure>
               </li>
@@ -567,11 +570,11 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-15-before.jpg" alt="湿気を帯びた床下の土壌。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-15-before.jpg" srcset="/images/works/works-15-before-640.jpg 640w, /images/works/works-15-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="湿気を帯びた床下の土壌。施工前の状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-15-after.jpg" alt="基礎沿いの床下の地面に白い調湿材を敷設した施工後の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-15-after.jpg" srcset="/images/works/works-15-after-640.jpg 640w, /images/works/works-15-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="基礎沿いの床下の地面に白い調湿材を敷設した施工後の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -582,15 +585,15 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-16-before.jpg" alt="補強施工前の床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-16-before.jpg" srcset="/images/works/works-16-before-640.jpg 640w, /images/works/works-16-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強施工前の床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-16-progress.jpg" alt="補強シートを施工している床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-16-progress.jpg" srcset="/images/works/works-16-progress-640.jpg 640w, /images/works/works-16-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強シートを施工している床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-16-after.jpg" alt="補強施工後に仕上げを施した床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-16-after.jpg" srcset="/images/works/works-16-after-640.jpg 640w, /images/works/works-16-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強施工後に仕上げを施した床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -601,24 +604,24 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-08-damage.jpg" alt="表面に土のような跡が付いた、シロアリ被害を受けた床下の木部" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-08-damage.jpg" srcset="/images/works/works-08-damage-640.jpg 640w, /images/works/works-08-damage.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="表面に土のような跡が付いた、シロアリ被害を受けた床下の木部" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-08-progress.jpg" alt="基礎と木部まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-08-progress.jpg" srcset="/images/works/works-08-progress-640.jpg 640w, /images/works/works-08-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="基礎と木部まわりに薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-08-damage-sub1.jpg" alt="シロアリ被害が見られる床下の木部と基礎" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-08-damage-sub1.jpg" srcset="/images/works/works-08-damage-sub1-320.jpg 320w, /images/works/works-08-damage-sub1.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="シロアリ被害が見られる床下の木部と基礎" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption><span class="sp-phrase">シロアリ</span><span class="sp-phrase">被害</span></figcaption>
                 </figure>
               </li>
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-08-damage-sub2.jpg" alt="シロアリ被害で傷んだ床下の木部" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-08-damage-sub2.jpg" srcset="/images/works/works-08-damage-sub2-320.jpg 320w, /images/works/works-08-damage-sub2.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="シロアリ被害で傷んだ床下の木部" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption><span class="sp-phrase">シロアリ</span><span class="sp-phrase">被害</span></figcaption>
                 </figure>
               </li>
@@ -630,15 +633,15 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-17-before.jpg" alt="補強施工前の床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-17-before.jpg" srcset="/images/works/works-17-before-640.jpg 640w, /images/works/works-17-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強施工前の床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-17-progress.jpg" alt="補強シートを施工している床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-17-progress.jpg" srcset="/images/works/works-17-progress-640.jpg 640w, /images/works/works-17-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強シートを施工している床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-17-after.jpg" alt="補強施工後に仕上げを施した床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-17-after.jpg" srcset="/images/works/works-17-after-640.jpg 640w, /images/works/works-17-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強施工後に仕上げを施した床下基礎コンクリート" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -649,18 +652,18 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-11-damage.jpg" alt="室内の床と壁の際に見られる多数のシロアリ" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-11-damage.jpg" srcset="/images/works/works-11-damage-640.jpg 640w, /images/works/works-11-damage.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="室内の床と壁の際に見られる多数のシロアリ" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">シロアリ被害</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-11-progress.jpg" alt="室内の柱と壁の際から薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-11-progress.jpg" srcset="/images/works/works-11-progress-640.jpg 640w, /images/works/works-11-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="室内の柱と壁の際から薬剤を処理している施工中の様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
           </div>
           <ul class="works-card__subs">
               <li class="works-card__sub">
                 <figure>
-                  <img src="/images/works/works-11-progress-sub.jpg" alt="壁の際の穴から薬剤を注入している施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
+                  <img src="/images/works/works-11-progress-sub.jpg" srcset="/images/works/works-11-progress-sub-320.jpg 320w, /images/works/works-11-progress-sub.jpg 640w" sizes="(min-width: 768px) 110px, calc(28vw - 24px)" alt="壁の際の穴から薬剤を注入している施工中の様子" width="640" height="480" loading="lazy" decoding="async" />
                   <figcaption>施工中</figcaption>
                 </figure>
               </li>
@@ -672,15 +675,15 @@
           </div>
           <div class="works-card__pair">
             <figure class="works-card__shot">
-              <img src="/images/works/works-18-before.jpg" alt="補強施工前の床下基礎コンクリートの状態" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-18-before.jpg" srcset="/images/works/works-18-before-640.jpg 640w, /images/works/works-18-before.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強施工前の床下基礎コンクリートの状態" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-18-progress.jpg" alt="床下の基礎コンクリートにアラミド繊維シートを施工している様子" width="1000" height="750" loading="lazy" decoding="async" />
+              <img src="/images/works/works-18-progress.jpg" srcset="/images/works/works-18-progress-640.jpg 640w, /images/works/works-18-progress.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の基礎コンクリートにアラミド繊維シートを施工している様子" width="1000" height="750" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
             </figure>
             <figure class="works-card__shot works-card__shot--after">
-              <img src="/images/works/works-18-after.jpg" alt="補強部分の表面仕上げが完了した床下基礎コンクリート" width="1000" height="652" loading="lazy" decoding="async" />
+              <img src="/images/works/works-18-after.jpg" srcset="/images/works/works-18-after-640.jpg 640w, /images/works/works-18-after.jpg 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="補強部分の表面仕上げが完了した床下基礎コンクリート" width="1000" height="652" loading="lazy" decoding="async" />
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
             </figure>
           </div>
@@ -697,7 +700,7 @@
           <li class="works-dialog__step">
             <figure>
               <div class="works-dialog__photo">
-                <img src="/images/works/works-18-before.jpg" alt="補強施工前の床下基礎コンクリートの状態" width="1000" height="750" loading="lazy" decoding="async" />
+                <img src="/images/works/works-18-before.jpg" srcset="/images/works/works-18-before-640.jpg 640w, /images/works/works-18-before.jpg 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="補強施工前の床下基礎コンクリートの状態" width="1000" height="750" loading="lazy" decoding="async" />
                 <span class="works-card__tag"><span class="works-card__tag-ja">施工前</span></span>
               </div>
               <figcaption>補強施工前の基礎コンクリートの状態</figcaption>
@@ -706,7 +709,7 @@
           <li class="works-dialog__step">
             <figure>
               <div class="works-dialog__photo">
-                <img src="/images/works/works-18-progress.jpg" alt="床下の基礎コンクリートにアラミド繊維シートを施工している様子" width="1000" height="750" loading="lazy" decoding="async" />
+                <img src="/images/works/works-18-progress.jpg" srcset="/images/works/works-18-progress-640.jpg 640w, /images/works/works-18-progress.jpg 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="床下の基礎コンクリートにアラミド繊維シートを施工している様子" width="1000" height="750" loading="lazy" decoding="async" />
                 <span class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></span>
               </div>
               <figcaption>アラミド繊維シートによる補強施工</figcaption>
@@ -715,7 +718,7 @@
           <li class="works-dialog__step">
             <figure>
               <div class="works-dialog__photo">
-                <img src="/images/works/works-18-after.jpg" alt="補強部分の表面仕上げが完了した床下基礎コンクリート" width="1000" height="652" loading="lazy" decoding="async" />
+                <img src="/images/works/works-18-after.jpg" srcset="/images/works/works-18-after-640.jpg 640w, /images/works/works-18-after.jpg 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="補強部分の表面仕上げが完了した床下基礎コンクリート" width="1000" height="652" loading="lazy" decoding="async" />
                 <span class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></span>
               </div>
               <figcaption>補強部分の表面仕上げ完了</figcaption>
@@ -744,7 +747,7 @@
         
       <li class="capability-item" id="service-foundation-repair">
         <div class="capability-item__photo">
-          <img src="/images/services/foundation-repair.jpg" alt="基礎のひび割れにエポキシ樹脂を注入している施工写真" width="1536" height="1024" />
+          <img loading="lazy" decoding="async" src="/images/services/foundation-repair.jpg" alt="基礎のひび割れにエポキシ樹脂を注入している施工写真" width="1536" height="1024" />
         </div>
         <span class="capability-item__rule" aria-hidden="true"></span>
         <p class="capability-item__number">01</p>
@@ -754,7 +757,7 @@
       </li>
       <li class="capability-item" id="service-underfloor-repair">
         <div class="capability-item__photo">
-          <img src="/images/case-studies/underfloor-07-hardware-joint.jpg" alt="床下の木部同士の接合部分に施工した補強金物" width="1600" height="1200" />
+          <img loading="lazy" decoding="async" src="/images/case-studies/underfloor-07-hardware-joint.jpg" alt="床下の木部同士の接合部分に施工した補強金物" width="1600" height="1200" />
         </div>
         <span class="capability-item__rule" aria-hidden="true"></span>
         <p class="capability-item__number">02</p>
@@ -764,7 +767,7 @@
       </li>
       <li class="capability-item" id="service-termite">
         <div class="capability-item__photo">
-          <img src="/images/services/termite-treatment.jpg" alt="床下のシロアリ防除イメージ" width="1536" height="1024" />
+          <img loading="lazy" decoding="async" src="/images/services/termite-treatment.jpg" alt="床下のシロアリ防除イメージ" width="1536" height="1024" />
         </div>
         <span class="capability-item__rule" aria-hidden="true"></span>
         <p class="capability-item__number">03</p>
@@ -774,7 +777,7 @@
       </li>
       <li class="capability-item" id="service-moisture">
         <div class="capability-item__photo">
-          <img src="/images/services/moisture-barrier.jpg" alt="床下に防湿シートを施工した状態の写真" width="1536" height="1024" />
+          <img loading="lazy" decoding="async" src="/images/services/moisture-barrier.jpg" alt="床下に防湿シートを施工した状態の写真" width="1536" height="1024" />
         </div>
         <span class="capability-item__rule" aria-hidden="true"></span>
         <p class="capability-item__number">04</p>
@@ -799,18 +802,18 @@
         <div class="case-preview-item__photo case-preview-item__photo--main">
           
       <div class="case-preview-item__main">
-        <img src="/images/case-studies/foundation-03-aramid.jpg" alt="アラミド繊維シートによる基礎補強施工後の様子" width="900" height="1200" loading="eager" />
+        <img src="/images/case-studies/foundation-03-aramid.jpg" alt="アラミド繊維シートによる基礎補強施工後の様子" width="900" height="1200" loading="lazy" decoding="async" />
       </div>
       <ul class="case-preview-subs">
         <li class="case-preview-sub">
           <div class="case-preview-sub__photo">
-            <img src="/images/case-studies/foundation-01-before.jpg" alt="補強前の基礎まわりの状態" width="900" height="1200" loading="eager" />
+            <img src="/images/case-studies/foundation-01-before.jpg" alt="補強前の基礎まわりの状態" width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-sub__label">施工前</p>
         </li>
         <li class="case-preview-sub">
           <div class="case-preview-sub__photo">
-            <img src="/images/case-studies/foundation-05-closeup.jpg" alt="基礎補強・保護施工後の様子" width="900" height="1200" loading="eager" />
+            <img src="/images/case-studies/foundation-05-closeup.jpg" alt="基礎補強・保護施工後の様子" width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-sub__label">施工後</p>
         </li></ul>
@@ -829,19 +832,19 @@
           <ul class="case-preview-steps">
         <li class="case-preview-step">
           <div class="case-preview-step__photo case-preview-step__photo--crack">
-            <img src="/images/case-studies/underfloor-01-wood-crack.jpg" alt="床下の木部に見られた割れ" width="1600" height="900" loading="eager" />
+            <img src="/images/case-studies/underfloor-01-wood-crack.jpg" alt="床下の木部に見られた割れ" width="1600" height="900" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>1</span><span class="case-step-text"><span class="sp-phrase">施工前｜</span><span class="sp-phrase">木部の割れ</span></span></p>
         </li>
         <li class="case-preview-step">
           <div class="case-preview-step__photo">
-            <img src="/images/case-studies/underfloor-02-aramid-after.jpg" alt="床下の木部にアラミド繊維を施工した補強後の様子" width="1600" height="1200" loading="eager" />
+            <img src="/images/case-studies/underfloor-02-aramid-after.jpg" alt="床下の木部にアラミド繊維を施工した補強後の様子" width="1600" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>2</span><span class="case-step-text"><span class="sp-phrase">木部補強｜</span><span class="sp-phrase">アラミド繊維施工</span></span></p>
         </li>
         <li class="case-preview-step">
           <div class="case-preview-step__photo">
-            <img src="/images/case-studies/underfloor-04-hardware-base.jpg" alt="床下の基礎と土台の接合部分に施工した補強金物" width="1600" height="1200" loading="eager" />
+            <img src="/images/case-studies/underfloor-04-hardware-base.jpg" alt="床下の基礎と土台の接合部分に施工した補強金物" width="1600" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>3</span><span class="case-step-text"><span class="sp-phrase">耐震補強｜</span><span class="sp-phrase">補強金物施工</span></span></p>
         </li>
@@ -860,19 +863,19 @@
           <ul class="case-preview-steps">
         <li class="case-preview-step">
           <div class="case-preview-step__photo">
-            <img src="/images/case-studies/termite-01-antway.jpg" alt="蟻道など床下の状態確認" width="900" height="1200" loading="eager" />
+            <img src="/images/case-studies/termite-01-antway.jpg" alt="蟻道など床下の状態確認" width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>1</span>状態確認</p>
         </li>
         <li class="case-preview-step">
           <div class="case-preview-step__photo">
-            <img src="/images/case-studies/termite-02-treatment.jpg" alt="シロアリ防除施工中の様子" width="900" height="1200" loading="eager" />
+            <img src="/images/case-studies/termite-02-treatment.jpg" alt="シロアリ防除施工中の様子" width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>2</span><span class="case-step-text"><span class="sp-phrase">防除</span><span class="sp-phrase">施工中</span></span></p>
         </li>
         <li class="case-preview-step">
           <div class="case-preview-step__photo">
-            <img src="/images/case-studies/termite-03-after.jpg" alt="シロアリ防除施工後の様子" width="900" height="1200" loading="eager" />
+            <img src="/images/case-studies/termite-03-after.jpg" alt="シロアリ防除施工後の様子" width="900" height="1200" loading="lazy" decoding="async" />
           </div>
           <p class="case-preview-step__label"><span>3</span>施工後</p>
         </li></ul>
@@ -1401,6 +1404,6 @@
     <a href="/#contact" class="fixed-cta__btn fixed-cta__btn--primary" aria-label="床下のことを相談する（ご相談窓口へ移動）">床下の相談</a><a href="tel:0428163369" class="fixed-cta__btn fixed-cta__btn--tel" aria-label="電話で相談（042-816-3369に発信します）"><svg class="fixed-cta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.7 3.5h2.4c.4 0 .8.3.9.7l.9 3c.1.4 0 .8-.3 1.1L9.1 9.6a12.4 12.4 0 0 0 5.3 5.3l1.3-1.5c.3-.3.7-.4 1.1-.3l3 .9c.4.1.7.5.7.9v2.4c0 1-.8 1.8-1.8 1.8C10.9 19.1 4.9 13.1 4.9 5.3c0-1 .8-1.8 1.8-1.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>電話で相談</span></a><a href="https://lin.ee/wMZ3Qpj" class="fixed-cta__btn fixed-cta__btn--line" target="_blank" rel="noopener noreferrer" aria-label="LINEで相談（公式LINE・新しいタブで開きます）"><svg class="fixed-cta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.5c-4.97 0-9 3.13-9 7 0 3.47 3.24 6.35 7.49 6.9l-.55 2.06c-.1.38.32.67.64.45l3.3-2.4C18 17.86 21 15 21 11.5c0-3.87-4.03-7-9-7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>LINEで相談</span></a>
   </div>
 
-  <script src="/js/main.js?v=20261021-1" defer></script>
+  <script src="/js/main.js?v=20261028-1" defer></script>
 </body>
 </html>
