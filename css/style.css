@@ -803,6 +803,23 @@ select {
   }
 }
 
+/* 表示速度の改善：WebP対応ブラウザでは、同じ写真を軽量なWebP形式で表示する
+   （inline styleの --hero-bg-pc-webp / --hero-bg-mobile-webp）。
+   写真の中身・配置・サイズ・明るさの指定は上のルールのまま変えない。
+   image-set() の type() に対応していないブラウザはこのブロックを丸ごと無視し、
+   上の --hero-bg-pc / --hero-bg-mobile（JPEG）で今までどおり表示する */
+@supports (background-image: image-set(url("a.webp") type("image/webp"))) {
+  .hero__bg {
+    background-image: var(--hero-bg-pc-webp, var(--hero-bg-pc));
+  }
+
+  @media (max-width: 767px) {
+    .hero__bg {
+      background-image: var(--hero-bg-mobile-webp, var(--hero-bg-mobile, var(--hero-bg-pc-webp, var(--hero-bg-pc))));
+    }
+  }
+}
+
 .hero__bg::after {
   content: "";
   position: absolute;
