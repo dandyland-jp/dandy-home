@@ -6051,3 +6051,50 @@ body.is-form-focused .fixed-cta {
     font-size: var(--fs-base);
   }
 }
+
+/* --- サービスページへの導線（内部リンク改善） ---
+   ドロワー（1199px以下）のみ「サービス」の下に3ページを表示する。
+   PC（1200px以上）のヘッダーは従来どおりで、項目・高さ・配置は変えない。 */
+.nav-link--sub {
+  padding-left: var(--space-5);
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+}
+
+@media (min-width: 1200px) {
+  .main-nav__sub {
+    display: none;
+  }
+}
+
+/* フッター：ナビゲーション列の「サービス」の下に3ページを字下げして並べる（列の数・幅は変えない） */
+.footer-nav__sub {
+  padding-left: var(--space-4);
+}
+
+/* TOP・WORKS：ギャラリーの下に、サービスページへの控えめなテキストリンクを並べる */
+.works__services {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-5);
+  margin-top: var(--space-6);
+  font-size: var(--fs-sm);
+  letter-spacing: 0.04em;
+}
+
+.works__services-label {
+  flex-basis: 100%;
+  font-size: var(--fs-xs);
+  color: var(--text-on-dark-muted);
+}
+
+.works__services a {
+  color: var(--color-bronze-light);
+  border-bottom: 1px solid rgba(169, 129, 47, 0.45);
+  transition: color var(--transition-fast);
+}
+
+.works__services a:hover {
+  color: var(--color-white);
+}
