@@ -27,12 +27,53 @@
   <link rel="icon" href="/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    rel="stylesheet"
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&family=Manrope:wght@400;500;600;700&family=Shippori+Mincho:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&family=Bodoni+Moda:wght@700;900&display=swap"
-  >
+  <!-- Webフォントは /fonts/ から自社配信（サイトで使う文字だけのサブセット＋予備フォント）。
+       文字を追加・変更したときは _tools/fonts/README.md の手順でサブセットを作り直す -->
+  <link rel="stylesheet" href="/fonts/fonts.css" media="print" id="site-fonts">
+  <script>
+    (function () {
+      // 読み込みの順番：ファーストビュー写真 → Webフォント → 予備フォントのCSS・画面外の写真。
+      // 写真の読み込みが終わってからWebフォントを有効にし（写真の読み込みが失敗・停止した場合の保険として最長8秒）、
+      // Webフォントの読み込みが終わったら（最長5秒）予備フォントのCSSを読み込んで firstviewloaded を知らせる
+      var sheet = document.getElementById('site-fonts'), on = false, ready = false;
+      function fontsOn() {
+        if (on) return;
+        on = true;
+        sheet.media = 'all';
+        requestAnimationFrame(function () { requestAnimationFrame(function () { document.fonts.ready.then(afterFonts); }); });
+        setTimeout(afterFonts, 5000);
+      }
+      function afterFonts() {
+        if (ready) return;
+        ready = true;
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = '/fonts/fonts-fallback.css';
+        sheet.parentNode.insertBefore(l, sheet);
+        window.firstViewLoaded = true;
+        dispatchEvent(new Event('firstviewloaded'));
+      }
+      var hero = [].filter.call(document.querySelectorAll('link[rel="preload"][as="image"]'), function (l) { return matchMedia(l.media || 'all').matches; })[0];
+      if (hero) { hero.addEventListener('load', fontsOn); hero.addEventListener('error', fontsOn); }
+      else {
+        // 背景写真のpreloadがないページは、最初の画面に表示される写真の読み込みを待つ
+        document.addEventListener('DOMContentLoaded', function () {
+          var wait = [].filter.call(document.images, function (img) {
+            var r = img.getBoundingClientRect();
+            return !img.complete && r.width > 0 && r.top < innerHeight && r.bottom > 0;
+          });
+          var left = wait.length;
+          if (!left) return fontsOn();
+          wait.forEach(function (img) {
+            function done() { if (--left === 0) fontsOn(); }
+            img.addEventListener('load', done); img.addEventListener('error', done);
+          });
+        });
+      }
+      setTimeout(fontsOn, 8000);
+    })();
+  </script>
+  <noscript><link rel="stylesheet" href="/fonts/fonts-fallback.css"><link rel="stylesheet" href="/fonts/fonts.css"></noscript>
 
   <link rel="stylesheet" href="/css/style.css?v=20261021-1">
 
