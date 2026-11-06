@@ -416,7 +416,7 @@
        施工例を増やすときは、下の <li class="works-card"> を1つ複製し、施工カテゴリ名・画像（/images/works/）・alt を差し替えるだけでよい。
        ・お客様向けに表示するのは施工カテゴリ名（works-card__title）。管理用の番号は data-case 属性に残す（画面には出さない）。
        ・施工カテゴリ名は次の表記に統一する（data-category にも同じ名称を入れる）：
-         基礎補強／シロアリ防除／木部補強／耐震補強／湿気・カビ対策／排水管高圧洗浄／木部防腐・防カビ工事／基礎コンクリート補修・補強工事
+         基礎補強／シロアリ防除／木部補強／耐震補強／湿気・カビ対策／排水管高圧洗浄／木部防腐・防カビ工事／基礎コンクリート補修・補強工事／基礎コンクリート補強工事
        ・写真のラベルは「施工前」「施工中」「施工後」「シロアリ被害」「薬剤処理箇所」のみ（メイン2枚は works-card__tag、補助写真は figcaption）。
          ゴールドのラベル（works-card__tag--after）は「施工中」「施工後」「薬剤処理箇所」にだけ付ける。
          補足表記（別の箇所・別角度など）や「※」の注記は付けない。
@@ -476,6 +476,26 @@
               <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">薬剤処理箇所</span></figcaption>
             </figure>
           </div>
+        </li>
+        <li class="works-card works-card--detail" data-case="21" data-category="基礎コンクリート補強工事" data-detail="works-detail-21">
+          <div class="works-card__head">
+            <h3 class="works-card__title"><span class="sp-phrase">基礎コンクリート</span><span class="sp-phrase">補強工事</span></h3>
+          </div>
+          <div class="works-card__pair">
+            <figure class="works-card__shot">
+              <img src="/images/works/works-21-before.webp" srcset="/images/works/works-21-before-640.webp 640w, /images/works/works-21-before.webp 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="ひび割れが発生した施工前の床下の基礎コンクリート" width="1000" height="665" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag"><span class="works-card__tag-ja">施工前</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-21-progress.webp" srcset="/images/works/works-21-progress-640.webp 640w, /images/works/works-21-progress.webp 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="床下の基礎コンクリートに補強繊維シートを施工している様子" width="1000" height="710" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></figcaption>
+            </figure>
+            <figure class="works-card__shot works-card__shot--after">
+              <img src="/images/works/works-21-after.webp" srcset="/images/works/works-21-after-640.webp 640w, /images/works/works-21-after.webp 1000w" sizes="(min-width: 1024px) 320px, (min-width: 768px) 330px, calc(84vw - 58px)" alt="仕上げ材で表面を保護した施工後の基礎コンクリート" width="1000" height="732" loading="lazy" decoding="async" />
+              <figcaption class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></figcaption>
+            </figure>
+          </div>
+          <button type="button" class="works-card__more" aria-haspopup="dialog" aria-controls="works-detail-21">施工内容を見る<span class="works-card__more-icon" aria-hidden="true">＋</span></button>
         </li>
         <li class="works-card" data-case="02" data-category="基礎補強">
           <div class="works-card__head">
@@ -818,6 +838,47 @@
             <p class="works-dialog__subhead">施工内容</p>
             <p>既存住宅の床下基礎コンクリートに対して、アラミド繊維シートを使用した補強工事を実施しました。</p>
             <p>基礎表面の下地処理を行い、補強用シートを施工。その後、表面の仕上げを行いました。</p>
+          </div>
+        </div>
+      </dialog>
+      <dialog class="works-dialog" id="works-detail-21" aria-labelledby="works-detail-21-title">
+        <div class="works-dialog__inner">
+          <button type="button" class="works-dialog__close" aria-label="施工内容を閉じる"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true" focusable="false"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+          <p class="works-dialog__category">基礎補強</p>
+          <h3 class="works-dialog__title" id="works-detail-21-title"><span class="sp-phrase">基礎コンクリート</span><span class="sp-phrase">補強工事</span></h3>
+          <ol class="works-dialog__steps">
+          <li class="works-dialog__step">
+            <figure>
+              <div class="works-dialog__photo">
+                <img src="/images/works/works-21-before.webp" srcset="/images/works/works-21-before-640.webp 640w, /images/works/works-21-before.webp 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="ひび割れが発生した施工前の床下の基礎コンクリート" width="1000" height="665" loading="lazy" decoding="async" />
+                <span class="works-card__tag"><span class="works-card__tag-ja">施工前</span></span>
+              </div>
+              <figcaption>ひび割れが発生した施工前の基礎コンクリート</figcaption>
+            </figure>
+          </li>
+          <li class="works-dialog__step">
+            <figure>
+              <div class="works-dialog__photo">
+                <img src="/images/works/works-21-progress.webp" srcset="/images/works/works-21-progress-640.webp 640w, /images/works/works-21-progress.webp 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="床下の基礎コンクリートに補強繊維シートを施工している様子" width="1000" height="710" loading="lazy" decoding="async" />
+                <span class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工中</span></span>
+              </div>
+              <figcaption>補強繊維シートによる補強施工</figcaption>
+            </figure>
+          </li>
+          <li class="works-dialog__step">
+            <figure>
+              <div class="works-dialog__photo">
+                <img src="/images/works/works-21-after.webp" srcset="/images/works/works-21-after-640.webp 640w, /images/works/works-21-after.webp 1000w" sizes="(min-width: 768px) 240px, calc(100vw - 80px)" alt="仕上げ材で表面を保護した施工後の基礎コンクリート" width="1000" height="732" loading="lazy" decoding="async" />
+                <span class="works-card__tag works-card__tag--after"><span class="works-card__tag-ja">施工後</span></span>
+              </div>
+              <figcaption>仕上げ材による表面保護の完了</figcaption>
+            </figure>
+          </li>
+          </ol>
+          <div class="works-dialog__body">
+            <p class="works-dialog__subhead">施工内容</p>
+            <p>床下基礎に発生したひび割れに対し、補強繊維シートを用いた補強工事を実施しました。</p>
+            <p>基礎表面の下地処理後、補強繊維シートを施工し、仕上げ材で表面を保護しています。</p>
           </div>
         </div>
       </dialog>
