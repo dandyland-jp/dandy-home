@@ -83,6 +83,48 @@
   }
 
   /* ------------------------------------------------------------------
+   * GA4 イベント計測
+   * ・GA4タグは各ページの<head>で、本番ドメインのときだけ読み込まれる。
+   *   それ以外（ローカル確認など）では window.gtag が無いので、ここでは何も送らない。
+   * ・phone_click / line_click：電話・LINEのボタンを押した回数（補助指標）。
+   *   実際の通話・LINE相談の成立件数ではない。
+   * ・generate_lead：フォーム送信が成功したときだけ（下のフォーム処理から送る）。
+   * ・氏名・連絡先・相談内容・相談の種類など、フォームの入力内容は一切送らない。
+   * ・計測に失敗しても、ボタンやフォームの動作には影響させない。
+   * ------------------------------------------------------------------ */
+  function sendGa4Event(name, params) {
+    if (typeof window.gtag !== "function") return;
+    try {
+      window.gtag("event", name, params || {});
+    } catch (err) {
+      /* 計測の失敗は無視する */
+    }
+  }
+
+  // ボタンの設置場所（固定CTA／問い合わせ欄／会社情報など）。ページはGA4が自動で記録する
+  function ga4LinkPosition(link) {
+    if (link.closest(".fixed-cta")) return "fixed_cta";
+    if (link.closest(".contact-quick")) return "contact_section";
+    if (link.closest(".company-detail__value")) return "company_info";
+    if (link.closest(".legal-page")) return "privacy_policy";
+    return "other";
+  }
+
+  document.addEventListener("click", function (e) {
+    var link = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+    if (!link) return;
+    var href = link.getAttribute("href") || "";
+    var eventName = "";
+    if (/^tel:/i.test(href)) {
+      eventName = "phone_click";
+    } else if (/^https:\/\/(lin\.ee|line\.me)\//i.test(href)) {
+      eventName = "line_click";
+    }
+    if (!eventName) return;
+    sendGa4Event(eventName, { link_position: ga4LinkPosition(link) });
+  });
+
+  /* ------------------------------------------------------------------
    * お問い合わせフォーム（Formspree 接続 / Ajax 送信）
    * エンドポイント: https://formspree.io/f/xaenobnw
    * ・必須：お名前／メールアドレスか電話番号のどちらか一方／プライバシーポリシーへの同意
@@ -267,6 +309,8 @@
               true
             );
             form.reset();
+            // 送信成功（Formspreeが正常応答）のときだけ記録する。入力内容は送らない
+            sendGa4Event("generate_lead", { form_name: "contact_form" });
             return;
           }
           return response

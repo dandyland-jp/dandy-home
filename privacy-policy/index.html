@@ -106,8 +106,27 @@
 }
   </script>
 
-  <!-- Google Analytics / Search Console
-       アカウント確定後、ここに計測タグ・確認用metaタグを追加してください。 -->
+  <!-- Google アナリティクス 4（測定ID：G-KM2DSV4JS6）
+       ・本番ドメイン（https://dandyland.co.jp）のときだけタグを読み込み、送信する。
+         ローカル確認・プレビュー等ではページビューを含めて一切送信しない。
+       ・同じページで二重に読み込まれても、2回目以降は何もしない（二重送信の防止）。
+       ・電話・LINEのクリック（phone_click / line_click）とフォーム送信成功（generate_lead）は
+         js/main.js から送る。フォームの入力内容・相談の種類はGA4に送らない。 -->
+  <script>
+    (function () {
+      if (window.__dandyGa4Loaded) return;
+      if (location.protocol !== 'https:' || location.hostname !== 'dandyland.co.jp') return;
+      window.__dandyGa4Loaded = true;
+      window.dataLayer = window.dataLayer || [];
+      window.gtag = function () { window.dataLayer.push(arguments); };
+      window.gtag('js', new Date());
+      window.gtag('config', 'G-KM2DSV4JS6');
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-KM2DSV4JS6';
+      document.head.appendChild(s);
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main-content">本文へスキップ</a>
@@ -209,7 +228,11 @@
       </div>
       <div class="legal-page__article">
         <h2 class="legal-page__heading"><span class="sp-phrase">第6条（アクセス解析ツール等</span><span class="sp-phrase">について）</span></h2>
-        <p>本サイトでは、現時点ではアクセス解析ツール等は導入していません。今後、Google Analytics等のアクセス解析ツールを導入する場合、当該ツールが取得するCookie等の情報の利用目的および取り扱いについて、本ポリシーを改定のうえ公表します。</p>
+        <p>本サイトでは、サイトの利用状況を把握し、内容の改善に役立てるため、Google LLCが提供するアクセス解析ツール「Googleアナリティクス」を利用しています。</p>
+        <p>Googleアナリティクスは、Cookie等を利用して、本サイトの閲覧に関する技術的な情報（閲覧されたページ、閲覧日時、ご利用の端末・ブラウザの種類、おおよその地域など）を収集します。また、本サイトでは、電話・LINEのボタンが押されたことと、お問い合わせフォームの送信が完了したことを、Googleアナリティクスで記録しています。</p>
+        <p>当社は、お問い合わせフォームに入力された内容（氏名・メールアドレス・電話番号・ご住所・ご相談の種類・ご相談内容）を、Googleアナリティクスに送信していません。</p>
+        <p>収集された情報は、Google社のプライバシーポリシーに基づいて管理されます。Googleによる情報の取り扱いについては、Google社の「Googleのサービスを使用するサイトやアプリから収集した情報のGoogleによる使用」（<a href="https://policies.google.com/technologies/partner-sites?hl=ja" target="_blank" rel="noopener noreferrer">https://policies.google.com/technologies/partner-sites?hl=ja</a>）をご確認ください。</p>
+        <p>Cookieの利用は、ブラウザの設定により無効にすることができます。また、Google社が提供する「Googleアナリティクス オプトアウト アドオン」（<a href="https://tools.google.com/dlpage/gaoptout?hl=ja" target="_blank" rel="noopener noreferrer">https://tools.google.com/dlpage/gaoptout?hl=ja</a>）を利用して、Googleアナリティクスによる計測を停止することもできます。</p>
       </div>
       <div class="legal-page__article">
         <h2 class="legal-page__heading">第7条（個人情報の開示、訂正、削除等）</h2>
@@ -238,6 +261,7 @@
         <li>メールアドレス：info@dandyland.co.jp</li>
       </ul>
       </div>
+      <p class="legal-page__enacted">最終改定日：2026年11月12日</p>
 
       
     </div>
@@ -289,6 +313,6 @@
     <a href="/#contact" class="fixed-cta__btn fixed-cta__btn--primary" aria-label="床下のことを相談する（ご相談窓口へ移動）">床下の相談</a><a href="tel:0428163369" class="fixed-cta__btn fixed-cta__btn--tel" aria-label="電話で相談（042-816-3369に発信します）"><svg class="fixed-cta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.7 3.5h2.4c.4 0 .8.3.9.7l.9 3c.1.4 0 .8-.3 1.1L9.1 9.6a12.4 12.4 0 0 0 5.3 5.3l1.3-1.5c.3-.3.7-.4 1.1-.3l3 .9c.4.1.7.5.7.9v2.4c0 1-.8 1.8-1.8 1.8C10.9 19.1 4.9 13.1 4.9 5.3c0-1 .8-1.8 1.8-1.8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>電話で相談</span></a><a href="https://lin.ee/wMZ3Qpj" class="fixed-cta__btn fixed-cta__btn--line" target="_blank" rel="noopener noreferrer" aria-label="LINEで相談（公式LINE・新しいタブで開きます）"><svg class="fixed-cta__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4.5c-4.97 0-9 3.13-9 7 0 3.47 3.24 6.35 7.49 6.9l-.55 2.06c-.1.38.32.67.64.45l3.3-2.4C18 17.86 21 15 21 11.5c0-3.87-4.03-7-9-7z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>LINEで相談</span></a>
   </div>
 
-  <script src="/js/main.js" defer></script>
+  <script src="/js/main.js?v=20261112-1" defer></script>
 </body>
 </html>
