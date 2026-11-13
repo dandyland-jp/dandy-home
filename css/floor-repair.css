@@ -1,0 +1,862 @@
+/* ==========================================================================
+   /floor-repair/ 床のきしみ・沈み 部分補修ページ専用（2026-11-13 追加）
+   ・このページだけで読み込む。css/style.css の既存ルールは変更しない。
+   ・クラス名は fr- で始まるもの、または body.fr-page 配下の指定に限定する。
+   ・スマホ（390px）を基準に組み、1024px以上で横並びにする。
+   ========================================================================== */
+
+/* --- ファーストビュー --- */
+.fr-hero {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(169, 129, 47, 0.16), transparent 50%),
+    linear-gradient(170deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+  color: var(--text-on-dark);
+  padding-block: var(--space-4) var(--space-7);
+}
+
+.fr-hero .sp-breadcrumb {
+  margin-bottom: var(--space-4);
+}
+
+.fr-hero__layout {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.fr-hero__eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.fr-hero__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(96px, 30vw, 132px);
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.fr-hero__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.75rem, 1.05rem + 3.4vw, 2.85rem);
+  line-height: 1.32;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+}
+
+.fr-hero__title span {
+  display: block;
+  white-space: nowrap;
+}
+
+.fr-hero__illust {
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.fr-hero__illust svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fr-hero__sub {
+  margin-top: var(--space-3);
+  font-weight: 700;
+  font-size: clamp(1.125rem, 0.9rem + 1.2vw, 1.625rem);
+  line-height: 1.5;
+  color: var(--color-white);
+}
+
+.fr-hero__sub em {
+  font-style: normal;
+  color: var(--color-bronze-light);
+}
+
+/* 価格カード（チラシと同じ構成） */
+.fr-price {
+  background: var(--color-white);
+  color: var(--text-on-light);
+  border: 2px solid var(--color-bronze);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.fr-price__label {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 0.6rem 1rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+}
+
+.fr-price__tag {
+  padding: 0.15rem 0.5rem;
+  border-radius: 3px;
+  background: var(--color-bronze-light);
+  color: var(--color-black);
+  font-size: 0.8125rem;
+}
+
+.fr-price__body {
+  padding: 0.75rem 1rem 0.9rem;
+}
+
+.fr-price__figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  line-height: 1;
+  color: var(--color-black);
+}
+
+.fr-price__pre {
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-right: 0.35rem;
+}
+
+.fr-price__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.75rem, 1.6rem + 6vw, 4.25rem);
+  letter-spacing: -0.01em;
+}
+
+.fr-price__yen {
+  font-weight: 700;
+  font-size: 1.5rem;
+  margin-left: 0.15rem;
+}
+
+.fr-price__tax {
+  font-weight: 700;
+  font-size: 0.875rem;
+  margin-left: 0.15rem;
+}
+
+.fr-price__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.7rem;
+}
+
+.fr-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.7rem;
+  border: 1.5px solid var(--color-bronze);
+  border-radius: 999px;
+  background: #fbf7ef;
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.fr-badge svg {
+  flex: none;
+  width: 1rem;
+  height: 1rem;
+}
+
+.fr-price__terms {
+  padding: 0.7rem 1rem 0.8rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-offwhite);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.fr-price__terms p + p {
+  margin-top: 0.25rem;
+}
+
+.fr-price__terms b {
+  font-weight: 700;
+}
+
+.fr-price__terms .fr-k {
+  display: inline-block;
+  min-width: 3.6em;
+  font-weight: 700;
+  color: var(--color-bronze-dark);
+}
+
+.fr-price__terms a {
+  color: var(--color-bronze-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 電話ボタン（ファーストビュー・各セクション共通） */
+.fr-cta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.fr-tel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+  box-shadow: var(--shadow-gold);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.fr-tel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(169, 129, 47, 0.32);
+}
+
+.fr-tel svg {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.fr-tel__text {
+  display: grid;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.fr-tel__label {
+  font-weight: 700;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+}
+
+.fr-tel__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.1rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fr-cta__sub {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+}
+
+.fr-cta__sub .btn {
+  padding-inline: 0.75rem;
+  border-radius: var(--radius-md);
+}
+
+.fr-cta__sub svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
+.fr-cta__note {
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--text-on-dark-muted);
+  text-align: center;
+}
+
+.fr-btn-dark {
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.fr-btn-dark:hover {
+  background: var(--color-charcoal-2);
+}
+
+/* 明るい背景のセクション内の電話CTA */
+.fr-inline-cta {
+  max-width: 520px;
+  margin-top: var(--space-6);
+}
+
+.fr-inline-cta .fr-cta__note {
+  color: var(--text-on-light-muted);
+}
+
+.fr-inline-cta .fr-btn-dark {
+  border-color: transparent;
+}
+
+/* --- 共通：本文 --- */
+.fr-lead {
+  max-width: 62ch;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+.fr-note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+/* --- よくある床の症状 --- */
+.fr-symptoms {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.fr-symptoms li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fr-symptoms svg {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* --- 床下から補修する仕組み --- */
+.fr-diagram {
+  margin: 0;
+  max-width: 760px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+
+.fr-diagram__cap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1rem;
+  background: var(--color-offwhite);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+}
+
+.fr-diagram__cap svg {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.fr-diagram svg.fr-diagram__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fr-points {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  max-width: 760px;
+}
+
+.fr-point {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.25rem 0.75rem;
+  align-items: baseline;
+}
+
+.fr-num {
+  display: inline-grid;
+  place-items: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-bronze);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1;
+  align-self: center;
+}
+
+.fr-point__title {
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.fr-point__title small {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--text-on-light-muted);
+}
+
+.fr-point__desc {
+  grid-column: 2;
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+/* --- 料金：「1箇所」の定義 --- */
+.fr-define {
+  margin-bottom: var(--space-5);
+  padding: 1rem 1.1rem;
+  border: 2px solid var(--color-bronze);
+  border-radius: var(--radius-md);
+  background: #fbf7ef;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+.fr-define__title {
+  margin-bottom: 0.3rem;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--color-bronze-dark);
+}
+
+.fr-define b {
+  font-weight: 700;
+}
+
+.fr-scope__sub {
+  margin-top: 0.7rem;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+.fr-scope__sub--top {
+  margin-top: 0;
+}
+
+.fr-price-lead {
+  margin-bottom: var(--space-4);
+  font-weight: 700;
+  color: var(--text-on-light);
+}
+
+.fr-method-lead {
+  margin-top: var(--space-5);
+}
+
+/* --- 料金：対象と対象外 --- */
+.fr-scope {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.fr-scope__card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.fr-scope__head {
+  padding: 0.75rem 1.1rem;
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.04em;
+}
+
+.fr-scope__card--extra .fr-scope__head {
+  background: #5b5750;
+}
+
+.fr-scope__body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fr-scope__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.2rem;
+  font-weight: 700;
+}
+
+.fr-scope__price .fr-big {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  line-height: 1.1;
+}
+
+.fr-scope__list {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.4rem;
+}
+
+.fr-scope__list li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.fr-scope__list li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.68em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-bronze);
+}
+
+.fr-scope__card--extra .fr-scope__list li::before {
+  background: #8a857c;
+}
+
+.fr-scope__strong {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-offwhite);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.fr-scope .fr-price__badges {
+  margin-top: 0.6rem;
+}
+
+/* --- ご依頼の流れ --- */
+.fr-flow {
+  display: grid;
+  gap: var(--space-3);
+  counter-reset: frflow;
+}
+
+.fr-flow li {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.9rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fr-flow__step {
+  grid-row: span 2;
+  align-self: start;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-bronze-dark);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.fr-flow__step b {
+  display: block;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+.fr-flow__title {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fr-flow__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+.fr-assure {
+  margin-top: var(--space-5);
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--color-bronze);
+  background: var(--color-white);
+  font-size: 0.9375rem;
+  line-height: 1.85;
+}
+
+/* --- 補修のイメージ --- */
+.fr-figures {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.fr-figure {
+  margin: 0;
+}
+
+.fr-figure__img {
+  position: relative;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.fr-figure__img svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.fr-figure__badge {
+  position: absolute;
+  right: 0.5rem;
+  bottom: 0.4rem;
+  font-size: 0.6875rem;
+  color: #d9d5cd;
+}
+
+.fr-figure figcaption {
+  margin-top: 0.7rem;
+}
+
+.fr-figure__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.0625rem;
+}
+
+.fr-figure__desc {
+  margin-top: 0.25rem;
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+/* --- 対応エリア・会社情報 --- */
+.fr-company {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.25rem;
+  max-width: 640px;
+  margin-top: var(--space-5);
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+}
+
+.fr-company dt {
+  font-weight: 700;
+  color: var(--color-bronze-dark);
+}
+
+.fr-company a {
+  font-weight: 700;
+}
+
+/* --- 下部の固定ボタン：このページは電話を先頭・強調 --- */
+body.fr-page .fixed-cta__btn--tel {
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  border-left: 0;
+}
+
+body.fr-page .fixed-cta__btn--form {
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  border-left: 1px solid rgba(169, 129, 47, 0.35);
+}
+
+/* --- タブレット以上 --- */
+@media (min-width: 640px) {
+  .fr-symptoms {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fr-scope {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .fr-figures {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .fr-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* --- タブレット（縦並びのまま幅を抑える） --- */
+@media (min-width: 768px) {
+  .fr-hero__side,
+  .fr-hero__cta {
+    max-width: 560px;
+  }
+
+  .fr-hero__head {
+    grid-template-columns: max-content 150px;
+    justify-content: start;
+    gap: var(--space-5);
+  }
+}
+
+/* --- PC：ファーストビューの横並び --- */
+@media (min-width: 1200px) {
+  .fr-hero__side,
+  .fr-hero__cta {
+    max-width: none;
+  }
+
+  .fr-hero__layout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-areas: "main side" "cta side";
+    align-items: center;
+    gap: var(--space-6) var(--space-8);
+  }
+
+  .fr-hero__main { grid-area: main; }
+  .fr-hero__side { grid-area: side; }
+  .fr-hero__cta { grid-area: cta; align-self: start; max-width: 460px; }
+
+  .fr-hero__head {
+    grid-template-columns: max-content 160px;
+    justify-content: start;
+    gap: var(--space-5);
+  }
+
+  .fr-hero__sub {
+    margin-top: var(--space-4);
+  }
+
+}
+
+/* --- PC --- */
+@media (min-width: 1024px) {
+  .fr-hero {
+    padding-block: var(--space-6) var(--space-9);
+  }
+
+  .fr-hero .sp-breadcrumb {
+    margin-bottom: var(--space-6);
+  }
+
+  .fr-price__label {
+    font-size: 1.125rem;
+    padding: 0.8rem 1.4rem;
+  }
+
+  .fr-price__body {
+    padding: 1rem 1.4rem 1.1rem;
+  }
+
+  .fr-price__terms {
+    padding: 0.9rem 1.4rem 1rem;
+    font-size: 0.9375rem;
+  }
+
+  .fr-badge {
+    font-size: 0.9375rem;
+  }
+
+  .fr-flow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fr-flow li {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+  }
+
+  .fr-flow__step {
+    grid-row: auto;
+    text-align: left;
+  }
+
+  .fr-flow__step b {
+    display: inline;
+    margin-left: 0.25rem;
+  }
+
+  .fr-symptoms {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fr-symptoms li {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+/* --- 小さいスマホ（360px未満） --- */
+@media (max-width: 359px) {
+  .fr-hero__head {
+    grid-template-columns: minmax(0, 1fr) 84px;
+  }
+
+  .fr-price__pre {
+    font-size: 0.9375rem;
+  }
+
+  .fr-price__num {
+    font-size: 2.4rem;
+  }
+
+  .fr-price__tax {
+    font-size: 0.75rem;
+  }
+
+  .fr-price__yen {
+    font-size: 1.25rem;
+  }
+
+  .fr-cta__sub {
+    grid-template-columns: 1fr;
+  }
+}
+
+body.fr-page .fixed-cta__btn--tel .fixed-cta__icon {
+  color: var(--color-white);
+}
+
+/* 補助の番号（＋・参考）と「別途お見積り」の札 */
+.fr-num--sub {
+  width: auto;
+  min-width: 1.75rem;
+  padding-inline: 0.45rem;
+  border-radius: 999px;
+  background: #5b5750;
+  font-family: var(--font-base);
+  font-size: 0.75rem;
+}
+
+.fr-tag-extra {
+  margin-left: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  border-radius: 4px;
+  background: #5b5750;
+  color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
