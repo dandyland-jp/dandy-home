@@ -1,0 +1,301 @@
+/* ==========================================================================
+   /shiroari/ 白蟻防除・シロアリ駆除ページ専用（2026-11-17 追加）
+   ・共通部品は css/foundation-crack.css（基礎ひび割れLP）を読み込んで使い、
+     このファイルでは配色（濃紺・黒・ティール）とこのページだけの部品を追加する。
+   ・css/style.css・css/foundation-crack.css の既存ルールは変更しない。
+   ・クラス名は tm- で始まるもの、または body.tm-page 配下の指定に限定する。
+   ========================================================================== */
+
+body.tm-page {
+  --tm-navy: #13233f;
+  --tm-navy-2: #1c3a5e;
+  --tm-navy-deep: #0b1628;
+  --tm-teal: #0e8c8c;
+  --tm-teal-light: #3cbab2;
+  --tm-teal-dark: #0a6b6c;
+  --tm-teal-pale: #eaf6f5;
+}
+
+/* 本文内のアクセント色（金色系の変数）をティールに置き換える。ヘッダー・フッターは対象外 */
+body.tm-page main {
+  --color-bronze: var(--tm-teal);
+  --color-bronze-light: var(--tm-teal-light);
+  --color-bronze-dark: var(--tm-teal-dark);
+  --shadow-gold: 0 8px 20px rgba(14, 140, 140, 0.28);
+}
+
+/* --- ファーストビュー --- */
+/* スマホ：左列（見出し・写真）→右列（料金・問い合わせ）の順に縦に並ぶ */
+.tm-hero__col {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+}
+
+/* PC：見出しの上に余白が出ないよう、左右の列をそれぞれ上から積む */
+@media (min-width: 1024px) {
+  .tm-hero .tm-hero__layout {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    grid-template-areas: none;
+    align-items: start;
+    gap: var(--space-6) var(--space-8);
+  }
+
+  .tm-hero .tm-hero__col > * {
+    grid-area: auto;
+    align-self: auto;
+  }
+
+  .tm-hero .tm-hero__col--left {
+    gap: var(--space-5);
+  }
+}
+
+.tm-hero {
+  background:
+    radial-gradient(circle at 88% 6%, rgba(60, 186, 178, 0.22), transparent 48%),
+    linear-gradient(170deg, var(--tm-navy-deep) 0%, var(--tm-navy) 100%);
+}
+
+.tm-hero__title span {
+  white-space: nowrap;
+}
+
+/* スマホ：料金と保証の帯を1画面目に収めるため、写真を少し横長にする */
+@media (max-width: 767px) {
+  .tm-hero .fc-hero__photo {
+    aspect-ratio: 5 / 2;
+  }
+}
+
+.tm-price {
+  border-color: var(--tm-teal);
+}
+
+.tm-price .fc-price__label {
+  gap: 0;
+  background: var(--tm-navy);
+  font-size: 1.0625rem;
+}
+
+/* 最低施工料金：880円/㎡の直下に、同じ画面で読みやすく */
+.tm-min {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.35rem;
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.7rem;
+  border: 2px solid var(--tm-navy);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.4;
+  color: var(--tm-navy);
+}
+
+.tm-min b {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  letter-spacing: 0.01em;
+}
+
+.tm-min span {
+  font-size: 0.875rem;
+}
+
+.tm-min--light {
+  margin-top: 0.4rem;
+}
+
+/* 料金の注記：スマホでも読める大きさ（14px以上）にする */
+.tm-basis {
+  margin-top: 0.55rem;
+  font-size: 0.875rem;
+  line-height: 1.75;
+  color: var(--text-on-light);
+}
+
+/* 予防・駆除の基本料金 */
+.tm-rates {
+  display: grid;
+  gap: 0.4rem;
+}
+
+.tm-rates > div {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0.1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tm-rates dt {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-on-light);
+}
+
+.tm-rates dd {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1rem;
+  white-space: nowrap;
+  color: var(--text-on-light);
+}
+
+.tm-rates dd b {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  line-height: 1;
+}
+
+.tm-rates dd span {
+  font-size: 0.8125rem;
+}
+
+/* 安心材料（5年保証・5年間無料定期点検・現地調査無料） */
+.tm-assure {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--tm-teal-dark);
+}
+
+.tm-assure li {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 0.25rem;
+  padding: 0.6rem 0.3rem 0.65rem;
+  background: var(--tm-teal);
+  color: #fff;
+  text-align: center;
+}
+
+.tm-assure svg {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+.tm-assure b {
+  font-weight: 700;
+  font-size: 0.875rem;
+  line-height: 1.35;
+}
+
+/* 電話ボタン：濃紺（LINEを最優先にするため、電話は落ち着いた色） */
+body.tm-page .fc-tel {
+  background: linear-gradient(135deg, var(--tm-navy-2), var(--tm-navy-deep));
+  border: 1.5px solid var(--tm-teal-light);
+  box-shadow: 0 8px 20px rgba(11, 22, 40, 0.3);
+}
+
+body.tm-page .fc-inline-cta .fc-tel {
+  border-color: transparent;
+}
+
+/* --- 施工方法：PCで3列 --- */
+@media (min-width: 1024px) {
+  .tm-methods {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* --- 5年保証・アフターメンテナンス --- */
+.tm-after {
+  background:
+    radial-gradient(circle at 10% 0%, rgba(60, 186, 178, 0.18), transparent 50%),
+    linear-gradient(170deg, var(--tm-navy) 0%, var(--tm-navy-deep) 100%);
+  color: var(--text-on-dark);
+}
+
+.tm-after__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
+  line-height: 1.45;
+  color: #fff;
+}
+
+.tm-after__grid {
+  display: grid;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  max-width: 880px;
+}
+
+.tm-after__card {
+  padding: 1.15rem 1.15rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-top: 3px solid var(--tm-teal-light);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tm-after__icon {
+  color: var(--tm-teal-light);
+}
+
+.tm-after__icon svg {
+  width: 2rem;
+  height: 2rem;
+}
+
+.tm-after__head {
+  margin-top: 0.35rem;
+  font-weight: 700;
+  font-size: 1.25rem;
+  line-height: 1.45;
+  color: #fff;
+}
+
+.tm-after__text {
+  margin-top: 0.4rem;
+  font-weight: 700;
+  line-height: 1.8;
+  color: #f1f4f8;
+}
+
+.tm-after__note {
+  margin-top: 0.5rem;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-dark-muted);
+}
+
+@media (min-width: 768px) {
+  .tm-after__grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* --- 流れ：5ステップ（PCでは5列） --- */
+@media (min-width: 1024px) {
+  body.tm-page .tm-flow {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* --- 最終CTA：濃紺 --- */
+.tm-final {
+  background:
+    radial-gradient(circle at 85% 10%, rgba(60, 186, 178, 0.2), transparent 55%),
+    linear-gradient(170deg, var(--tm-navy-deep) 0%, var(--tm-navy) 100%);
+}
+
+/* --- 本文中のリンク --- */
+body.tm-page main .fc-note a {
+  color: var(--tm-teal-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- 下部の固定ボタン：電話は濃紺、LINEは緑（foundation-crack.css の body.fc-page 指定を上書き） --- */
+body.tm-page .fixed-cta__btn--tel {
+  background: linear-gradient(135deg, var(--tm-navy-2), var(--tm-navy-deep));
+  border-left: 0;
+}
