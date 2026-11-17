@@ -1,0 +1,1317 @@
+/* ==========================================================================
+   /foundation-crack/ 基礎ひび割れ補修ページ専用（2026-11-17 追加）
+   ・このページだけで読み込む。css/style.css・css/floor-repair.css の既存ルールは変更しない。
+   ・クラス名は fc- で始まるもの、または body.fc-page 配下の指定に限定する。
+   ・スマホ（390px）を基準に組み、1024px以上でファーストビューを横並びにする。
+   ========================================================================== */
+
+/* --- ファーストビュー --- */
+.fc-hero {
+  background:
+    radial-gradient(circle at 12% 8%, rgba(169, 129, 47, 0.16), transparent 50%),
+    linear-gradient(170deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+  color: var(--text-on-dark);
+  padding-block: var(--space-4) var(--space-7);
+}
+
+.fc-hero .sp-breadcrumb {
+  margin-bottom: var(--space-4);
+}
+
+.fc-hero__layout {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.fc-hero__eyebrow {
+  margin-bottom: var(--space-3);
+}
+
+.fc-hero__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  /* 「ひび割れを見つけたら。」（11文字）を1行に収める：320pxで約24px、PC横並び時（左列約480px）で最大41.6px */
+  font-size: clamp(1.5rem, 0.62rem + 4.4vw, 2.6rem);
+  line-height: 1.34;
+  letter-spacing: 0.02em;
+  color: var(--color-white);
+}
+
+.fc-hero__title span {
+  display: block;
+  white-space: nowrap;
+}
+
+.fc-hero__sub {
+  margin-top: var(--space-3);
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 0.9rem + 1vw, 1.5rem);
+  line-height: 1.55;
+  color: var(--color-bronze-light);
+}
+
+/* 実際のひび割れ写真（施工事例の施工前写真） */
+.fc-hero__photo {
+  position: relative;
+  margin: 0;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 2 / 1;
+  background: var(--color-charcoal);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.fc-hero__photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 45%;
+}
+
+.fc-hero__photo figcaption {
+  position: absolute;
+  left: 0.5rem;
+  bottom: 0.5rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 3px;
+  background: rgba(17, 17, 17, 0.72);
+  color: #f1ede6;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+/* 価格カード */
+.fc-price {
+  background: var(--color-white);
+  color: var(--text-on-light);
+  border: 2px solid var(--color-bronze);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.fc-price__label {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--space-2);
+  padding: 0.55rem 1rem;
+  background: var(--color-black);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 0.05em;
+}
+
+.fc-price__tag {
+  padding: 0.12rem 0.5rem;
+  border-radius: 3px;
+  background: var(--color-bronze-light);
+  color: var(--color-black);
+  font-size: 0.8125rem;
+}
+
+.fc-price__body {
+  padding: 0.7rem 1rem 0.85rem;
+}
+
+.fc-price__figure {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.15rem;
+  line-height: 1.1;
+  color: var(--color-black);
+}
+
+.fc-price__pre {
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 1.125rem;
+  margin-right: 0.3rem;
+}
+
+.fc-price__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  /* 375pxでも「1箇所 13,500円〜（税別）」が1行に収まる大きさ */
+  font-size: clamp(2.3rem, 1.2rem + 5.4vw, 4rem);
+  letter-spacing: -0.01em;
+}
+
+.fc-price__yen {
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 1.375rem;
+}
+
+.fc-price__tax {
+  white-space: nowrap;
+  font-weight: 700;
+  font-size: 0.9375rem;
+}
+
+/* 税込価格（総額）も読みやすい大きさで併記する */
+.fc-price__incl {
+  margin-top: 0.35rem;
+  font-weight: 700;
+  font-size: 1.1875rem;
+  line-height: 1.5;
+  color: var(--text-on-light);
+}
+
+.fc-price__incl b {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+}
+
+/* 価格直下の補足（13,500円が何の料金かを明示し、補強まで含むと誤認させない） */
+.fc-price__caution {
+  margin-top: 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border-left: 3px solid var(--color-bronze);
+  background: var(--color-offwhite);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  line-height: 1.65;
+  color: var(--text-on-light);
+}
+
+/* 無料現地調査の帯（価格カードの最上部。スマホの1画面目に入るよう1〜2行に収める） */
+.fc-free {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.1rem 0.6rem;
+  padding: 0.5rem 0.8rem;
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-black);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.fc-free__main {
+  font-weight: 700;
+  font-size: 1.1875rem;
+  letter-spacing: 0.06em;
+}
+
+.fc-free__sub {
+  font-weight: 700;
+  font-size: 0.8125rem;
+}
+
+/* 安心材料（現地調査無料など） */
+.fc-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.65rem;
+}
+
+.fc-badges li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.22rem 0.55rem;
+  border: 1.5px solid var(--color-bronze);
+  border-radius: 999px;
+  background: #fbf7ef;
+  font-weight: 700;
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--text-on-light);
+}
+
+.fc-badges svg {
+  flex: none;
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.fc-badges--dark {
+  margin: 0 0 var(--space-5);
+}
+
+.fc-badges--dark li {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(169, 129, 47, 0.7);
+  color: var(--color-white);
+}
+
+.fc-price__terms {
+  padding: 0.65rem 1rem 0.75rem;
+  border-top: 1px solid var(--color-border);
+  background: var(--color-offwhite);
+  font-size: 0.875rem;
+  line-height: 1.75;
+}
+
+.fc-price__terms p + p {
+  margin-top: 0.25rem;
+}
+
+.fc-price__terms b {
+  font-weight: 700;
+}
+
+.fc-price__terms a {
+  color: var(--color-bronze-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* --- 問い合わせボタン（ファーストビュー・各セクション共通） --- */
+.fc-cta {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.fc-tel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  min-height: 64px;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  color: var(--color-white);
+  box-shadow: var(--shadow-gold);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.fc-tel:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(169, 129, 47, 0.32);
+}
+
+.fc-tel svg {
+  flex: none;
+  width: 1.9rem;
+  height: 1.9rem;
+}
+
+.fc-tel__text {
+  display: grid;
+  line-height: 1.2;
+  text-align: left;
+}
+
+.fc-tel__label {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+
+.fc-tel__num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 1.2rem + 2vw, 2.1rem);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+.fc-tel__hours {
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  opacity: 0.92;
+}
+
+/* LINE：ひび割れの写真を送って相談（基礎のひび割れは写真を撮りやすいため、最も目立つ導線にする。LINEの緑を使用） */
+.fc-line {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  min-height: 62px;
+  padding: 0.7rem 1rem;
+  border-radius: var(--radius-md);
+  background: #06c755;
+  color: #fff;
+  font-weight: 700;
+  line-height: 1.35;
+  box-shadow: 0 8px 18px rgba(6, 199, 85, 0.22);
+  transition: transform var(--transition-fast), background var(--transition-fast);
+}
+
+.fc-line:hover {
+  background: #05b54d;
+  transform: translateY(-2px);
+}
+
+.fc-line__icon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 9px;
+  background: #fff;
+  color: #06c755;
+}
+
+.fc-line__icon svg {
+  width: 1.4rem;
+  height: 1.4rem;
+}
+
+.fc-line__text {
+  display: grid;
+  gap: 0.1rem;
+  text-align: left;
+}
+
+.fc-line__main {
+  font-size: 1.0625rem;
+}
+
+.fc-line__sub {
+  font-weight: 500;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  opacity: 0.95;
+}
+
+.fc-line--wide {
+  max-width: 520px;
+}
+
+.fc-form-link {
+  justify-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.4rem 0.75rem;
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.fc-form-link svg {
+  width: 1.1rem;
+  height: 1.1rem;
+}
+
+.fc-cta__note {
+  font-size: var(--fs-xs);
+  line-height: 1.7;
+  color: var(--text-on-dark-muted);
+  text-align: center;
+}
+
+/* 明るい背景のセクション内のCTA */
+.fc-inline-cta {
+  max-width: 520px;
+  margin-top: var(--space-6);
+}
+
+.fc-inline-cta .fc-form-link {
+  color: var(--text-on-light);
+}
+
+.fc-inline-cta .fc-cta__note {
+  color: var(--text-on-light-muted);
+}
+
+/* --- 共通：本文 --- */
+.fc-lead {
+  max-width: 62ch;
+  color: var(--text-on-light-muted);
+  line-height: 1.9;
+}
+
+.fc-note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+/* --- 補修で済むか、補強が必要か --- */
+.fc-outcomes {
+  display: grid;
+  gap: var(--space-3);
+  margin: var(--space-5) 0 0;
+  max-width: 880px;
+}
+
+.fc-outcome {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fc-outcome--main {
+  border: 2px solid var(--color-bronze);
+}
+
+.fc-outcome__head {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+  color: var(--text-on-light);
+}
+
+.fc-outcome__body {
+  margin-top: 0.25rem;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+.fc-outcome__body b {
+  display: block;
+  margin-top: 0.15rem;
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-on-light);
+}
+
+/* --- 代表者の経験（信頼性） --- */
+.fc-exp {
+  padding-block: var(--space-7);
+  background: var(--color-white);
+}
+
+.fc-exp__inner {
+  max-width: 760px;
+  padding: 1.25rem 1.15rem 1.3rem;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--color-bronze);
+  border-radius: var(--radius-md);
+  background: var(--color-offwhite);
+}
+
+.fc-exp__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 1.1rem + 1.8vw, 2.1rem);
+  line-height: 1.45;
+  color: var(--text-on-light);
+}
+
+.fc-exp__sub {
+  margin-top: 0.35rem;
+  font-weight: 700;
+  font-size: clamp(1.0625rem, 0.95rem + 0.6vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--color-bronze-dark);
+}
+
+.fc-exp__text {
+  margin-top: var(--space-3);
+  line-height: 1.9;
+  color: var(--text-on-light-muted);
+}
+
+.fc-exp__list {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: var(--space-4);
+}
+
+.fc-exp__list li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.fc-exp__list svg {
+  flex: none;
+  width: 1.35rem;
+  height: 1.35rem;
+}
+
+.fc-exp__list a {
+  color: var(--text-on-light);
+  text-decoration: underline;
+  text-decoration-color: var(--color-bronze);
+  text-underline-offset: 4px;
+}
+
+.fc-exp__note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+/* --- こんなひび割れ --- */
+.fc-check {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.fc-check li {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fc-check svg {
+  flex: none;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.fc-photo {
+  margin: 0 0 var(--space-5);
+  max-width: 640px;
+}
+
+.fc-photo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+}
+
+.fc-photo figcaption {
+  margin-top: 0.5rem;
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text-on-light-muted);
+}
+
+/* --- LINEで写真相談 --- */
+.fc-line-band {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(6, 199, 85, 0.12), transparent 50%),
+    linear-gradient(170deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+  color: var(--text-on-dark);
+}
+
+.fc-line-band__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.45rem, 1.1rem + 1.8vw, 2.1rem);
+  line-height: 1.45;
+  color: var(--color-white);
+}
+
+.fc-line-band__lead {
+  margin-top: var(--space-3);
+  font-weight: 700;
+  line-height: 1.8;
+  color: var(--color-bronze-light);
+}
+
+.fc-line-steps {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 880px;
+  margin: var(--space-5) 0;
+}
+
+.fc-line-steps li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.9rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: var(--radius-md);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.fc-line-steps p {
+  display: grid;
+  gap: 0.15rem;
+  line-height: 1.7;
+}
+
+.fc-line-steps b {
+  font-weight: 700;
+  color: var(--color-white);
+}
+
+.fc-line-steps span:not(.fc-num) {
+  font-size: var(--fs-sm);
+  color: var(--text-on-dark-muted);
+}
+
+.fc-line-band__note {
+  margin-top: var(--space-4);
+  font-size: var(--fs-xs);
+  line-height: 1.8;
+  color: var(--text-on-dark-muted);
+}
+
+/* --- 料金 --- */
+/* 補修と補強の違い */
+.fc-diff {
+  display: grid;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+}
+
+.fc-diff__item {
+  padding: 0.9rem 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fc-diff dt {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fc-diff dd {
+  margin: 0.3rem 0 0;
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+.fc-diff__tag {
+  flex: none;
+  padding: 0.1rem 0.55rem;
+  border-radius: 3px;
+  background: var(--color-bronze);
+  color: var(--color-white);
+  font-size: 0.8125rem;
+}
+
+.fc-diff__tag--sub {
+  background: #5b5750;
+}
+
+.fc-fee-lead {
+  margin-bottom: var(--space-4);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  color: var(--text-on-light);
+}
+
+.fc-fee__card--free {
+  border: 2px solid var(--color-bronze-light);
+}
+
+.fc-fee__card--free .fc-fee__head {
+  background: var(--color-bronze-dark);
+}
+
+.fc-fee {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.fc-fee__card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.fc-fee__card--main {
+  border: 2px solid var(--color-bronze);
+}
+
+.fc-fee__head {
+  padding: 0.75rem 1.1rem;
+  background: var(--color-charcoal);
+  color: var(--color-white);
+  font-weight: 700;
+  font-size: 1.0625rem;
+  letter-spacing: 0.04em;
+}
+
+.fc-fee__card--extra .fc-fee__head {
+  background: #5b5750;
+}
+
+.fc-fee__body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fc-fee__price {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0 0.2rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.fc-fee__price .fc-big {
+  font-family: var(--font-display);
+  font-size: 2.25rem;
+  line-height: 1.1;
+}
+
+.fc-fee__incl {
+  margin-top: 0.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.fc-fee__unit {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 3px;
+  background: var(--color-offwhite);
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.fc-fee__range {
+  margin-top: 0.9rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: var(--radius-sm);
+  background: var(--color-offwhite);
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.fc-fee__range dt {
+  font-weight: 700;
+  color: var(--color-bronze-dark);
+}
+
+.fc-fee__range dd {
+  margin: 0;
+}
+
+.fc-fee__range dd b {
+  font-weight: 700;
+  font-size: 1.0625rem;
+}
+
+.fc-list {
+  margin-top: 0.75rem;
+  display: grid;
+  gap: 0.45rem;
+}
+
+.fc-list li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.fc-list li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.68em;
+  width: 0.45rem;
+  height: 0.45rem;
+  border-radius: 50%;
+  background: var(--color-bronze);
+}
+
+.fc-fee__card--extra .fc-list li::before {
+  background: #8a857c;
+}
+
+.fc-list b {
+  font-weight: 700;
+}
+
+.fc-fee__card a {
+  color: var(--color-bronze-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fc-promise {
+  margin-top: var(--space-5);
+  padding: 1rem 1.1rem;
+  border-left: 3px solid var(--color-bronze);
+  background: var(--color-white);
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.85;
+}
+
+/* --- 施工事例 --- */
+.fc-cases {
+  display: grid;
+  gap: var(--space-6);
+  margin-top: var(--space-5);
+}
+
+.fc-case {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  overflow: hidden;
+}
+
+.fc-case__photos {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2px;
+  background: var(--color-border);
+}
+
+.fc-case__photos--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+/* 写真3枚の事例：スマホでは施工前を大きく、施工中・施工後を下に2枚並べる */
+.fc-case__photos--3 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.fc-case__photos--3 figure:first-child {
+  grid-column: 1 / -1;
+}
+
+.fc-page .sp-faq__a a {
+  color: var(--color-bronze-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fc-case__photos figure {
+  position: relative;
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  background: var(--color-charcoal);
+}
+
+.fc-case__photos img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fc-case__photos figcaption {
+  position: absolute;
+  left: 0.3rem;
+  top: 0.3rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 3px;
+  background: rgba(17, 17, 17, 0.75);
+  color: #fff;
+  font-weight: 700;
+  font-size: 0.75rem;
+  line-height: 1.5;
+}
+
+.fc-case__photos figcaption.is-after {
+  background: var(--color-bronze-dark);
+}
+
+.fc-case__body {
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.fc-case__label {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  color: var(--color-bronze-dark);
+}
+
+.fc-case__title {
+  margin-top: 0.15rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+.fc-case__desc {
+  margin-top: 0.4rem;
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+.fc-case__kind {
+  display: inline-block;
+  margin-top: 0.6rem;
+  padding: 0.15rem 0.6rem;
+  border-radius: 999px;
+  background: var(--color-offwhite);
+  font-weight: 700;
+  font-size: 0.8125rem;
+  color: var(--text-on-light);
+}
+
+/* --- 補修方法 --- */
+.fc-methods {
+  display: grid;
+  gap: var(--space-4);
+  max-width: 880px;
+}
+
+.fc-method {
+  padding: 1.1rem 1.15rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fc-method__head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.6rem;
+  font-weight: 700;
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* 料金の目安：スマホでは見出しの下の行に置き、はみ出さないようにする */
+.fc-method__tag {
+  flex-basis: 100%;
+  justify-self: start;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.1rem 0.55rem;
+  border-radius: 3px;
+  background: var(--color-offwhite);
+  font-size: 0.75rem;
+  color: var(--text-on-light-muted);
+}
+
+.fc-method__desc {
+  margin-top: 0.45rem;
+  font-size: var(--fs-sm);
+  line-height: 1.85;
+  color: var(--text-on-light-muted);
+}
+
+.fc-method__desc a {
+  color: var(--color-bronze-dark);
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.fc-num {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--color-bronze);
+  color: var(--color-white);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9375rem;
+  line-height: 1;
+}
+
+/* --- 安心できる対応 --- */
+.fc-points {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.fc-point {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.2rem 0.75rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fc-point svg {
+  grid-row: span 2;
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.fc-point__title {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fc-point__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+/* --- ご相談から施工までの流れ --- */
+.fc-flow {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.fc-flow li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.15rem 0.9rem;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+}
+
+.fc-flow__step {
+  grid-row: span 2;
+  align-self: start;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--color-bronze-dark);
+  line-height: 1.2;
+  text-align: center;
+}
+
+.fc-flow__step b {
+  display: block;
+  font-size: 1.5rem;
+  letter-spacing: 0;
+}
+
+.fc-flow__title {
+  font-weight: 700;
+  font-size: 1.0625rem;
+  line-height: 1.5;
+}
+
+.fc-flow__desc {
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+  color: var(--text-on-light-muted);
+}
+
+/* --- 最終CTA --- */
+.fc-final {
+  background:
+    radial-gradient(circle at 85% 10%, rgba(169, 129, 47, 0.18), transparent 55%),
+    linear-gradient(170deg, var(--color-black) 0%, var(--color-charcoal) 100%);
+  color: var(--text-on-dark);
+}
+
+.fc-final__title {
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 1.1rem + 2vw, 2.25rem);
+  line-height: 1.45;
+  color: var(--color-white);
+}
+
+.fc-final__lead {
+  margin-top: var(--space-3);
+  margin-bottom: var(--space-5);
+  line-height: 1.85;
+  color: var(--text-on-dark-muted);
+}
+
+.fc-badges--dark {
+  margin-bottom: var(--space-2);
+}
+
+.fc-final__area {
+  margin-bottom: var(--space-5);
+  font-size: var(--fs-xs);
+  line-height: 1.8;
+  color: var(--text-on-dark-muted);
+}
+
+.fc-final .fc-cta {
+  max-width: 520px;
+}
+
+/* --- 会社情報 --- */
+.fc-company {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.5rem 1.25rem;
+  max-width: 640px;
+  margin-top: var(--space-5);
+  padding: 1.1rem 1.2rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background: var(--color-white);
+  font-size: var(--fs-sm);
+  line-height: 1.8;
+}
+
+.fc-company dt {
+  font-weight: 700;
+  color: var(--color-bronze-dark);
+}
+
+.fc-company a {
+  font-weight: 700;
+}
+
+/* --- 下部の固定ボタン：このページは電話・LINEの2つ --- */
+body.fc-page .fixed-cta {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+body.fc-page .fixed-cta__btn--tel {
+  background: linear-gradient(135deg, var(--color-bronze-light), var(--color-bronze-dark));
+  border-left: 0;
+}
+
+/* LINE（写真相談）を主な導線にするため、本文のLINEボタンと同じ緑にそろえる */
+body.fc-page .fixed-cta__btn--line {
+  background: #06c755;
+  color: #fff;
+}
+
+body.fc-page .fixed-cta__btn--line .fixed-cta__icon {
+  color: #fff;
+}
+
+/* --- タブレット以上 --- */
+@media (min-width: 640px) {
+  .fc-check {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fc-points {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .fc-hero__photo {
+    aspect-ratio: 16 / 9;
+  }
+
+  .fc-hero__main,
+  .fc-hero__photo,
+  .fc-hero__side,
+  .fc-hero__cta {
+    max-width: 640px;
+  }
+
+  .fc-fee {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+
+  .fc-diff {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fc-outcomes {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .fc-flow {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .fc-cases {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+  }
+}
+
+/* --- PC：ファーストビューの横並び --- */
+@media (min-width: 1024px) {
+  .fc-hero {
+    padding-block: var(--space-6) var(--space-9);
+  }
+
+  .fc-hero .sp-breadcrumb {
+    margin-bottom: var(--space-6);
+  }
+
+  .fc-hero__main,
+  .fc-hero__photo,
+  .fc-hero__side,
+  .fc-hero__cta {
+    max-width: none;
+  }
+
+  .fc-hero__layout {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    grid-template-areas: "main side" "photo cta";
+    align-items: start;
+    gap: var(--space-6) var(--space-8);
+  }
+
+  .fc-hero__main { grid-area: main; align-self: end; }
+  .fc-hero__photo { grid-area: photo; }
+  .fc-hero__side { grid-area: side; align-self: end; }
+  .fc-hero__cta { grid-area: cta; }
+
+  .fc-price__label {
+    font-size: 1.125rem;
+    padding: 0.75rem 1.4rem;
+  }
+
+  .fc-price__body,
+  .fc-price__terms {
+    padding-inline: 1.4rem;
+  }
+
+  .fc-methods {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .fc-line-steps {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .fc-points {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fc-point {
+    grid-template-columns: 1fr;
+  }
+
+  .fc-point svg {
+    grid-row: auto;
+  }
+
+  .fc-flow {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .fc-flow li {
+    grid-template-columns: 1fr;
+  }
+
+  .fc-flow__step {
+    grid-row: auto;
+    text-align: left;
+  }
+
+  .fc-final .fc-cta {
+    grid-template-columns: 1fr 1fr;
+    max-width: 880px;
+  }
+
+  .fc-final .fc-form-link,
+  .fc-final .fc-cta__note {
+    grid-column: 1 / -1;
+  }
+}

@@ -102,7 +102,10 @@
   }
 
   // ボタンの設置場所（固定CTA／問い合わせ欄／会社情報など）。ページはGA4が自動で記録する
+  // data-ga-position があるボタンはその値を使う（専用ページで設置場所を細かく分けるため。既存ページには付けていない）
   function ga4LinkPosition(link) {
+    var tagged = link.closest("[data-ga-position]");
+    if (tagged) return tagged.getAttribute("data-ga-position");
     if (link.closest(".fixed-cta")) return "fixed_cta";
     if (link.closest(".contact-quick")) return "contact_section";
     if (link.closest(".company-detail__value")) return "company_info";
@@ -119,6 +122,9 @@
       eventName = "phone_click";
     } else if (/^https:\/\/(lin\.ee|line\.me)\//i.test(href)) {
       eventName = "line_click";
+    } else if (link.getAttribute("data-ga-event") === "form_cta_click") {
+      // 「フォームで相談する」ボタン（フォームへ移動するだけ。送信の成否は generate_lead で計測）
+      eventName = "form_cta_click";
     }
     if (!eventName) return;
     sendGa4Event(eventName, { link_position: ga4LinkPosition(link) });
@@ -310,7 +316,8 @@
             );
             form.reset();
             // 送信成功（Formspreeが正常応答）のときだけ記録する。入力内容は送らない
-            sendGa4Event("generate_lead", { form_name: "contact_form" });
+            // form_name：専用ページのフォームは data-ga-form-name の値（例：foundation_crack_lp）、それ以外は従来どおり contact_form
+            sendGa4Event("generate_lead", { form_name: form.getAttribute("data-ga-form-name") || "contact_form" });
             return;
           }
           return response
