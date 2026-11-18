@@ -125,6 +125,14 @@
     } else if (link.getAttribute("data-ga-event") === "form_cta_click") {
       // 「フォームで相談する」ボタン（フォームへ移動するだけ。送信の成否は generate_lead で計測）
       eventName = "form_cta_click";
+    } else if (link.getAttribute("data-ga-event") === "select_content") {
+      // トップページの料金カード：どの料金ページへ進んだかを区別する。
+      // content_id は HTML に書いた固定値（下の3つ）だけを送る。それ以外の値や入力内容は送らない
+      var contentId = link.getAttribute("data-ga-content-id") || "";
+      if (/^(termite_lp|foundation_crack_lp|floor_repair_lp)$/.test(contentId)) {
+        sendGa4Event("select_content", { content_type: "price_lp", content_id: contentId, link_position: ga4LinkPosition(link) });
+      }
+      return;
     }
     if (!eventName) return;
     sendGa4Event(eventName, { link_position: ga4LinkPosition(link) });
