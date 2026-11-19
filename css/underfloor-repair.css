@@ -1,0 +1,68 @@
+/* ==========================================================================
+   /underfloor-repair/（床下耐震補強・補強金物）専用の追加スタイル（2026-11-18 追加）
+   ・css/style.css の既存ルールは変更しない。クラス名は uf-hero- で始まるものに限定する。
+   ・ファーストビューの「対象エリア内」の補足と、PC用の電話・LINE導線だけを扱う。
+   ========================================================================== */
+
+/* 無料床下点検ボタンの下の補足（全画面幅で表示） */
+.uf-hero-note {
+  margin-top: var(--space-3);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
+  color: var(--text-on-dark-muted);
+}
+
+/* PC用の電話・LINE導線。
+   1199px以下は画面下の固定CTAに電話・LINEがあるため表示しない（重複して画面を圧迫しないように） */
+.uf-hero-contact {
+  display: none;
+}
+
+@media (min-width: 1200px) {
+  .uf-hero-contact {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-2) var(--space-5);
+    margin-top: var(--space-5);
+    padding-top: var(--space-4);
+    border-top: 1px solid rgba(199, 154, 75, 0.25);
+  }
+
+  .uf-hero-contact__label {
+    flex-basis: 100%;
+    font-size: var(--fs-sm);
+    color: var(--text-on-dark-muted);
+  }
+
+  .uf-hero-contact__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 44px;
+    font-weight: 700;
+    color: var(--color-bronze-light);
+    transition: color var(--transition-fast);
+  }
+
+  .uf-hero-contact__link:hover {
+    color: var(--text-on-dark);
+  }
+
+  .uf-hero-contact__link:focus-visible {
+    outline: 2px solid var(--color-bronze-light);
+    outline-offset: 3px;
+  }
+
+  .uf-hero-contact__icon {
+    width: 20px;
+    height: 20px;
+    flex: none;
+  }
+
+  .uf-hero-contact__num {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    letter-spacing: 0.04em;
+  }
+}
